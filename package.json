@@ -43,7 +43,7 @@
     "ramda": "^0.26.1",
     "react": "^16.8.6",
     "react-app-polyfill": "^0.2.2",
-    "react-dev-utils": "^9.0.1",
+    "react-dev-utils": "^11.0.4",
     "react-dom": "16.8.6",
     "react-error-boundary": "^1.2.5",
     "react-hot-loader": "^4.12.3",
