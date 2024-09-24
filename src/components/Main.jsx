@@ -12,7 +12,8 @@ import {
   SEARCH_REPORTS,
   GAVI_REPORTS,
   GAVI_REPORTS_CTN,
-  GAVI_STATEMENTS_ACC
+  GAVI_STATEMENTS_ACC,
+  COVAX
 } from '../lib/constants';
 import DonorsList from 'pages/donors-list';
 import ContentHeader from './Content-Header';
@@ -131,6 +132,10 @@ export default function MainAppBar() {
                     </ProtectedRouteReportPage>
 
                     <ProtectedRouteReportPage exact path={`/${THEMATIC_GRANTS}`}>
+                      <SearchPage />
+                    </ProtectedRouteReportPage>
+
+                    <ProtectedRouteReportPage exact path={`/${COVAX}`}>
                       <SearchPage />
                     </ProtectedRouteReportPage>
 

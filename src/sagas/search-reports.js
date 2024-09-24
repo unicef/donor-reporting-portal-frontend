@@ -27,7 +27,8 @@ import {
   POOLED_GRANTS,
   GAVI_REPORTS,
   GAVI_REPORTS_CTN,
-  GAVI_STATEMENTS_ACC
+  GAVI_STATEMENTS_ACC,
+  COVAX
 } from '../lib/constants';
 
 function* getInitialSearchReports(params) {
@@ -58,7 +59,11 @@ function* getSearchReports(params) {
   } else if (reportPageName === 'gavi-reports') {
     params.m_o_u_r_eference__not = 'ADJUSTING CTNS';
     searchReports = yield call(fetchSearchGavi, params);
-  } else if (reportPageName === 'gavi-reports-ctn') {
+  }  else if (reportPageName === 'covax') {
+    params.m_o_u_r_eference = 'MOU 11 CTN - DEVICES,MOU 11 CTN - VACCINES';
+    searchReports = yield call(fetchSearchGavi, params);
+  }  
+  else if (reportPageName === 'gavi-reports-ctn') {
     params.m_o_u_r_eference = 'ADJUSTING CTNS';
     searchReports = yield call(fetchSearchGavi, params);
   } else if (reportPageName === 'gavi-statements-acc') {
@@ -100,6 +105,7 @@ function* getSearchCallerFunc(payload) {
       }
       break;
     }
+    case COVAX:
     case GAVI_REPORTS_CTN:
     case GAVI_REPORTS: {
       yield call(waitFor, selectConfig);

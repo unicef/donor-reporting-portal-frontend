@@ -50,13 +50,16 @@ function ContentHeader({ children, location }) {
   const isUnicefUser = useSelector(selectIsUnicefUser);
 
   function onExportClick() {
-    let extraParam = '';
+    let extraParam = '';    
+    let gaviKey = isUnicefUser ? UNICEF_GAVI_KEY : config.source_id.gavi;
+
     if (window.location.pathname.includes('gavi-reports-ctn')) {
       extraParam = '&m_o_u_r_eference=ADJUSTING CTNS';
     } else if (window.location.pathname.includes('gavi-reports')) {
       extraParam = '&m_o_u_r_eference__not=ADJUSTING CTNS';
+    } else if (window.location.pathname.includes('covax')) {
+      extraParam = '&m_o_u_r_eference=MOU 11 CTN - DEVICES,MOU 11 CTN - VACCINES';
     }
-    const gaviKey = isUnicefUser ? UNICEF_GAVI_KEY : config.source_id.gavi;
     const searchParams = window.location.search.replace('?', '&');
     const downloadUrl = `${window.location.origin}/api/sharepoint/search/export/?serializer=gavi&donor_code=${config.gavi_donor_code}&source_id=${gaviKey}${searchParams}${extraParam}`;
     window.open(downloadUrl, '_blank');

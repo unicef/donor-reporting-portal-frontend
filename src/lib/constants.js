@@ -70,6 +70,7 @@ export const REPORTS = 'reports';
 export const ADMIN = 'admin';
 export const SEARCH_REPORTS = 'reports';
 export const THEMATIC_GRANTS = 'thematic-grants';
+export const COVAX = 'covax';
 export const GAVI_REPORTS = 'gavi-reports';
 export const GAVI_REPORTS_CTN = 'gavi-reports-ctn';
 export const GAVI_STATEMENTS_ACC = 'gavi-statements-acc';
@@ -88,9 +89,11 @@ export const TABLE_PAGES = [
   USERS_PORTAL,
   GAVI_REPORTS,
   GAVI_REPORTS_CTN,
-  GAVI_STATEMENTS_ACC
+  GAVI_STATEMENTS_ACC,
+  COVAX
 ];
 export const THEMATIC_GRANTS_PATH = `/${THEMATIC_GRANTS}`;
+export const COVAX_PATH = `/${COVAX}`;
 export const GAVI_REPORTS_PATH = `/${GAVI_REPORTS}`;
 export const GAVI_REPORTS_CTN_PATH = `/${GAVI_REPORTS_CTN}`;
 export const GAVI_STATEMENTS_ACC_PATH = `/${GAVI_STATEMENTS_ACC}`;
@@ -138,6 +141,7 @@ export const PAGE_TITLE_MAP = {
   [REPORTS]: 'Reports',
   [SEARCH_REPORTS]: 'Reports',
   [THEMATIC_GRANTS]: 'Thematic Grants',
+  [COVAX]: 'Covax',
   [GAVI_REPORTS]: 'Gavi Reports',
   [GAVI_REPORTS_CTN]: 'Gavi Adjusting CTNs',
   [GAVI_STATEMENTS_ACC]: 'Gavi Statements of Account',

@@ -38,7 +38,7 @@ import {
 } from '../../pages/reports/constants';
 import TablePaginationActions from './table-pagination-actions';
 import { selectMenuBarPage } from 'selectors/ui-flags';
-import { POOLED_GRANTS, THEMATIC_GRANTS, GAVI_REPORTS, GAVI_REPORTS_CTN, GAVI_STATEMENTS_ACC } from 'lib/constants';
+import { POOLED_GRANTS, THEMATIC_GRANTS, GAVI_REPORTS, GAVI_REPORTS_CTN, GAVI_STATEMENTS_ACC, COVAX } from 'lib/constants';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 
 export function getRecipientOfficeStr(report) {
@@ -84,7 +84,8 @@ const gaviStatementsAccTableHeadings = [
   { id: BACKEND_GAVI_FIELDS['grantNumber'], label: 'Grant Number', sortable: true },
   { id: BACKEND_GAVI_FIELDS['gaviWBS'], label: 'GAVI WBS', sortable: true },
   { id: BACKEND_GAVI_FIELDS['unicefWBS'], label: 'UNICEF WBS', sortable: true },  
-  { id: BACKEND_GAVI_FIELDS['country'], label: 'Country Name', sortable: true }  
+  { id: BACKEND_GAVI_FIELDS['country'], label: 'Country Name', sortable: true },
+  { id: BACKEND_GAVI_FIELDS['sentDate'], label: 'Sent To GAVI Date', sortable: true },
 ];
 
 const externalRefCell = {
@@ -125,6 +126,7 @@ const getTableHeadings = pageName => {
   switch (pageName) {
     case THEMATIC_GRANTS:
       return thematicReportsTableHeadings;
+    case COVAX:
     case GAVI_REPORTS_CTN:    
     case GAVI_REPORTS:
       return gaviReportsTableHeadings;
@@ -146,7 +148,7 @@ export default function ReportsTable() {
   const certifiedReports = pageName !== THEMATIC_GRANTS;
   const pooledGrants = pageName === POOLED_GRANTS;
   const thematicGrants = pageName === THEMATIC_GRANTS;
-  const isGaviPage = pageName === GAVI_REPORTS || pageName == GAVI_REPORTS_CTN;
+  const isGaviPage = pageName === GAVI_REPORTS || pageName == GAVI_REPORTS_CTN || pageName == COVAX;
   const isGaveStatementsPage = pageName == GAVI_STATEMENTS_ACC;
   const headCells = getHeadCells(
     isUnicefUser,
@@ -459,6 +461,12 @@ export default function ReportsTable() {
           <Tooltip title={arrayToTooltip(row.country_name)}>
             <TableCell className={classes.cell} align="left">
               {arrayToCellValue(row.country_name)}
+            </TableCell>
+          </Tooltip>
+
+          <Tooltip title={row.sent_to_g_a_v_i_date ? getDisplayDate(row.sent_to_g_a_v_i_date) : ''}>
+            <TableCell className={classes.cell} align="left">
+              {getDisplayDate(row.sent_to_g_a_v_i_date)}
             </TableCell>
           </Tooltip>
   

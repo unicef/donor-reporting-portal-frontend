@@ -216,13 +216,13 @@ export const FILTERS_MAP = {
   [SENT_GAVI_DATE_BEFORE_FIELD]: {
     label: 'Sent To GAVI Date Before',
     Component: GaviDateBeforeFilter,
-    pageName: [GAVI_REPORTS, GAVI_REPORTS_CTN]
+    pageName: [GAVI_REPORTS, GAVI_REPORTS_CTN, GAVI_STATEMENTS_ACC]
   },
 
   [SENT_GAVI_DATE_AFTER_FIELD]: {
     label: 'Sent To GAVI Date After',
     Component: GaviDateAfterFilter,
-    pageName: [GAVI_REPORTS, GAVI_REPORTS_CTN]
+    pageName: [GAVI_REPORTS, GAVI_REPORTS_CTN, GAVI_STATEMENTS_ACC]
   },
 
   [GAVI_WBS]: {
