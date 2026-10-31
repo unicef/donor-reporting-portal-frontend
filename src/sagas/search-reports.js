@@ -1,4 +1,4 @@
-import { takeLatest, call, put, all, select } from 'redux-saga/effects';
+import { takeLatest, take, call, put, all, select } from 'redux-saga/effects';
 import {
   selectDonorCode,
   selectError,
@@ -75,8 +75,11 @@ function* getSearchReports(params) {
 }
 
 function* getSourceId() {
-  yield call(waitFor, selectConfig);
-  const config = yield select(selectConfig);
+  let config = yield select(selectConfig);
+  while (!config || !config.source_id || !Object.keys(config.source_id).length) {
+    yield take('*');
+    config = yield select(selectConfig);
+  }
   return config.source_id;
 }
 
@@ -89,8 +92,7 @@ function* getSearchCallerFunc(payload) {
     }
   };
 
-  yield call(waitFor, getSourceId);
-  const sourceIds = yield getSourceId(reportPageName);
+  const sourceIds = yield call(getSourceId);
   result.caller = getSearchReports;
 
   switch (reportPageName) {
@@ -98,11 +100,6 @@ function* getSearchCallerFunc(payload) {
       result.params.source_id = isUnicefUser
         ? sourceIds.thematic_internal
         : sourceIds.thematic_external;
-      if (process.env.NODE_ENV === 'development') {
-        result.params.source_id = isUnicefUser
-          ? process.env.REACT_APP_DRP_SOURCE_ID_THEMATIC_EXTERNAL
-          : process.env.REACT_APP_DRP_SOURCE_ID_THEMATIC_INTERNAL;
-      }
       break;
     }
     case COVAX:
@@ -126,11 +123,6 @@ function* getSearchCallerFunc(payload) {
       const donorCode = yield select(selectDonorCode);
       result.params.donor_code = donorCode;
       result.params.source_id = isUnicefUser ? sourceIds.pool_internal : sourceIds.pool_external;
-      if (process.env.NODE_ENV === 'development') {
-        result.params.source_id = isUnicefUser
-          ? process.env.REACT_APP_DRP_SOURCE_ID_POOL_EXTERNAL
-          : process.env.REACT_APP_DRP_SOURCE_ID_POOL_INTERNAL;
-      }
       break;
     }
     case SEARCH_REPORTS: {
@@ -138,11 +130,6 @@ function* getSearchCallerFunc(payload) {
       const donorCode = yield select(selectDonorCode);
       result.params.donor_code = donorCode;
       result.params.source_id = isUnicefUser ? sourceIds.internal : sourceIds.external;
-      if (process.env.NODE_ENV === 'development') {
-        result.params.source_id = isUnicefUser
-          ? process.env.REACT_APP_DRP_SOURCE_ID_EXTERNAL
-          : process.env.REACT_APP_DRP_SOURCE_ID_INTERNAL;
-      }
       break;
     }
   }

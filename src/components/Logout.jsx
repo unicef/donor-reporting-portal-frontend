@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
-import { Paper, makeStyles, createStyles } from '@material-ui/core';
+import { Navigate } from 'react-router-dom';
+import { makeStyles } from 'styles/makeStyles';
+import { Paper } from '@mui/material';
 import IconTextButton from './IconTextButton';
-import { Person, PowerSettingsNew as SignOut } from '@material-ui/icons';
+import { Person, PowerSettingsNew as SignOut } from '@mui/icons-material';
 
 const useStyles = makeStyles(theme =>
-  createStyles({
+  ({
     root: {
       width: '15vw',
       '&:hover': {
@@ -31,7 +32,7 @@ export default function Logout({ onClose, logout }) {
   }
 
   return viewProfile ? (
-    <Redirect push to="/user" />
+    <Navigate to="/user" replace />
   ) : (
       <Paper>
         <div className={classes.root}>

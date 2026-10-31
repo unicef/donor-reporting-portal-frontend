@@ -9,7 +9,7 @@ import {
   MenuItem,
   Button,
   TextField
-} from '@material-ui/core';
+} from '@mui/material';
 import useFilterStyles from 'styles/filter-styles';
 import { selectDonorUserGroups } from 'selectors/user';
 import { FORM_CONFIG } from '../../../lib/constants';
@@ -32,7 +32,7 @@ export default function UsersFilter() {
 
   useEffect(() => {
     const queryObj = {
-      group__in: selectedRoles.map(name => prop('id', find(propEq('name', name), groups))).join(),
+      group__in: selectedRoles.map(name => prop('id', find(propEq(name, 'name'), groups))).join(),
       search: searchQuery || undefined
     };
 
@@ -41,9 +41,9 @@ export default function UsersFilter() {
   }, [searchQuery, selectedRoles]);
 
   return (
-    <Grid item xs={12} className={classes.filterContainer}>
+    <Grid className={classes.filterContainer} size={{ xs: 12 }}>
       <Grid container direction="row" spacing={1}>
-        <Grid item sm={4} xs={12}>
+        <Grid size={{ sm: 4, xs: 12 }}>
           <FormControl className={classes.formControl}>
             <TextField
               id="search"
@@ -55,7 +55,7 @@ export default function UsersFilter() {
             />
           </FormControl>
         </Grid>
-        <Grid item sm={4} xs={12}>
+        <Grid size={{ sm: 4, xs: 12 }}>
           <FormControl className={classes.formControl}>
             <InputLabel htmlFor="roles">{FORM_CONFIG.roles.label}</InputLabel>
             <Select
@@ -75,7 +75,7 @@ export default function UsersFilter() {
             </Select>
           </FormControl>
         </Grid>
-        <Grid item className={classes.button}>
+        <Grid className={classes.button}>
           <Button
             className={classes.formBtn}
             color="secondary"

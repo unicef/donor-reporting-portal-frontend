@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import { compose, equals } from 'ramda';
 
 import { useSelector } from 'react-redux';
-import { FormControl, TextField } from '@material-ui/core';
+import { FormControl, TextField } from '@mui/material';
 import { useGetFilterClasses } from 'styles/filter-styles';
-import { makeStyles } from '@material-ui/styles';
-import { Autocomplete } from '@material-ui/lab';
+import { makeStyles } from 'styles/makeStyles';
+import { Autocomplete } from '@mui/material';
 
 const useStyles = makeStyles({
   root: {
-    '&> :first-child': {
+    '&> :first-of-type': {
       margin: 0
     }
   }
@@ -36,13 +36,23 @@ export default function SearchableDropdownFilterFactory(selector, label, getValu
     return (
       <FormControl className={classes.formControl}>
         <Autocomplete
+          size="small"
           options={options}
           value={dropdownValue}
           onChange={(event, newValue) => {
             onChange(getValueFromObj(newValue));
           }}
           classes={classes2}
-          renderInput={params => <TextField className={classes.input} {...params} label={label} margin="normal" fullWidth />}
+          renderInput={params => (
+            <TextField
+              className={classes.input}
+              {...params}
+              label={label}
+              margin="none"
+              size="small"
+              fullWidth
+            />
+          )}
           {...props}
         />
       </FormControl>

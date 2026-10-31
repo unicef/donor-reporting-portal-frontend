@@ -1,6 +1,7 @@
-import { createSlice } from 'redux-starter-kit';
+import { createSlice } from '@reduxjs/toolkit';
 
 export const officesSlice = createSlice({
+  name: 'offices',
   initialState: [],
   reducers: {
     onReceiveOffices(state, action) {

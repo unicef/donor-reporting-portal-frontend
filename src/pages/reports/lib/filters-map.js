@@ -144,7 +144,7 @@ export const FILTERS_MAP = {
   }
 };
 
-export const getPageFilters = (userGroup, currentPageName) => {
+export const useGetPageFilters = (userGroup, currentPageName) => {
   const isSuperUser = useSelector(selectIsSuperUser);
   if (!userGroup || !currentPageName) {
     return [];

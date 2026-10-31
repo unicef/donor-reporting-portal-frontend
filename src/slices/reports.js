@@ -1,6 +1,7 @@
-import { createSlice } from 'redux-starter-kit';
+import { createSlice } from '@reduxjs/toolkit';
 
 const reportsSlice = createSlice({
+  name: 'reports',
   initialState: [],
   reducers: {
     onReceiveReports(state, action) {

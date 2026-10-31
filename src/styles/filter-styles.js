@@ -1,14 +1,11 @@
-import {
-  makeStyles,
-  createStyles
-} from '@material-ui/styles';
+import { makeStyles } from 'styles/makeStyles';
 import clsx from 'clsx';
 
 const useFilterStyles = makeStyles(theme =>
-  createStyles({
+  ({
     filterContainer: {
       borderRadius: 8,
-      padding: `${theme.spacing(3)}px ${theme.spacing(2)}px ${theme.spacing(2)}px `,
+      padding: `${theme.spacing(3)} ${theme.spacing(2)} ${theme.spacing(2)}`,
       background: theme.palette.common.white
     },
     button: {
@@ -26,8 +23,7 @@ const useFilterStyles = makeStyles(theme =>
       boxSizing: 'initial'
     },
     filterBox: {
-      margin: `0 ${theme.spacing(2)}px ${theme.spacing(2)}px 0 `,
-      maxWidth: 400
+      maxWidth: 360
     },
     validationWarning: {
       color: 'red'
@@ -46,11 +42,11 @@ const useFilterStyles = makeStyles(theme =>
       fontWeight: 400,
       fontSize: 14,
       borderRadius: 14,
-      lineHeight: `${theme.spacing(3)}px`,
+      lineHeight: theme.spacing(3),
       border: `1px solid #e5eaf0;`
     },
     filterPaper: {
-      padding: 20
+      padding: 16
     },
     yearFilter: {
       backgroundColor: '#fafafa',
@@ -68,7 +64,25 @@ const useFilterStyles = makeStyles(theme =>
     },
     formControl: {
       width: '100%',
-      // marginTop: `-${theme.spacing(2)}px`
+      '& .MuiInputBase-root, & .MuiPickersInputBase-root': {
+        minHeight: 44
+      },
+      '& .MuiPickersSectionList-root': {
+        paddingTop: 10.5,
+        paddingBottom: 10.5
+      },
+      '& .MuiSelect-select': {
+        paddingTop: 10,
+        paddingBottom: 10
+      },
+      '& .MuiOutlinedInput-input': {
+        paddingTop: 10.5,
+        paddingBottom: 10.5,
+        fontSize: '0.875rem'
+      },
+      '& .MuiInputLabel-root': {
+        fontSize: '0.875rem'
+      }
     },
     formControlLabel: {
       left: theme.spacing(1)
@@ -83,7 +97,7 @@ const useFilterStyles = makeStyles(theme =>
       overflowX: 'hidden',
       textOverflow: 'ellipsis',
       color: 'currentColor',
-      opacity: theme.palette.type === 'light' ? 0.42 : 0.5,
+      opacity: theme.palette.mode === 'light' ? 0.42 : 0.5,
       font: 'inherit',
       transition: theme.transitions.create('opacity', {
         duration: theme.transitions.duration.shorter,
@@ -92,13 +106,13 @@ const useFilterStyles = makeStyles(theme =>
     },
     chips: {
       '& > *': {
-        margin: `0 ${theme.spacing(0.5)}px`,
+        margin: `0 ${theme.spacing(0.5)}`,
         height: 28
       }
     },
     checkBox: {
-      padding: 0,
-      margin: `0 ${theme.spacing(2)}px 0 0 `,
+      padding: 6,
+      margin: `0 ${theme.spacing(1)} 0 0`,
       height: 18,
       width: 18
     },

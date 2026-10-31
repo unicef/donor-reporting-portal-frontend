@@ -1,21 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  TableRow,
-  TableCell,
-  Typography,
-  IconButton,
-  makeStyles,
-  Tooltip
-} from '@material-ui/core';
+import { makeStyles } from 'styles/makeStyles';
+import { TableRow, TableCell, Typography, IconButton, Tooltip } from '@mui/material';
 import {
   BACKEND_PROPERTIES_USER_LAST_NAME,
   BACKEND_PROPERTIES_USER_FIRST_NAME,
   BACKEND_PROPERTIES_USER_LAST_LOGIN,
   NOTIFICATION_PERIODS_MAP
 } from 'lib/constants';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import clsx from 'clsx';
 import { useSelector } from 'react-redux';

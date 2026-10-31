@@ -1,6 +1,7 @@
-import { createSlice } from 'redux-starter-kit';
+import { createSlice } from '@reduxjs/toolkit';
 
 const externalGrantsSlice = createSlice({
+  name: 'externalGrants',
   initialState: [],
   reducers: {
     onReceiveExternalGrants(state, action) {

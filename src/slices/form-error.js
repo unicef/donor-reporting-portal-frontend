@@ -1,6 +1,7 @@
-import { createSlice } from 'redux-starter-kit';
+import { createSlice } from '@reduxjs/toolkit';
 
 const formErrorSlice = createSlice({
+  name: 'formError',
   initialState: null,
   reducers: {
     onFormError(state, action) {

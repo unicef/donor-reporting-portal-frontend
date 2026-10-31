@@ -1,8 +1,9 @@
 import {
   createSlice
-} from 'redux-starter-kit';
+} from '@reduxjs/toolkit';
 
 const grantsSlice = createSlice({
+  name: 'grants',
   initialState: [],
   reducers: {
     onReceiveGrants(state, action) {

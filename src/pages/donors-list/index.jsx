@@ -2,19 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import {
-  Grid,
-  Paper,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  makeStyles,
-  Typography,
-  TablePagination,
-  InputBase
-} from '@material-ui/core';
+import { makeStyles } from 'styles/makeStyles';
+import { Grid, Paper, Table, TableHead, TableRow, TableCell, TableBody, Typography, TablePagination, InputBase } from '@mui/material';
 
 import { selectDonors } from 'selectors/collections';
 import Loader from 'components/Loader';
@@ -81,9 +70,9 @@ export default function DonorsList() {
   }
 
   return (
-    <Grid container direction="row" justify="center">
+    <Grid container direction="row" sx={{ justifyContent: 'center' }}>
       <Loader loading={loading} fullscreen />
-      <Grid item xs={12} md={4}>
+      <Grid size={{ xs: 12, md: 4 }}>
         <Typography>Select Donor:</Typography>
 
         <Paper className={clsx(classes.root)}>
@@ -132,14 +121,8 @@ export default function DonorsList() {
             count={donors.length}
             rowsPerPage={rowsPerPage}
             page={page}
-            backIconButtonProps={{
-              'aria-label': 'previous page'
-            }}
-            nextIconButtonProps={{
-              'aria-label': 'next page'
-            }}
-            onChangePage={handleChangePage}
-            onChangeRowsPerPage={handleChangeRowsPerPage}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
           />
         </Paper>
       </Grid>

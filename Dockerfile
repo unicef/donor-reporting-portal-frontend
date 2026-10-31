@@ -1,12 +1,12 @@
 
-FROM node:11.9.0-alpine as builder
+FROM node:22-alpine as builder
 
 WORKDIR /code
 ADD . /code
 RUN npm install --silent
 RUN npm run build
 
-FROM node:11.9.0-alpine
+FROM node:22-alpine
 RUN apk update && \
   apk add --update bash
 

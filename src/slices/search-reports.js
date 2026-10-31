@@ -1,8 +1,9 @@
 import {
   createSlice
-} from 'redux-starter-kit';
+} from '@reduxjs/toolkit';
 
 const searchReportsSlice = createSlice({
+  name: 'searchReports',
   initialState: {},
   reducers: {
     onReceiveSearchReports(state, action) {

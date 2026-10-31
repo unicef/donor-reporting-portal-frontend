@@ -1,6 +1,7 @@
-import {createSlice} from 'redux-starter-kit';
+import {createSlice} from '@reduxjs/toolkit';
 
 const gaviSlice = createSlice({
+  name: 'gavi',
   initialState: [],
   reducers: {
     onReceiveGavi(state, action) {

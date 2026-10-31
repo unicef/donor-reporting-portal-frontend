@@ -1,6 +1,6 @@
 import React from 'react';
 import { useGetFilterClasses } from 'styles/filter-styles';
-import { FormControl, MenuItem } from '@material-ui/core';
+import { FormControl, MenuItem } from '@mui/material';
 import { StyledInputLabel, StyledSelect } from './styled-dropdown';
 import { FilterProps } from '../lib/dropdown-filter-factory';
 
@@ -15,6 +15,7 @@ export default function PrepaidStatusFilter({ value, onChange }) {
         className={classes.textField}
         value={value}
         onChange={onChange}
+        label="Prepaid Status"
         inputProps={{
           name: 'option',
           id: 'option-select'

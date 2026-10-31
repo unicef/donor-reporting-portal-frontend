@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormControl, TextField } from '@material-ui/core';
+import { FormControl, TextField } from '@mui/material';
 import { useGetFilterClasses } from 'styles/filter-styles';
 import { FilterProps } from '../lib/dropdown-filter-factory';
 
@@ -11,8 +11,10 @@ export default function CTNNumberFilter({ value = '', onChange, ...props }) {
       <TextField
         placeholder="CTN Number"
         className={classes.input}
-        inputProps={{
-          'aria-label': 'description'
+        slotProps={{
+          htmlInput: {
+            'aria-label': 'description'
+          }
         }}
         label="CTN Number"
         onChange={onChange}

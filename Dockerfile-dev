@@ -1,4 +1,4 @@
-FROM mhart/alpine-node:11 AS builder
+FROM node:22-alpine AS builder
 RUN apk update
 WORKDIR /tmp
 ADD package.json /tmp/

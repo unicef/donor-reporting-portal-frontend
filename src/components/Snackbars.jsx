@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import ErrorIcon from '@material-ui/icons/Error';
-import InfoIcon from '@material-ui/icons/Info';
-import CloseIcon from '@material-ui/icons/Close';
-import { amber, green } from '@material-ui/core/colors';
-import IconButton from '@material-ui/core/IconButton';
-import SnackbarContent from '@material-ui/core/SnackbarContent';
-import WarningIcon from '@material-ui/icons/Warning';
-import { makeStyles } from '@material-ui/core/styles';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import ErrorIcon from '@mui/icons-material/Error';
+import InfoIcon from '@mui/icons-material/Info';
+import CloseIcon from '@mui/icons-material/Close';
+import { amber, green } from '@mui/material/colors';
+import IconButton from '@mui/material/IconButton';
+import SnackbarContent from '@mui/material/SnackbarContent';
+import WarningIcon from '@mui/icons-material/Warning';
+import { makeStyles } from 'styles/makeStyles';
 
 const variantIcon = {
   success: CheckCircleIcon,
@@ -44,13 +44,14 @@ const useStyles1 = makeStyles(theme => ({
   }
 }));
 
-export function MySnackbarContentWrapper(props) {
+export const MySnackbarContentWrapper = React.forwardRef(function MySnackbarContentWrapper(props, ref) {
   const classes = useStyles1();
   const { className, message, onClose, variant, ...other } = props;
   const Icon = variantIcon[variant];
 
   return (
     <SnackbarContent
+      ref={ref}
       className={clsx(classes[variant], className)}
       aria-describedby="client-snackbar"
       message={
@@ -67,7 +68,7 @@ export function MySnackbarContentWrapper(props) {
       {...other}
     />
   );
-}
+});
 
 MySnackbarContentWrapper.propTypes = {
   className: PropTypes.string,

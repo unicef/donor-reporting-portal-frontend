@@ -1,19 +1,15 @@
-import {
-  createMuiTheme
-} from '@material-ui/core/styles';
-import blue from '@material-ui/core/colors/blue';
-import grey from '@material-ui/core/colors/grey';
+import { createTheme } from '@mui/material/styles';
+import { blue, grey } from '@mui/material/colors';
 
-blue['A400'] = '#0199ff';
+blue.A400 = '#0199ff';
+grey.A100 = '#e5eaf0';
 
 export const getColorTheme = () => ({
   ...blue,
   500: '#0099FF'
 });
 
-grey['A100'] = '#e5eaf0';
-
-export default createMuiTheme({
+export default createTheme({
   palette: {
     primary: {
       ...grey,
@@ -71,80 +67,79 @@ export default createMuiTheme({
       background: '#E5E5E5'
     }
   },
-  overrides: {
+  components: {
     MuiList: {
-      root: {
-        width: '100%'
-      },
-      padding: {
-        paddingTop: 0,
-        paddingBottom: 0
+      styleOverrides: {
+        root: {
+          width: '100%'
+        },
+        padding: {
+          paddingTop: 0,
+          paddingBottom: 0
+        }
       }
     },
     MuiLink: {
-      root: {
-        fontWeight: 500,
-        cursor: 'pointer',
-        '&:hover': {
-          textDecoration: 'none'
+      styleOverrides: {
+        root: {
+          fontWeight: 500,
+          cursor: 'pointer',
+          '&:hover': {
+            textDecoration: 'none'
+          }
         }
       }
     },
     MuiMenuItem: {
-      root: {
-        fontSize: '14px',
-        minHeight: 24
-      },
-      gutters: {
-        paddingLeft: '16px',
-        paddingRight: '16px'
-      }
-    },
-    MuiFormLabel: {
-      root: {
-        color: 'rgba(0, 0, 0, 0.34)',
-        zIndex: 1,
-        transform: 'scale(0.75)',
-        transformOrigin: 'left top',
-        pointerEvents: 'none',
-        fontSize: '1rem',
-        // transform: 'scale(1)',
-        '&focused': {
-          color: 'rgba(0, 0, 0, 0.34)'
+      styleOverrides: {
+        root: {
+          fontSize: '14px',
+          minHeight: 24
+        },
+        gutters: {
+          paddingLeft: '16px',
+          paddingRight: '16px'
         }
       }
     },
-    MuiTableCell: {
-      root: {
-        paddingDefault: {
-          '&:not(:first-child)': {
-            paddingLeft: '8px'
+    MuiFormLabel: {
+      styleOverrides: {
+        root: {
+          color: 'rgba(0, 0, 0, 0.54)',
+          fontSize: '0.875rem',
+          '&.Mui-focused': {
+            color: getColorTheme()[500]
           }
         }
       }
     },
     MuiTab: {
-      rootLabelIcon: {
-        height: '48px'
+      styleOverrides: {
+        rootLabelIcon: {
+          height: '48px'
+        }
       }
     },
     MuiRadio: {
-      root: {
-        '&checked': {
-          color: getColorTheme()[500]
+      styleOverrides: {
+        root: {
+          '&checked': {
+            color: getColorTheme()[500]
+          }
         }
       }
     },
     MuiCheckbox: {
-      root: {
-        '&checked': {
-          color: getColorTheme()[500]
-        },
-        '&disabled': {
-          color: getColorTheme()[200]
+      styleOverrides: {
+        root: {
+          '&checked': {
+            color: getColorTheme()[500]
+          },
+          '&disabled': {
+            color: getColorTheme()[200]
+          }
         }
       }
-    },
-    MuiGrid: {}
+    }
   }
 });
