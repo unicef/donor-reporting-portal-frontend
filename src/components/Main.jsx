@@ -1,5 +1,5 @@
 import React from 'react';
-import { Outlet, Route, Routes } from 'react-router-dom';
+import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
 import { makeStyles } from 'styles/makeStyles';
 import { Box } from '@mui/material';
 import ConnectedDrawer from './Drawer';
@@ -10,7 +10,9 @@ import {
   THEMATIC_GRANTS,
   POOLED_GRANTS,
   SEARCH_REPORTS,
+  GAVI_PATH,
   GAVI_REPORTS,
+  GAVI_REPORTS_PATH,
   GAVI_REPORTS_CTN,
   GAVI_STATEMENTS_ACC,
   COVAX
@@ -160,6 +162,8 @@ export default function MainAppBar() {
                       </ProtectedRouteReportPage>
                     }
                   />
+
+                  <Route path={GAVI_PATH} element={<Navigate to={GAVI_REPORTS_PATH} replace />} />
 
                   <Route
                     path={`/${COVAX}`}

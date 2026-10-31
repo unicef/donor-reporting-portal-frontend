@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useMainStyles } from './Main';
 import { Box, List, ListItemButton, ListItemIcon, ListItemText, Drawer } from '@mui/material';
@@ -16,6 +16,7 @@ import {
   GAVI_REPORTS,
   GAVI_REPORTS_CTN,
   GAVI_STATEMENTS_ACC,
+  GAVI_SECTION_PATHS,
   COVAX
 } from '../lib/constants';
 import { selectMenuBarPage, selectAssignedRole, selectPageName } from 'selectors/ui-flags';
@@ -54,11 +55,15 @@ export const useNav = () => {
 export default function ConnectedDrawer() {
   const classes = useMainStyles();
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const isAssignedRole = useSelector(selectAssignedRole);
   const { isUnicefUser, isSuperUser, isGaviDonor } = usePermissions();
   const pageName = useSelector(selectPageName);
   const showDrawer = isAssignedRole && pageName !== 'privacy-policy';
+  const isGaviSection = GAVI_SECTION_PATHS.some(
+    path => location.pathname === path || location.pathname.startsWith(`${path}/`)
+  );
 
   useEffect(() => {
     dispatch(menuItemSelected(isGaviDonor ? GAVI_REPORTS : SEARCH_REPORTS));
@@ -84,63 +89,80 @@ export default function ConnectedDrawer() {
           <ListItemText primary="Reports" />
         </ListItem> */}
 
-        <ListItemButton selected={navSelected(SEARCH_REPORTS)} onClick={handleNav(SEARCH_REPORTS)}>
-          <ListItemIcon>
-            <DescriptionIcon />
-          </ListItemIcon>
-          <ListItemText primary="Reports" />
-        </ListItemButton>
+        {!isGaviSection && (
+          <>
+            <ListItemButton
+              selected={navSelected(SEARCH_REPORTS)}
+              onClick={handleNav(SEARCH_REPORTS)}
+            >
+              <ListItemIcon>
+                <DescriptionIcon />
+              </ListItemIcon>
+              <ListItemText primary="Reports" />
+            </ListItemButton>
 
-        <ListItemButton selected={navSelected(POOLED_GRANTS)} onClick={handleNav(POOLED_GRANTS)}>
-          <ListItemIcon>
-            <DescriptionIcon />
-          </ListItemIcon>
-          <ListItemText primary="Pooled Grants" />
-        </ListItemButton>
+            <ListItemButton
+              selected={navSelected(POOLED_GRANTS)}
+              onClick={handleNav(POOLED_GRANTS)}
+            >
+              <ListItemIcon>
+                <DescriptionIcon />
+              </ListItemIcon>
+              <ListItemText primary="Pooled Grants" />
+            </ListItemButton>
 
-        <ListItemButton
-          selected={navSelected(THEMATIC_GRANTS)}
-          onClick={handleNav(THEMATIC_GRANTS)}
-        >
-          <ListItemIcon>
-            <DescriptionIcon />
-          </ListItemIcon>
-          <ListItemText primary="Thematic Grants" />
-        </ListItemButton>
+            <ListItemButton
+              selected={navSelected(THEMATIC_GRANTS)}
+              onClick={handleNav(THEMATIC_GRANTS)}
+            >
+              <ListItemIcon>
+                <DescriptionIcon />
+              </ListItemIcon>
+              <ListItemText primary="Thematic Grants" />
+            </ListItemButton>
+          </>
+        )}
 
-        <ListItemButton selected={navSelected(GAVI_REPORTS)} onClick={handleNav(GAVI_REPORTS)}>
-          <ListItemIcon>
-            <DescriptionIcon />
-          </ListItemIcon>
-          <ListItemText primary="Gavi Reports" />
-        </ListItemButton>
+        {isGaviSection && (
+          <>
+            <ListItemButton
+              selected={navSelected(GAVI_REPORTS)}
+              onClick={handleNav(GAVI_REPORTS)}
+            >
+              <ListItemIcon>
+                <DescriptionIcon />
+              </ListItemIcon>
+              <ListItemText primary="Gavi Reports" />
+            </ListItemButton>
 
-        <ListItemButton selected={navSelected(COVAX)} onClick={handleNav(COVAX)}>
-          <ListItemIcon>
-            <DescriptionIcon />
-          </ListItemIcon>
-          <ListItemText primary="Covax" />
-        </ListItemButton>
+            <ListItemButton selected={navSelected(COVAX)} onClick={handleNav(COVAX)}>
+              <ListItemIcon>
+                <DescriptionIcon />
+              </ListItemIcon>
+              <ListItemText primary="Covax" />
+            </ListItemButton>
 
-        <ListItemButton
-          selected={navSelected(GAVI_REPORTS_CTN)}
-          onClick={handleNav(GAVI_REPORTS_CTN)}
-        >
-        <ListItemIcon>
-            <DescriptionIcon />
-          </ListItemIcon>
-          <ListItemText primary="Gavi Adjusting CTNs" />
-        </ListItemButton>
+            <ListItemButton
+              selected={navSelected(GAVI_REPORTS_CTN)}
+              onClick={handleNav(GAVI_REPORTS_CTN)}
+            >
+              <ListItemIcon>
+                <DescriptionIcon />
+              </ListItemIcon>
+              <ListItemText primary="Gavi Adjusting CTNs" />
+            </ListItemButton>
 
-        <ListItemButton
-          selected={navSelected(GAVI_STATEMENTS_ACC)}
-          onClick={handleNav(GAVI_STATEMENTS_ACC)}
-        >
-        <ListItemIcon>
-            <DescriptionIcon />
-          </ListItemIcon>
-          <ListItemText primary="Gavi Statements of Account" />
-        </ListItemButton>
+            <ListItemButton
+              selected={navSelected(GAVI_STATEMENTS_ACC)}
+              onClick={handleNav(GAVI_STATEMENTS_ACC)}
+            >
+              <ListItemIcon>
+                <DescriptionIcon />
+              </ListItemIcon>
+              <ListItemText primary="Gavi Statements of Account" />
+            </ListItemButton>
+          </>
+        )}
 
         <ListItemButton selected={navSelected(USERS_PORTAL)} onClick={handleNav(USERS_PORTAL)}>
           <ListItemIcon>
@@ -158,7 +180,7 @@ export default function ConnectedDrawer() {
           </ListItemButton>
         )}
 
-        {isUnicefUser && (
+        {!isGaviSection && isUnicefUser && (
           <ListItemButton onClick={handleNav(TRAINING_LINK)}>
             <ListItemIcon>
               <SettingsIcon />
