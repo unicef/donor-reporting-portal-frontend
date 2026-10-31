@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { FormControl, MenuItem } from '@material-ui/core';
+import { FormControl, MenuItem } from '@mui/material';
 import { StyledInputLabel, StyledSelect } from './styled-dropdown';
 import { FORM_CONFIG } from 'lib/constants';
 import { selectThemeCollection } from 'selectors/collections';
@@ -21,6 +21,7 @@ export default function ThemeFilter({ value = '', onChange, ...props }) {
       <StyledSelect
         value={value}
         onChange={onChange}
+        label={FORM_CONFIG.theme.label}
         inputProps={{
           name: 'select-theme',
           id: 'select-theme'

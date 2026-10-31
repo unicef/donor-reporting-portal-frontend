@@ -1,6 +1,6 @@
 import React from 'react';
-import { Grid, Box, Link, Button, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
+import { Grid, Box, Link, Button, Typography } from '@mui/material';
+import { makeStyles } from 'styles/makeStyles';
 import bgImage from './img/home-bkg-3.jpg';
 import circleLogo from 'assets/images/unicef_circle_logo.png';
 import clsx from 'clsx';
@@ -75,22 +75,14 @@ export default function LandingPage() {
   return (
     <div className={classes.root}>
       <Grid container spacing={3} className={classes.maskOverlay}>
-        <Grid container className={classes.main} alignItems="center" justify="center">
-          <Grid
-            item
-            xs={12}
-            sm={8}
-            container
-            direction="column"
-            alignItems="center"
-            justify="center"
-          >
+        <Grid container className={classes.main} sx={{ alignItems: 'center', justifyContent: 'center' }}>
+          <Grid container size={{ xs: 12, sm: 8 }} sx={{ flexDirection: 'column', flexWrap: 'nowrap', alignItems: 'center', justifyContent: 'center' }}>
             <img src={circleLogo} className={classes.logoSplash} alt="UN Logo" />
             <Typography variant="h4" className={classes.hWelcome}>
               <strong>Welcome to the Donor Reporting Portal</strong>
             </Typography>
-            <Grid container justify="center">
-              <Box display="flex" alignItems="center">
+            <Grid container sx={{ justifyContent: 'center' }}>
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Button
                   className={clsx(classes.btn, classes.signInBtn)}
                   variant="container"

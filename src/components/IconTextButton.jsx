@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ButtonBase, makeStyles, createStyles, Typography } from '@material-ui/core';
+import { makeStyles } from 'styles/makeStyles';
+import { ButtonBase, Typography } from '@mui/material';
 
 const useStyles = makeStyles(
-  createStyles({
+  ({
     basse: {
       padding: 8,
       display: 'flex',

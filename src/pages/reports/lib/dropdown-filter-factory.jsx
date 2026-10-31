@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { FormControl, MenuItem } from '@material-ui/core';
+import { FormControl, MenuItem } from '@mui/material';
 import { StyledInputLabel, StyledSelect } from '../components/styled-dropdown';
 import { useGetFilterClasses } from 'styles/filter-styles';
 import clsx from 'clsx';
@@ -30,6 +30,7 @@ export default function DropdownFilterFactory(selector, description, filterProp 
         <StyledSelect
           value={value}
           onChange={onChange}
+          label={description}
           inputProps={{
             name: 'option',
             id: description

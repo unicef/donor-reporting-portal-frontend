@@ -1,6 +1,6 @@
 import {
   createSlice
-} from 'redux-starter-kit';
+} from '@reduxjs/toolkit';
 
 export const configInitialState = {
   tracker: {},
@@ -8,6 +8,7 @@ export const configInitialState = {
 };
 
 const configSlice = createSlice({
+  name: 'config',
   initialState: configInitialState,
   reducers: {
     onReceiveConfig(state, action) {

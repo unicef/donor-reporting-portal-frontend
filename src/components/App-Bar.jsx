@@ -1,16 +1,17 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { createStyles } from '@material-ui/styles';
-import { makeStyles, AppBar, Toolbar, Box, Typography, IconButton } from '@material-ui/core';
+import { makeStyles } from 'styles/makeStyles';
+import { AppBar, Toolbar, Box, Typography, IconButton } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import horizontalLogo from '../assets/images/UNICEF_White_Horizontal.png';
 import ErrorsSnackbar from './Errors-Snackbar';
 import { selectUserName } from 'selectors/ui-flags';
 import SuccessSnackbar from './Success-Snackbar';
 import clsx from 'clsx';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 const useStyles = makeStyles(theme =>
-  createStyles({
+  ({
     appBar: {
       zIndex: theme.zIndex.drawer + 1,
       backgroundColor: theme.palette.primary.strong
@@ -29,8 +30,11 @@ const useStyles = makeStyles(theme =>
       fill: theme.palette.primary[400]
     },
     headerLogo: {
-      width: '25%',
-      height: '25%'
+      width: 'auto',
+      height: 52,
+      maxWidth: '60%',
+      display: 'block',
+      objectFit: 'contain'
     },
     noPrint: {
       '@media print': {
@@ -53,6 +57,7 @@ const useStyles = makeStyles(theme =>
 
 export default function AppToolbar() {
   const classes = useStyles();
+  const theme = useTheme();
   const userName = useSelector(selectUserName);
 
   function logout() {
@@ -60,18 +65,22 @@ export default function AppToolbar() {
   }
 
   return (
-    <AppBar className={classes.appBar} position="fixed">
-      <Toolbar className={classes.toolbar}>
-        <Box width="100%">
-          <Box width="100%" display="flex" justifyContent="space-between">
-            <img src={horizontalLogo} className={classes.headerLogo} />
-            <IconButton aria-label="logout" className={classes.button} onClick={logout}>
+    <AppBar
+      className={classes.appBar}
+      position="fixed"
+      sx={{ zIndex: theme.zIndex.drawer + 1, backgroundColor: theme.palette.primary.strong, color: '#FFF' }}
+    >
+      <Toolbar className={classes.toolbar} style={{ minHeight: 112 }}>
+        <Box sx={{ width: '100%' }}>
+          <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <img src={horizontalLogo} className={classes.headerLogo} alt="UNICEF" />
+            <IconButton aria-label="logout" className={classes.button} onClick={logout} sx={{ ml: 2 }}>
               <ExitToAppIcon />
             </IconButton>
           </Box>
-          <Box width="100%" display="flex" justifyContent="space-between">
+          <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1 }}>
             <Typography className={clsx(classes.appTitle, classes.banner)}>Donor Reporting Portal</Typography>
-            <Typography className={classes.banner}>{userName}</Typography>
+            <Typography className={classes.banner} sx={{ color: '#FFF', lineHeight: '1.25em', fontSize: '15px' }}>{userName}</Typography>
           </Box>
         </Box>
       </Toolbar>

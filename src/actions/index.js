@@ -1,6 +1,6 @@
 import {
   createAction
-} from 'redux-starter-kit';
+} from '@reduxjs/toolkit';
 
 export const initDonorsList = createAction('initDonorsList');
 export const onFetchUserRoles = createAction('onFetchUserRoles');
@@ -21,5 +21,6 @@ export const initThematicGrantsPage = createAction('initThematicGrantsPage');
 export const initGaviReportsPage = createAction('initGaviReportsPage');
 export const initGaviStatementsPage = createAction('initGaviStatementsPage');
 export const initSearchReportsPage = createAction('initSearchReportsPage');
+export const initConfig = createAction('initConfig');
 export const deleteUserRole = createAction('deleteUserRole');
 export const onFetchSearchReports = createAction('onFetchSearchReports');

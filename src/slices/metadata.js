@@ -1,6 +1,6 @@
 import {
   createSlice
-} from 'redux-starter-kit';
+} from '@reduxjs/toolkit';
 
 export const metadataInitialState = {
   report_type: [],
@@ -13,6 +13,7 @@ export const metadataInitialState = {
 };
 
 const metadataSlice = createSlice({
+  name: 'metadata',
   initialState: metadataInitialState,
   reducers: {
     onReceiveMetadata(state, action) {

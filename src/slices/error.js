@@ -1,6 +1,7 @@
-import { createSlice } from 'redux-starter-kit';
+import { createSlice } from '@reduxjs/toolkit';
 
 const errorSlice = createSlice({
+  name: 'error',
   initialState: null,
   reducers: {
     setError(state, action) {

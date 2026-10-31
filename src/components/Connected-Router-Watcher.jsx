@@ -6,8 +6,8 @@ import { onRouteChange } from 'slices/ui';
 import { useEffect } from 'react';
 import { selectPageName, selectParamDonorId } from 'selectors/ui-flags';
 import { usePermissions } from './PermissionRedirect';
-import { initDonorsList, onFetchUserGroups } from 'actions';
-import { selectDonors } from 'selectors/collections';
+import { initConfig, initDonorsList, onFetchUserGroups } from 'actions';
+import { selectDonors, selectConfig } from 'selectors/collections';
 import {selectUserGroups} from 'selectors/user';
 
 export default function ConnectedRouterWatcher({ children }) {
@@ -16,8 +16,15 @@ export default function ConnectedRouterWatcher({ children }) {
   const currentDonorId = useSelector(selectParamDonorId);
   const donors = useSelector(selectDonors);
   const groups = useSelector(selectUserGroups);
+  const config = useSelector(selectConfig);
   const { canViewDonors } = usePermissions();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!config || !config.source_id || !Object.keys(config.source_id).length) {
+      dispatch(initConfig());
+    }
+  }, [config]);
 
   useEffect(() => {
     if (canViewDonors && !donors.length) {
@@ -34,11 +41,14 @@ export default function ConnectedRouterWatcher({ children }) {
   useEffect(() => {
     // only dispatch if actual route changed, children change will trigger re-render of this component
     const route = location.pathname.split('/').filter(Boolean);
+    if (!route.length) {
+      return;
+    }
     const [page, donorId] = route;
-    if (route.length && (!equals(currentPageName, page) || !equals(currentDonorId, donorId))) {
+    if (!equals(currentPageName, page) || !equals(currentDonorId, donorId)) {
       dispatch(onRouteChange({ page, donorId: donorId || null }));
     }
-  });
+  }, [location.pathname]);
 
   return children;
 }

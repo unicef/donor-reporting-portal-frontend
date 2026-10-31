@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TableHead, TableRow, TableCell, TableSortLabel } from '@material-ui/core';
+import { TableHead, TableRow, TableCell, TableSortLabel } from '@mui/material';
 import clsx from 'clsx';
 
 export default function EnhancedTableHead(props) {
@@ -15,9 +15,10 @@ export default function EnhancedTableHead(props) {
         {cells.map(headCell => (
           <TableCell
             className={clsx(classes.cell)}
+            sx={{ paddingRight: '14px', maxWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }}
             key={headCell.id}
             align={headCell.align || 'left'}
-            padding={headCell.disablePadding ? 'none' : 'default'}
+            padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             {headCell.sortable ? (

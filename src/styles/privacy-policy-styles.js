@@ -1,6 +1,4 @@
-import {
-  makeStyles
-} from "@material-ui/core";
+import { makeStyles } from 'styles/makeStyles';
 
 export const usePrivacyPolicyStyles = makeStyles({
   root: {

@@ -1,19 +1,19 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TablePagination from '@mui/material/TablePagination';
+import TableRow from '@mui/material/TableRow';
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
 import PropTypes from 'prop-types';
-import { Link, Tooltip, TableContainer, Box } from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import FiberNewIcon from '@material-ui/icons/FiberNew';
+import { Link, Tooltip, TableContainer, Box } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import FiberNewIcon from '@mui/icons-material/FiberNew';
 
 import { useTableStyles } from 'styles/table-styles';
 import EnhancedTableToolbar from './table-toolbar';
@@ -368,7 +368,7 @@ export default function ReportsTable() {
     return (
       <ExpandableTableRow hover role="checkbox" tabIndex={-1} key={index} rowData={row}>
         <TableCell
-          className={clsx(classes.cell, classes.titleCell)}
+          className={clsx(classes.cell, classes.titleCell)} sx={{ paddingRight: '14px', maxWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }}
           component="th"
           id={labelId}
           scope="row"
@@ -386,37 +386,37 @@ export default function ReportsTable() {
         </TableCell>
 
         <Tooltip title={arrayToTooltip(row.country_name)}>
-          <TableCell className={classes.cell} align="left">
+          <TableCell className={classes.cell} sx={{ paddingRight: '14px', maxWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }} align="left">
             {arrayToCellValue(row.country_name)}
           </TableCell>
         </Tooltip>
 
         <Tooltip title={row.m_o_u_number ? row.m_o_u_number : ''}>
-          <TableCell className={classes.cell} align="left">
+          <TableCell className={classes.cell} sx={{ paddingRight: '14px', maxWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }} align="left">
             {row.m_o_u_number}
           </TableCell>
         </Tooltip>
 
         <Tooltip title={row.approval_year ? row.approval_year : ''}>
-          <TableCell className={classes.cell} align="left">
+          <TableCell className={classes.cell} sx={{ paddingRight: '14px', maxWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }} align="left">
             {row.approval_year}
           </TableCell>
         </Tooltip>
 
         <Tooltip title={row.sent_to_g_a_v_i_date ? getDisplayDate(row.sent_to_g_a_v_i_date) : ''}>
-          <TableCell className={classes.cell} align="left">
+          <TableCell className={classes.cell} sx={{ paddingRight: '14px', maxWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }} align="left">
             {getDisplayDate(row.sent_to_g_a_v_i_date)}
           </TableCell>
         </Tooltip>
 
         <Tooltip title={arrayToTooltip(row.g_a_v_i_w_b_s)}>
-          <TableCell className={classes.cell} align="left">
+          <TableCell className={classes.cell} sx={{ paddingRight: '14px', maxWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }} align="left">
             {arrayToCellValue(row.g_a_v_i_w_b_s)}
           </TableCell>
         </Tooltip>
 
         <Tooltip title={row.allocation_round ? getDisplayValue(row.allocation_round) : ''}>
-          <TableCell className={classes.cell} align="left">
+          <TableCell className={classes.cell} sx={{ paddingRight: '14px', maxWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }} align="left">
             {getDisplayValue(row.allocation_round)}
           </TableCell>
         </Tooltip>
@@ -429,7 +429,7 @@ export default function ReportsTable() {
     return (
       <ExpandableTableRow hover role="checkbox" tabIndex={-1} key={index} rowData={row}>
         <TableCell
-          className={clsx(classes.cell, classes.titleCell)}
+          className={clsx(classes.cell, classes.titleCell)} sx={{ paddingRight: '14px', maxWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }}
           component="th"
           id={labelId}
           scope="row"
@@ -447,25 +447,25 @@ export default function ReportsTable() {
           </TableCell>
 
           <Tooltip title={arrayToTooltip(row.g_a_v_i_w_b_s)}>
-            <TableCell className={classes.cell} align="left">
+            <TableCell className={classes.cell} sx={{ paddingRight: '14px', maxWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }} align="left">
               {arrayToCellValue(row.g_a_v_i_w_b_s)}
             </TableCell>
           </Tooltip>
 
           <Tooltip title={arrayToTooltip(row.u_n_i_c_e_f_w_b_s)}>
-              <TableCell className={classes.cell} align="left">
+              <TableCell className={classes.cell} sx={{ paddingRight: '14px', maxWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }} align="left">
                 {row.u_n_i_c_e_f_w_b_s}
               </TableCell>
           </Tooltip>          
 
           <Tooltip title={arrayToTooltip(row.country_name)}>
-            <TableCell className={classes.cell} align="left">
+            <TableCell className={classes.cell} sx={{ paddingRight: '14px', maxWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }} align="left">
               {arrayToCellValue(row.country_name)}
             </TableCell>
           </Tooltip>
 
           <Tooltip title={row.sent_to_g_a_v_i_date ? getDisplayDate(row.sent_to_g_a_v_i_date) : ''}>
-            <TableCell className={classes.cell} align="left">
+            <TableCell className={classes.cell} sx={{ paddingRight: '14px', maxWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }} align="left">
               {getDisplayDate(row.sent_to_g_a_v_i_date)}
             </TableCell>
           </Tooltip>
@@ -479,7 +479,7 @@ export default function ReportsTable() {
     return (
       <ExpandableTableRow hover role="checkbox" tabIndex={-1} key={index} rowData={row}>
         <TableCell
-          className={clsx(classes.cell, classes.titleCell)}
+          className={clsx(classes.cell, classes.titleCell)} sx={{ paddingRight: '14px', maxWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }}
           component="th"
           id={labelId}
           scope="row"
@@ -497,69 +497,69 @@ export default function ReportsTable() {
         </TableCell>
         {thematicGrants && (
           <Tooltip title={row.theme ? row.theme : ''}>
-            <TableCell className={classes.cell} align="left">
+            <TableCell className={classes.cell} sx={{ paddingRight: '14px', maxWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }} align="left">
               {row.theme}
             </TableCell>
           </Tooltip>
         )}
         <Tooltip title={row.grant_number ? row.grant_number : ''}>
-          <TableCell className={classes.cell} align="left">
+          <TableCell className={classes.cell} sx={{ paddingRight: '14px', maxWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }} align="left">
             {row.grant_number}
           </TableCell>
         </Tooltip>
         {pooledGrants && (
           <Tooltip title={row.donor ? row.donor : ''}>
-            <TableCell className={classes.cell} align="left">
+            <TableCell className={classes.cell} sx={{ paddingRight: '14px', maxWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }} align="left">
               {row.donor}
             </TableCell>
           </Tooltip>
         )}
         {shouldShowExternalGrants && (
           <Tooltip title={row.external_reference ? row.external_reference : ''}>
-            <TableCell className={classes.cell} align="left">
+            <TableCell className={classes.cell} sx={{ paddingRight: '14px', maxWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }} align="left">
               {row.external_reference}
             </TableCell>
           </Tooltip>
         )}
         {certifiedReports && (
           <Tooltip title={row.donor_report_category ? row.donor_report_category : ''}>
-            <TableCell className={classes.cell} align="left">
+            <TableCell className={classes.cell} sx={{ paddingRight: '14px', maxWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }} align="left">
               {row.donor_report_category}
             </TableCell>
           </Tooltip>
         )}
         <Tooltip title={row.donor_document ? row.donor_document : ''}>
-          <TableCell className={classes.cell} align="left">
+          <TableCell className={classes.cell} sx={{ paddingRight: '14px', maxWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }} align="left">
             {row.donor_document}
           </TableCell>
         </Tooltip>
         <Tooltip title={row.report_type ? row.report_type : ''}>
-          <TableCell className={classes.cell} align="left">
+          <TableCell className={classes.cell} sx={{ paddingRight: '14px', maxWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }} align="left">
             {row.report_type}
           </TableCell>
         </Tooltip>
         <Tooltip title={row.modified ? row.modified : ''}>
-          <TableCell className={classes.cell} align="left">
+          <TableCell className={classes.cell} sx={{ paddingRight: '14px', maxWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }} align="left">
             {getDisplayDate(row.modified)}
           </TableCell>
         </Tooltip>
         {thematicGrants && (
           <Tooltip title={row.report_end_date ? getDisplayDate(row.report_end_date) : ''}>
-            <TableCell className={classes.cell} align="left">
+            <TableCell className={classes.cell} sx={{ paddingRight: '14px', maxWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }} align="left">
               {getDisplayDate(row.report_end_date)}
             </TableCell>
           </Tooltip>
         )}
         {certifiedReports && (
           <Tooltip title={row.recipientOffice ? row.recipientOffice : ''}>
-            <TableCell className={classes.cell} align="left">
+            <TableCell className={classes.cell} sx={{ paddingRight: '14px', maxWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }} align="left">
               {row.recipient_office ? row.recipient_office.join(', ') : row.recipientOffice}
             </TableCell>
           </Tooltip>
         )}
         {isUnicefUser && (
           <Tooltip title={row.report_group === 'Grant Internal' ? 'Internal' : ''}>
-            <TableCell className={classes.cell} align="left">
+            <TableCell className={classes.cell} sx={{ paddingRight: '14px', maxWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }} align="left">
               {row.report_group === 'Grant Internal' ? 'Internal' : ''}
             </TableCell>
           </Tooltip>
@@ -595,13 +595,7 @@ export default function ReportsTable() {
           count={data.total_rows || 0}
           rowsPerPage={25}
           page={page}
-          backIconButtonProps={{
-            'aria-label': 'previous page'
-          }}
-          nextIconButtonProps={{
-            'aria-label': 'next page'
-          }}
-          onChangePage={handleChangePage}
+          onPageChange={handleChangePage}
           ActionsComponent={TablePaginationActions}
         />
         {/* <DocViewer fileType={docFileType} filePath={doc} /> */}

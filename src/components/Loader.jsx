@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { CircularProgress, makeStyles, createStyles, Box } from '@material-ui/core';
+import { makeStyles } from 'styles/makeStyles';
+import { CircularProgress, Box } from '@mui/material';
 
 const useStyles = makeStyles({
   root: {
@@ -64,7 +65,7 @@ Loader.propTypes = {
 export default Loader;
 
 const useSLocaltyles = makeStyles(() =>
-  createStyles({
+  ({
     root: {
       left: 0,
       top: 0,
@@ -87,8 +88,8 @@ const useSLocaltyles = makeStyles(() =>
 export function LoaderLocal() {
   const styles = useSLocaltyles({});
   return (
-    <Box justifyContent="center" alignItems="center" className={styles.root}>
-      <Box flexDirection="column" justifyContent="center" alignItems="center">
+    <Box sx={{ justifyContent: 'center', alignItems: 'center' }} className={styles.root}>
+      <Box sx={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
         <CircularProgress color="secondary" />
       </Box>
     </Box>

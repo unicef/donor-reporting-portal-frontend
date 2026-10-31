@@ -1,8 +1,9 @@
-import { createSlice } from 'redux-starter-kit';
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = [];
 
 const userRolesSlice = createSlice({
+  name: 'userRoles',
     initialState,
     reducers: {
         setUserRoles(state, action) {

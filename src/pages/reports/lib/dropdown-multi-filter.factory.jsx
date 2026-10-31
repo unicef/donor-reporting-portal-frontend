@@ -3,7 +3,7 @@ import { without } from 'ramda';
 
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { FormControl, MenuItem } from '@material-ui/core';
+import { FormControl, MenuItem } from '@mui/material';
 import { StyledInputLabel, StyledSelect } from '../components/styled-dropdown';
 import { useGetFilterClasses } from 'styles/filter-styles';
 
@@ -58,6 +58,7 @@ export default function DropdownMultiFilterFactory(selector, description, filter
           multiple
           value={multiVal}
           onChange={wrappedOnChangeHandler}
+          label={description}
           inputProps={{
             name: 'option',
             id: description

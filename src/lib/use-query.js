@@ -1,6 +1,6 @@
 import {
   useLocation,
-  useHistory
+  useNavigate
 } from 'react-router-dom';
 import {
   pickBy
@@ -16,7 +16,7 @@ function parseQuery(search) {
   for (const [key, value] of entries) {
     try {
       object[key] = JSON.parse(value);
-    } catch (err) {
+    } catch {
       object[key] = value;
     }
   }
@@ -30,19 +30,17 @@ function stringifyQuery(query) {
 }
 
 export default function useQuery([defaultQuery, setValue], method = 'replace') {
-  const history = useHistory();
+  const navigate = useNavigate();
   const {
-    search,
-    pathname,
-    hash
+    search
   } = useLocation();
   const hasParams = search.indexOf('=') > -1;
 
   const setValueWithQuery = newQuery => {
     const nonEmpties = pickBy(hasValue, newQuery);
-    const search = stringifyQuery(nonEmpties);
+    const nextSearch = stringifyQuery(nonEmpties);
     setValue(newQuery);
-    history[method](pathname + '?' + search + hash);
+    navigate(window.location.pathname + '?' + nextSearch + window.location.hash, { replace: method === 'replace' });
   };
 
   return [hasParams ? {

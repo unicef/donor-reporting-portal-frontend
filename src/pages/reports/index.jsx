@@ -6,32 +6,32 @@ import ReportsFilter from 'pages/reports/components/reports-filters-root';
 import ReportsTable from 'components/table/reports-table';
 import { selectPageName } from 'selectors/ui-flags';
 import { initCertifiedReportsPage, initThematicGrantsPage, initGaviReportsPage, initGaviStatementsPage } from 'actions';
-import { THEMATIC_GRANTS, REPORTS, GAVI_REPORTS } from 'lib/constants';
+import { THEMATIC_GRANTS, REPORTS, GAVI_REPORTS, GAVI_STATEMENTS_ACC } from 'lib/constants';
 import { onReceiveReports } from 'slices/reports';
 
-function useInitThematicGrants(dispatch) {
+function thematicGrantsEffect(dispatch) {
   return () => {
     dispatch(initThematicGrantsPage());
   };
 }
 
-function useInitGaviReports(dispatch) {
+function gaviReportsEffect(dispatch) {
   return () => {
     dispatch(initGaviReportsPage());
   };
 }
 
-function useInitGaviStatements(dispatch) {
+function gaviStatementsEffect(dispatch) {
   return () => {
     dispatch(initGaviStatementsPage());
   };
 }
 
-function useDefaultHook() {
+function defaultEffect() {
   return () => { };
 }
 
-function useInitCertifiedReports(dispatch, donorId) {
+function certifiedReportsEffect(dispatch, donorId) {
   return () => {
     dispatch(initCertifiedReportsPage(donorId));
   };
@@ -45,15 +45,15 @@ const useInitPage = pageName => {
 
   switch (pageName) {
     case THEMATIC_GRANTS:
-      return useInitThematicGrants(dispatch);
+      return thematicGrantsEffect(dispatch);
     case GAVI_REPORTS:
-      return useInitGaviReports(dispatch);
+      return gaviReportsEffect(dispatch);
     case GAVI_STATEMENTS_ACC:
-      return useInitGaviStatements(dispatch);
+      return gaviStatementsEffect(dispatch);
     case REPORTS:
-      return useInitCertifiedReports(dispatch, donorId);
+      return certifiedReportsEffect(dispatch, donorId);
     default:
-      return useDefaultHook;
+      return defaultEffect;
   }
 };
 
@@ -61,11 +61,17 @@ export default function ReportsPage() {
   const pageName = useSelector(selectPageName);
   const dispatch = useDispatch();
   const effect = useInitPage(pageName);
-  useEffect(effect, [pageName]);
+  useEffect(() => {
+    const cleanup = effect();
+    return cleanup;
+  }, [pageName, dispatch]);
 
   useEffect(() => {
     dispatch(onReceiveReports([]));
-  }, [pageName]);
+    return () => {
+      dispatch(onReceiveReports([]));
+    };
+  }, [pageName, dispatch]);
 
   return (
     <>

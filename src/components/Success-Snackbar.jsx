@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Snackbar from '@material-ui/core/Snackbar';
-import { makeStyles } from '@material-ui/core/styles';
+import Snackbar from '@mui/material/Snackbar';
+import { makeStyles } from 'styles/makeStyles';
 import { MySnackbarContentWrapper } from './Snackbars';
 import { successCleared } from 'slices/success';
 import { selectSuccess } from 'selectors/ui-flags';

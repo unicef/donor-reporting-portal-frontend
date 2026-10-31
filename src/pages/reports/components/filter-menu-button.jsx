@@ -3,20 +3,23 @@ import React, {
 } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Menu, MenuItem, Button, withStyles, Checkbox } from '@material-ui/core';
-import ListItemText from '@material-ui/core/ListItemText';
-import FilterListIcon from '@material-ui/icons/FilterList';
+import { Menu, MenuItem, Button, Checkbox } from '@mui/material';
+import { menuClasses } from '@mui/material/Menu';
+import { styled } from '@mui/material/styles';
+import ListItemText from '@mui/material/ListItemText';
+import FilterListIcon from '@mui/icons-material/FilterList';
 import useFilterStyles from 'styles/filter-styles';
-import { FILTERS_MAP, getPageFilters } from '../lib/filters-map';
+import { FILTERS_MAP, useGetPageFilters } from '../lib/filters-map';
 import { selectUserGroup, selectMenuBarPage, selectIsSuperUser } from 'selectors/ui-flags';
-import clsx from 'clsx';
 
 export default function FilterMenuButton({ onSelectFilter, selected }) {
   const classes = useFilterStyles();
   const [anchorEl, setAnchorEl] = useState(null);
-  const group = useSelector(selectUserGroup) || useSelector(selectIsSuperUser);
+  const userGroup = useSelector(selectUserGroup);
+  const isSuperUser = useSelector(selectIsSuperUser);
+  const group = userGroup || isSuperUser;
   const pageName = useSelector(selectMenuBarPage);
-  const usersFilters = getPageFilters(group, pageName);
+  const usersFilters = useGetPageFilters(group, pageName);
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
@@ -35,6 +38,15 @@ export default function FilterMenuButton({ onSelectFilter, selected }) {
         keepMounted
         open={Boolean(anchorEl)}
         onClose={handleClose}
+        elevation={1}
+        anchorOrigin={{
+          horizontal: 'right',
+          vertical: 'top'
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 102
+        }}
       >
         {usersFilters.map(filter => (
           <StyledMenuItem
@@ -73,32 +85,16 @@ export function FilterButton(props) {
   );
 }
 
-const StyledMenuItem = withStyles({
-  root: {
-    '& .MuiListItemText-root': {
-      margin: 0
-    }
+const StyledMenuItem = styled(MenuItem)({
+  '& .MuiListItemText-root': {
+    margin: 0
   }
-})(MenuItem);
+});
 
-export const StyledMenu = withStyles(theme => ({
-  paper: {
-    padding: `${theme.spacing(1)}px 0`,
+export const StyledMenu = styled(Menu)(({ theme }) => ({
+  [`& .${menuClasses.paper}`]: {
+    padding: `${theme.spacing(1)} 0`,
     borderRadius: 8,
     minWidth: 180
   }
-}))(props => (
-  <Menu
-    elevation={1}
-    getContentAnchorEl={null}
-    anchorOrigin={{
-      horizontal: 'right',
-      vertical: 'top'
-    }}
-    transformOrigin={{
-      vertical: 'top',
-      horizontal: 102
-    }}
-    {...props}
-  />
-));
+}));

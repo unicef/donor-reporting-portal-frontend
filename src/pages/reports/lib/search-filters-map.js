@@ -292,8 +292,10 @@ export const FILTERS_MAP = {
   }
 };
 
-export const getPageFilters = (userGroup, currentPageName) => {
-  const isSuperUserOrUnicefUser = useSelector(selectIsSuperUser) || useSelector(selectIsUnicefUser);
+export const useGetPageFilters = (userGroup, currentPageName) => {
+  const isSuperUser = useSelector(selectIsSuperUser);
+  const isUnicefUser = useSelector(selectIsUnicefUser);
+  const isSuperUserOrUnicefUser = isSuperUser || isUnicefUser;
 
   if (!(userGroup || isSuperUserOrUnicefUser) || !currentPageName) {
     return [];

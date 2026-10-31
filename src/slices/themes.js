@@ -1,6 +1,7 @@
-import { createSlice } from 'redux-starter-kit';
+import { createSlice } from '@reduxjs/toolkit';
 
 const themesSlice = createSlice({
+  name: 'themes',
   initialState: [],
   reducers: {
     onReceivethemes(state, action) {

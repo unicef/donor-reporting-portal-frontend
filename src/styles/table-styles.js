@@ -1,7 +1,5 @@
-import {
-  lighten,
-  makeStyles
-} from '@material-ui/core/styles';
+import { makeStyles } from 'styles/makeStyles';
+import { lighten } from '@mui/material/styles';
 
 export const useToolbarStyles = makeStyles(theme => ({
   root: {
@@ -9,7 +7,7 @@ export const useToolbarStyles = makeStyles(theme => ({
     paddingRight: theme.spacing(3),
     marginBottom: theme.spacing(2)
   },
-  highlight: theme.palette.type === 'light' ? {
+  highlight: theme.palette.mode === 'light' ? {
     color: theme.palette.secondary.main,
     backgroundColor: lighten(theme.palette.secondary.light, 0.85)
   } : {

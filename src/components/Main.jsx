@@ -1,7 +1,7 @@
 import React from 'react';
-import { Switch } from 'react-router';
-import { Route } from 'react-router-dom';
-import { makeStyles, createStyles, Box } from '@material-ui/core';
+import { Outlet, Route, Routes } from 'react-router-dom';
+import { makeStyles } from 'styles/makeStyles';
+import { Box } from '@mui/material';
 import ConnectedDrawer from './Drawer';
 import AppToolbar from './App-Bar';
 import {
@@ -35,7 +35,7 @@ import { useSelector } from 'react-redux';
 import { selectUserProfile } from 'selectors/ui-flags';
 
 export const useMainStyles = makeStyles(theme =>
-  createStyles({
+  ({
     root: {
       display: 'flex'
     },
@@ -83,18 +83,23 @@ export default function MainAppBar() {
   const classes = useMainStyles();
   const config = useSelector(selectConfig);
   const profile = useSelector(selectUserProfile);
-  const instance = createInstance({
-    urlBase: config.tracker.site_tracker,
-    siteId: config.tracker.site_id || 6,
-    userId: profile.email,
-    disabled: false, // optional, false by default. Makes all tracking calls no-ops if set to true.
-    heartBeat: {
-      // optional, enabled by default
-      active: true, // optional, default value: true
-      seconds: 10 // optional, default value: `15
-    },
-    linkTracking: true
-  });
+  const trackerUrl = config.tracker.site_tracker;
+  const instance = React.useMemo(
+    () =>
+      createInstance({
+        urlBase: trackerUrl || window.location.origin,
+        siteId: config.tracker.site_id || 6,
+        userId: profile.email,
+        disabled: !trackerUrl, // no-op until the tracker config is loaded
+        heartBeat: {
+          // optional, enabled by default
+          active: true, // optional, default value: true
+          seconds: 10 // optional, default value: `15
+        },
+        linkTracking: true
+      }),
+    [trackerUrl, config.tracker.site_id, profile.email]
+  );
 
   return (
     <MatomoProvider value={instance}>
@@ -106,59 +111,102 @@ export default function MainAppBar() {
           <ContentHeader />
 
           <div className={classes.contentWrapper}>
-            <Box flexDirection="column">
-              <Switch>
-                <Route exact path="/no-role" component={NoRole} />
-                <UnassignedDonor path="*">
-                  <Switch>
-                    <Route exact path="/privacy-policy" component={PrivacyPolicy} />
+            <Box sx={{ flexDirection: 'column' }}>
+              <Routes>
+                <Route path="/no-role" element={<NoRole />} />
+                <Route
+                  element={
+                    <UnassignedDonor>
+                      <Outlet />
+                    </UnassignedDonor>
+                  }
+                >
+                  <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
-                    <Route exact path="/" component={PermissionRedirect} />
+                  <Route path="/" element={<PermissionRedirect />} />
 
-                    <ProtectedRouteDonorsList exact path="/donors">
-                      <DonorsList />
-                    </ProtectedRouteDonorsList>
+                  <Route
+                    path="/donors"
+                    element={
+                      <ProtectedRouteDonorsList>
+                        <DonorsList />
+                      </ProtectedRouteDonorsList>
+                    }
+                  />
 
-                    {/* <ProtectedRouteReportPage exact path={`/${REPORTS}/:donorId?`}>
-                    <ReportsPage />
-                  </ProtectedRouteReportPage> */}
+                  <Route
+                    path={`/${SEARCH_REPORTS}/:donorId?`}
+                    element={
+                      <ProtectedRouteReportPage path={`/${SEARCH_REPORTS}/:donorId?`}>
+                        <SearchPage />
+                      </ProtectedRouteReportPage>
+                    }
+                  />
 
-                    <ProtectedRouteReportPage exact path={`/${SEARCH_REPORTS}/:donorId?`}>
-                      <SearchPage />
-                    </ProtectedRouteReportPage>
+                  <Route
+                    path={`/${POOLED_GRANTS}/:donorId?`}
+                    element={
+                      <ProtectedRouteReportPage path={`/${POOLED_GRANTS}/:donorId?`}>
+                        <SearchPage />
+                      </ProtectedRouteReportPage>
+                    }
+                  />
 
-                    <ProtectedRouteReportPage exact path={`/${POOLED_GRANTS}/:donorId?`}>
-                      <SearchPage />
-                    </ProtectedRouteReportPage>
+                  <Route
+                    path={`/${THEMATIC_GRANTS}`}
+                    element={
+                      <ProtectedRouteReportPage path={`/${THEMATIC_GRANTS}`}>
+                        <SearchPage />
+                      </ProtectedRouteReportPage>
+                    }
+                  />
 
-                    <ProtectedRouteReportPage exact path={`/${THEMATIC_GRANTS}`}>
-                      <SearchPage />
-                    </ProtectedRouteReportPage>
+                  <Route
+                    path={`/${COVAX}`}
+                    element={
+                      <ProtectedRouteReportPage path={`/${COVAX}`}>
+                        <SearchPage />
+                      </ProtectedRouteReportPage>
+                    }
+                  />
 
-                    <ProtectedRouteReportPage exact path={`/${COVAX}`}>
-                      <SearchPage />
-                    </ProtectedRouteReportPage>
+                  <Route
+                    path={`/${GAVI_REPORTS}`}
+                    element={
+                      <ProtectedRouteReportPage path={`/${GAVI_REPORTS}`}>
+                        <SearchPage />
+                      </ProtectedRouteReportPage>
+                    }
+                  />
 
-                    <ProtectedRouteReportPage exact path={`/${GAVI_REPORTS}`}>
-                      <SearchPage />
-                    </ProtectedRouteReportPage>
+                  <Route
+                    path={`/${GAVI_REPORTS_CTN}`}
+                    element={
+                      <ProtectedRouteReportPage path={`/${GAVI_REPORTS_CTN}`}>
+                        <SearchPage />
+                      </ProtectedRouteReportPage>
+                    }
+                  />
 
-                    <ProtectedRouteReportPage exact path={`/${GAVI_REPORTS_CTN}`}>
-                      <SearchPage />
-                    </ProtectedRouteReportPage>
+                  <Route
+                    path={`/${GAVI_STATEMENTS_ACC}`}
+                    element={
+                      <ProtectedRouteReportPage path={`/${GAVI_STATEMENTS_ACC}`}>
+                        <SearchPage />
+                      </ProtectedRouteReportPage>
+                    }
+                  />
 
-                    <ProtectedRouteReportPage exact path={`/${GAVI_STATEMENTS_ACC}`}>
-                      <SearchPage />
-                    </ProtectedRouteReportPage>                    
-
-                    {/* Optional donorId param here since donor list is not aware of what page
+                  {/* Optional donorId param here since donor list is not aware of what page
                   to link to per donor and only super users can choose donor for user management */}
-                    <ProtectedRouteUserManagement path={`${USERS_PORTAL_PATH}/:donorId?`} />
+                  <Route
+                    path={`${USERS_PORTAL_PATH}/:donorId?`}
+                    element={<ProtectedRouteUserManagement />}
+                  />
 
-                    <Route path="*" component={NotFound} />
-                  </Switch>
-                </UnassignedDonor>
-              </Switch>
+                  <Route path="*" element={<NotFound />} />
+                </Route>
+              </Routes>
             </Box>
           </div>
         </main>

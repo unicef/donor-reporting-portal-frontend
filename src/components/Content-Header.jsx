@@ -1,17 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { withRouter } from 'react-router';
-import { makeStyles, createStyles, Grid, Typography } from '@material-ui/core';
+import { useLocation } from 'react-router-dom';
+import { makeStyles } from 'styles/makeStyles';
+import { Grid, Typography } from '@mui/material';
 import { getSubheadingFromParams } from 'lib/params';
 import { selectDonorName, selectDonorCode, selectIsUnicefUser } from 'selectors/ui-flags';
 import IconTextButton from './IconTextButton';
-import { CloudDownload } from '@material-ui/icons';
+import { CloudDownload } from '@mui/icons-material';
 import { selectConfig } from 'selectors/collections';
 import { UNICEF_GAVI_KEY } from 'lib/constants';
 
 const useStyles = makeStyles(theme =>
-  createStyles({
+  ({
     root: {
       width: ' 100%',
       margin: 0,
@@ -40,7 +41,8 @@ const useStyles = makeStyles(theme =>
   })
 );
 
-function ContentHeader({ children, location }) {
+function ContentHeader({ children }) {
+  const location = useLocation();
   const classes = useStyles();
   const donorName = useSelector(selectDonorName);
   const donorCode = useSelector(selectDonorCode);
@@ -66,14 +68,9 @@ function ContentHeader({ children, location }) {
   }
 
   return (
-    <Grid
-      alignItems="center"
-      justify="space-between"
-      className={`${classes.root} ${classes.content}`}
-      container
-    >
+    <Grid className={`${classes.root} ${classes.content}`} container sx={{ alignItems: 'center', justifyContent: 'space-between' }}>
       <Grid className={classes.header}>
-        <Typography className={classes.title} variant="h5">
+        <Typography className={classes.title} variant="h5" sx={{ fontSize: '1.5rem', fontWeight: 500, color: '#244784' }}>
           {title}
         </Typography>
         {showExport && (
@@ -92,8 +89,7 @@ function ContentHeader({ children, location }) {
   );
 }
 
-export default withRouter(ContentHeader);
+export default ContentHeader;
 ContentHeader.propTypes = {
-  location: PropTypes.object.isRequired,
   children: PropTypes.node
 };

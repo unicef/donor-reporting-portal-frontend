@@ -1,12 +1,11 @@
 import {
   configureStore
-} from 'redux-starter-kit';
+} from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 import rootReducer from './slices';
 import rootSaga from './sagas';
 const sagas = createSagaMiddleware();
 
-const middleware = [sagas];
 // if (process.env.NODE_ENV === `development`) {
 //   const { logger } = require(`redux-logger`);
 
@@ -15,7 +14,7 @@ const middleware = [sagas];
 
 const store = configureStore({
   reducer: rootReducer,
-  middleware
+  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(sagas)
 });
 sagas.run(rootSaga);
 

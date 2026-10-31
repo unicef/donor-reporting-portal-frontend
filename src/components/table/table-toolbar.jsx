@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useToolbarStyles } from 'styles/table-styles';
-import { Toolbar, Typography } from '@material-ui/core';
+import { Toolbar, Typography } from '@mui/material';
 import clsx from 'clsx';
 import { selectPageName } from 'selectors/ui-flags';
 import { capitalize } from 'lib/helpers';

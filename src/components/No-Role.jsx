@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Grid, Card, CardContent, Typography } from '@material-ui/core';
+import { Grid, Card, CardContent, Typography } from '@mui/material';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 
 export default function NoRole() {
@@ -10,8 +10,8 @@ export default function NoRole() {
   }, []);
 
   return (
-    <Grid container justify="center" align="center">
-      <Grid item xs={4}>
+    <Grid container sx={{ justifyContent: 'center', alignItems: 'center' }}>
+      <Grid size={{ xs: 4 }}>
         <Card>
           <CardContent>
             <Typography variant="h5" gutterBottom>
