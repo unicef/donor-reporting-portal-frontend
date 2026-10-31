@@ -1,20 +1,20 @@
-import { createSlice } from 'redux-starter-kit';
+import { createSlice } from '@reduxjs/toolkit';
 import { onReceiveUserProfile } from './user-profile';
 
 const initialState = [];
 
 const donorsSlice = createSlice({
+  name: 'donors',
   initialState,
   reducers: {
     setDonors(state, action) {
       return action.payload;
     }
   },
-  extraReducers: {
-    [onReceiveUserProfile]: (state, action) => {
+  extraReducers: builder =>
+    builder.addCase(onReceiveUserProfile, (state, action) => {
       return action.payload.donors;
-    }
-  }
+    })
 });
 
 export const { reducer: donorsReducer } = donorsSlice;

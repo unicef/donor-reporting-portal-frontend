@@ -1,7 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from '@testing-library/react';
+
 import App from './App';
 
-it('sample test', () => {
-  expect(1).toBe(1);
+it('mounts the application shell without crashing', () => {
+  const { container } = render(<App />);
+
+  expect(container.firstChild).not.toBeNull();
 });

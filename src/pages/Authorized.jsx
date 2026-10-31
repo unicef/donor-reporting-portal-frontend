@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect } from 'react-router';
-import { Route } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 
 import { selectUserProfileDonorId } from 'selectors/ui-flags';
 import { usePermissions } from 'components/PermissionRedirect';
@@ -13,64 +12,69 @@ import { setAssignedRole } from '../slices/ui';
 
 import { selectUserProfile } from 'selectors/ui-flags';
 
-export function UnassignedDonor({ children, ...rest }) {
+export function UnassignedDonor({ children }) {
   const { isSuperUser, isUnicefUser } = usePermissions();
   const profile = useSelector(selectUserProfile);
   const noRoles = !profile.roles.length;
   const hasNoAssignedRole = noRoles && !isUnicefUser && !isSuperUser;
   const dispatch = useDispatch();
-  dispatch(setAssignedRole({ assignedRole: !hasNoAssignedRole }));
 
-  return (
-    <Route {...rest} render={() => (hasNoAssignedRole ? <Redirect to="/no-role" /> : children)} />
-  );
+  useEffect(() => {
+    dispatch(setAssignedRole({ assignedRole: !hasNoAssignedRole }));
+  }, [dispatch, hasNoAssignedRole]);
+
+  return hasNoAssignedRole ? <Navigate to="/no-role" replace /> : children;
 }
 
-export function ProtectedRouteDonorsList({ children, ...rest }) {
-  return <Route {...rest} render={() => children} />;
+export function ProtectedRouteDonorsList({ children }) {
+  return children;
 }
 
-export function ProtectedRouteReportPage({ children, ...rest }) {
+function ProtectedRouteReportPageContent({ children, path }) {
   let { canViewDonors, isGaviDonor } = usePermissions();
   const usersDonor = useSelector(selectUserProfileDonorId);
+  const { donorId } = useParams();
+  const thematicPath = path === THEMATIC_GRANTS_PATH;
 
+  if (
+    (path === GAVI_REPORTS_PATH ||
+      path === GAVI_REPORTS_CTN_PATH ||
+      path === GAVI_STATEMENTS_ACC_PATH) &&
+    isGaviDonor
+  ) {
+    canViewDonors = true;
+  }
+
+  const unassignedDonorAttempt = usersDonor
+    ? Boolean(usersDonor !== Number(donorId) && !canViewDonors && !thematicPath)
+    : Boolean(!canViewDonors);
+
+  return unassignedDonorAttempt ? <Navigate to="/not-found" replace /> : children;
+}
+
+export function ProtectedRouteReportPage({ children, path }) {
   return (
-    <Route
-      {...rest}
-      render={({ match }) => {
-        const { donorId } = match.params;
-        const { path } = match;
-        const thematicPath = path === THEMATIC_GRANTS_PATH;
-        if ((path === GAVI_REPORTS_PATH || path === GAVI_REPORTS_CTN_PATH || path === GAVI_STATEMENTS_ACC_PATH) && isGaviDonor) {
-          canViewDonors = true;
-        }
-        const unassignedDonorAttempt = usersDonor
-          ? Boolean(usersDonor !== Number(donorId) && !canViewDonors && !thematicPath)
-          : Boolean(!canViewDonors);
-        return unassignedDonorAttempt ? <Redirect to="/not-found" /> : children;
-      }}
-    />
+    <ProtectedRouteReportPageContent path={path}>{children}</ProtectedRouteReportPageContent>
   );
 }
 
-export function ProtectedRouteUserManagement({ ...rest }) {
+function ProtectedRouteUserManagementContent() {
   const { isDonorAdmin, isSuperUser, isUnicefUser, isDonorUser } = usePermissions();
+  const { donorId } = useParams();
 
-  return (
-    <Route
-      {...rest}
-      render={({ match }) => {
-        const { donorId } = match.params;
-        return !donorId && (isUnicefUser || isSuperUser) ? (
-          <DonorsList />
-        ) : isDonorAdmin || isDonorUser || (donorId && (isSuperUser || isUnicefUser)) ? (
-          <UsersManagement />
-        ) : (
-          <Redirect to="/not-found" />
-        );
-      }}
-    />
-  );
+  if (!donorId && (isUnicefUser || isSuperUser)) {
+    return <DonorsList />;
+  }
+
+  if (isDonorAdmin || isDonorUser || (donorId && (isSuperUser || isUnicefUser))) {
+    return <UsersManagement />;
+  }
+
+  return <Navigate to="/not-found" replace />;
+}
+
+export function ProtectedRouteUserManagement() {
+  return <ProtectedRouteUserManagementContent />;
 }
 
 const ProtectedRouteProps = {
@@ -79,7 +83,14 @@ const ProtectedRouteProps = {
 
 UnassignedDonor.propTypes = ProtectedRouteProps;
 ProtectedRouteDonorsList.propTypes = ProtectedRouteProps;
-ProtectedRouteReportPage.propTypes = ProtectedRouteProps;
+ProtectedRouteReportPage.propTypes = {
+  ...ProtectedRouteProps,
+  path: PropTypes.string
+};
+ProtectedRouteReportPageContent.propTypes = {
+  ...ProtectedRouteProps,
+  path: PropTypes.string
+};
 ProtectedRouteUserManagement.propTypes = {
-  rest: function() {}
+  children: PropTypes.node
 };

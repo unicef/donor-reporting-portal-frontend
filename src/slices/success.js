@@ -1,6 +1,7 @@
-import { createSlice } from 'redux-starter-kit';
+import { createSlice } from '@reduxjs/toolkit';
 
 const successSlice = createSlice({
+  name: 'success',
   initialState: null,
   reducers: {
     actionSucceeded(state, action) {

@@ -1,54 +1,59 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useGetFilterClasses } from 'styles/filter-styles';
-import { createMuiTheme } from '@material-ui/core';
-import { ThemeProvider } from '@material-ui/styles';
-import { format, parse } from 'date-fns';
-import { FormControl } from '@material-ui/core';
-import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
+import { FormControl } from '@mui/material';
+import { createTheme, ThemeProvider, useTheme } from '@mui/material/styles';
+import { format, isValid, parse } from 'date-fns';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { FilterProps } from './dropdown-filter-factory';
 import { getColorTheme } from 'styles/theme';
 import { DATE_FORMAT, DISPLAY_FORMAT } from '../constants';
 
-const defaultMaterialTheme = createMuiTheme({
-  palette: {
-    primary: getColorTheme()
-  }
-});
-
 export default function DateFilterFactory(label) {
   function DateFilter({ value, onChange }) {
     const { classes } = useGetFilterClasses();
+    const theme = useTheme();
     const [date, setDate] = useState(new Date());
+
+    const pickerTheme = useMemo(
+      () => createTheme(theme, { palette: { primary: getColorTheme() } }),
+      [theme]
+    );
+
     useEffect(() => {
       const newDate = value ? parse(value, DATE_FORMAT, new Date()) : null;
-      setDate(newDate);
+      setDate(newDate && isValid(newDate) ? newDate : null);
     }, [value]);
 
-    const handleDateChange = date => {
-      const newValue = date ? format(date, DATE_FORMAT) : null;
+    const handleDateChange = newDate => {
+      const newValue = newDate && isValid(newDate) ? format(newDate, DATE_FORMAT) : null;
       onChange({ target: { value: newValue } });
     };
 
     return (
       <FormControl className={classes.formControl}>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <ThemeProvider theme={defaultMaterialTheme}>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <ThemeProvider theme={pickerTheme}>
             <DatePicker
-              // disableToolbar
-              autoOk
-              className={classes.textField}
-              clearable
-              // variant="inline"
-              margin="none"
-              id="grant-from"
               format={DISPLAY_FORMAT}
               label={label}
               value={date}
               onChange={handleDateChange}
+              closeOnSelect={false}
+              slotProps={{
+                field: { clearable: true },
+                actionBar: { actions: ['clear', 'cancel', 'accept'] },
+                textField: {
+                  className: classes.textField,
+                  margin: 'none',
+                  size: 'small',
+                  variant: 'outlined'
+                }
+              }}
             />
           </ThemeProvider>
-        </MuiPickersUtilsProvider>
+        </LocalizationProvider>
       </FormControl>
     );
   }

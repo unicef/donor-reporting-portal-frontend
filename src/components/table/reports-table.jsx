@@ -1,15 +1,15 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import { Link, Tooltip, TableContainer } from '@material-ui/core';
-import FiberNewIcon from '@material-ui/icons/FiberNew';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TablePagination from '@mui/material/TablePagination';
+import TableRow from '@mui/material/TableRow';
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
+import { Link, Tooltip, TableContainer } from '@mui/material';
+import FiberNewIcon from '@mui/icons-material/FiberNew';
 
 import { useTableStyles } from 'styles/table-styles';
 import EnhancedTableToolbar from './table-toolbar';
@@ -111,6 +111,7 @@ export default function ReportsTable() {
                     <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                       <TableCell
                         className={clsx(classes.cell, classes.titleCell)}
+                        sx={{ paddingRight: '14px', maxWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }}
                         component="th"
                         id={labelId}
                         scope="row"
@@ -182,14 +183,8 @@ export default function ReportsTable() {
           count={rows.length}
           rowsPerPage={rowsPerPage}
           page={page}
-          backIconButtonProps={{
-            'aria-label': 'previous page'
-          }}
-          nextIconButtonProps={{
-            'aria-label': 'next page'
-          }}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
         />
         {/* <DocViewer fileType={docFileType} filePath={doc} /> */}
       </Paper >

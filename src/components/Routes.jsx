@@ -1,25 +1,27 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Switch } from 'react-router';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import LoginAuth from 'components/Login-Auth-Wrapper';
 import Main from 'components/Main';
 import RouteObserver from 'components/Connected-Router-Watcher';
 import LandingPage from 'pages/landing/Page';
 
-const Routes = () => (
+const AppRoutes = () => (
   <Router>
-    <Switch>
-      <Route exact path="/landing" component={LandingPage} />
-      <Route path="*">
-        <LoginAuth>
-          <RouteObserver>
-            <Main />
-          </RouteObserver>
-        </LoginAuth>
-      </Route>
-    </Switch>
+    <Routes>
+      <Route path="/landing" element={<LandingPage />} />
+      <Route
+        path="*"
+        element={
+          <LoginAuth>
+            <RouteObserver>
+              <Main />
+            </RouteObserver>
+          </LoginAuth>
+        }
+      />
+    </Routes>
   </Router>
 );
 
-export default Routes;
+export default AppRoutes;

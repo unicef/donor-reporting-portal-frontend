@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { pathOr } from 'ramda';
 import { useSelector, useDispatch } from 'react-redux';
-import Snackbar from '@material-ui/core/Snackbar';
-import { makeStyles } from '@material-ui/core/styles';
+import Snackbar from '@mui/material/Snackbar';
+import { makeStyles } from 'styles/makeStyles';
 import { MySnackbarContentWrapper } from './Snackbars';
 import { setError } from 'slices/error';
 import { selectError } from 'selectors/ui-flags';

@@ -1,8 +1,9 @@
 import {
   createSlice
-} from 'redux-starter-kit';
+} from '@reduxjs/toolkit';
 
 const reportFiltersSlice = createSlice({
+  name: 'reportFilter',
   initialState: {
     reportYear: ''
   },

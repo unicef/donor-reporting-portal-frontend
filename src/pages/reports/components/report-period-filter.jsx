@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { without } from 'ramda';
 import { useSelector } from 'react-redux';
 import { useGetFilterClasses } from 'styles/filter-styles';
-import { FormControl, MenuItem } from '@material-ui/core';
+import { FormControl, MenuItem } from '@mui/material';
 import { FORM_CONFIG } from 'lib/constants';
 import { selectYears } from 'selectors/collections';
 import { StyledInputLabel, StyledSelect } from './styled-dropdown';
@@ -51,6 +51,7 @@ export default function ReportPeriodFilter({ value, onChange }) {
         multiple
         value={multiVal}
         onChange={handleChangeMulti}
+        label={FORM_CONFIG.reportPeriod.label}
         inputProps={{
           name: 'year',
           id: 'year-select'

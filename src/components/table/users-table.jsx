@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TablePagination from '@mui/material/TablePagination';
+import TableRow from '@mui/material/TableRow';
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
 import { useTableStyles } from 'styles/table-styles';
 import EnhancedTableHead from './table-head';
 import EnhancedTableToolbar from './table-toolbar';
 import AddUserModal from 'pages/users-portal/components/add-user-modal';
-import { Button, Box } from '@material-ui/core';
+import { Button, Box } from '@mui/material';
 import { selectUserRoles } from 'selectors/user';
 import { BACKEND_PROPERTIES_USER_LAST_LOGIN } from '../../lib/constants';
 import { stableSort, getSorting } from './lib';
@@ -115,7 +115,7 @@ export default function UsersTable() {
       <Paper className={classes.paper}>
         {hasEditRights && (
           <EnhancedTableToolbar>
-            <Box display="flex">
+            <Box sx={{ display: 'flex' }}>
               <Button
                 onClick={openAddUserModal}
                 className={classes.addBtn}
@@ -165,14 +165,8 @@ export default function UsersTable() {
           count={users.length}
           rowsPerPage={rowsPerPage}
           page={page}
-          backIconButtonProps={{
-            'aria-label': 'previous page'
-          }}
-          nextIconButtonProps={{
-            'aria-label': 'next page'
-          }}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
       <AddUserModal open={addUserModalOpen} onClose={onCloseAddUserModal} userProp={editingUser} />

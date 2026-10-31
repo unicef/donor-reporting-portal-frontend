@@ -1,6 +1,6 @@
 import React from 'react';
 import { useGetFilterClasses } from 'styles/filter-styles';
-import { FormControl, MenuItem } from '@material-ui/core';
+import { FormControl, MenuItem } from '@mui/material';
 import { FORM_CONFIG } from 'lib/constants';
 import { StyledInputLabel, StyledSelect } from './styled-dropdown';
 import { FilterProps } from '../lib/dropdown-filter-factory';
@@ -15,6 +15,7 @@ export default function RecertifiedFilter({ value, onChange }) {
       <StyledSelect
         value={value}
         onChange={onChange}
+        label={FORM_CONFIG.recertified.label}
         inputProps={{
           name: 'option',
           id: 'option-select'

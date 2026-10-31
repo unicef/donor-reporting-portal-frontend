@@ -1,6 +1,7 @@
-import { createSlice } from 'redux-starter-kit';
+import { createSlice } from '@reduxjs/toolkit';
 
 const userProfileSlice = createSlice({
+  name: 'userProfile',
   initialState: null,
   reducers: {
     onReceiveUserProfile(state, action) {

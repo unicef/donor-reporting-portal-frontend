@@ -37,7 +37,8 @@ import {
   initGaviReportsPage,
   initGaviStatementsPage,
   initPooledGrantsPage,
-  initSearchReportsPage
+  initSearchReportsPage,
+  initConfig
 } from 'actions';
 import {
   setLoading,
@@ -220,28 +221,37 @@ function* handleCurrentDonor({
   if (profile.is_unicef_user || profile.is_superuser) {
     yield call(waitForLength, selectDonors);
     const donors = yield select(selectDonors);
-    donor = donors.find(propEq('id', Number(payload.donorId)));
+    donor = donors.find(propEq(Number(payload.donorId), 'id'));
   } else {
     donor = profile.donor;
   }
 
+  // Select the donor first so the page can load its reports. The donor's user
+  // groups are only needed by the filters / user management and must not block
+  // the page (a user can legitimately have no groups).
+  yield put(currentDonorSelected(donor));
+
   if (typeof donor !== 'undefined') {
     // set UserGroups of selected Donor, will need them in the filter and Add User popup
-    yield call(waitForLength, selectUserGroups);
-    const userGroups = yield select(selectUserGroups);
     yield call(waitFor, selectUserGaviGroups);
+    const userGroups = yield select(selectUserGroups);
     const userGaviGroups = yield select(selectUserGaviGroups);
     const config = yield select(selectConfig);
     const donorUserGroups = donor.code === config.gavi_donor_code ? userGaviGroups : userGroups;
     yield put(setDonorUserGroups(donorUserGroups));
   }
+}
 
-  yield put(currentDonorSelected(donor));
+function* donorsCollectionsSaga() {
+  yield takeLatest(initDonorsList.type, handleFetchDonors);
+  yield all([call(handleFetchStatic), call(handleFetchMetadata)]);
 }
 
 export function* donorsSaga() {
-  yield takeLatest(initDonorsList.type, handleFetchDonors);
-  yield all([call(handleFetchStatic), call(handleFetchMetadata), call(handleFetchConfig)])
+  yield all([
+    donorsCollectionsSaga(),
+    takeLatest(initConfig.type, handleFetchConfig)
+  ]);
 }
 
 export function* currentDonorSaga() {

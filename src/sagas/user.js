@@ -167,7 +167,7 @@ function* handleFetchUserProfile() {
   try {
     const userProfile = yield call(getUserProfile);
     yield put(onReceiveUserProfile(userProfile));
-  } catch (err) {
+  } catch {
     yield put(redirectToLogin());
   } finally {
     yield put(setLoading(false));

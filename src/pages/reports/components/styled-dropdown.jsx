@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useGetFilterClasses } from 'styles/filter-styles';
-import { InputLabel, Select } from '@material-ui/core';
+import { InputLabel, Select } from '@mui/material';
 
 export function StyledInputLabel(props) {
   const { labelProps } = useGetFilterClasses();

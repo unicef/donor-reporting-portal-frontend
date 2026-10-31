@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { prop, propOr } from 'ramda';
 import { useSelector, useDispatch } from 'react-redux';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import CloseIcon from '@material-ui/icons/Close';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import CloseIcon from '@mui/icons-material/Close';
+import DialogTitle from '@mui/material/DialogTitle';
 import {
   TextField,
   Typography,
@@ -21,9 +21,9 @@ import {
   Paper,
   FormHelperText,
   CircularProgress
-} from '@material-ui/core';
+} from '@mui/material';
 import { setValueFromEvent, oneIsEmpty } from 'lib/helpers';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from 'styles/makeStyles';
 import { FORM_CONFIG } from '../../../lib/constants';
 import { NOTIFICATION_PERIODS_MAP } from '../../../lib/constants';
 import { selectDonorUserGroups } from 'selectors/user';
@@ -187,7 +187,7 @@ export default function AddUserModal({ open, onClose, userProp = {} }) {
       aria-labelledby="add-user-dialog"
     >
       <DialogTitle className={classes.dialogTitle} disableTypography>
-        <Box display="flex" alignItems="center" justifyContent="space-between">
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <Typography variant="h6" color="inherit">
             {isEditMode ? "Edit User Role" : "Add New User"}
           </Typography>
@@ -198,7 +198,7 @@ export default function AddUserModal({ open, onClose, userProp = {} }) {
       </DialogTitle>
 
       {!isEditMode &&
-        <Grid item>
+        <Grid>
           <Paper className={classes.contentHeader} elevation={0}>
             <Typography variant="subtitle1">
               Email with invitation will be sent to provided email.
@@ -209,9 +209,9 @@ export default function AddUserModal({ open, onClose, userProp = {} }) {
 
       <DialogContent>
         <FormControl className={classes.formControl}>
-          <Grid container direction="column">
+          <Grid container sx={{ flexDirection: 'column', flexWrap: 'nowrap' }}>
             <Grid className={classes.formRow} container spacing={3}>
-              <Grid item xs={5}>
+              <Grid size={{ xs: 5 }}>
                 <TextField
                   required
                   className={classes.textField}
@@ -230,7 +230,7 @@ export default function AddUserModal({ open, onClose, userProp = {} }) {
               </Grid>
             </Grid>
             <Grid container className={classes.formRow} spacing={3}>
-              <Grid item xs={5}>
+              <Grid size={{ xs: 5 }}>
                 <TextField
                   required
                   className={classes.textField}
@@ -249,7 +249,7 @@ export default function AddUserModal({ open, onClose, userProp = {} }) {
                   </FormHelperText>
                 )}
               </Grid>
-              <Grid item xs={5}>
+              <Grid size={{ xs: 5 }}>
                 <TextField
                   required
                   className={classes.textField}
@@ -271,7 +271,7 @@ export default function AddUserModal({ open, onClose, userProp = {} }) {
             </Grid>
 
             <Grid container spacing={3}>
-              <Grid item xs={5}>
+              <Grid size={{ xs: 5 }}>
                 <form action="" />
                 <FormControl className={classes.formControl} required>
                   <InputLabel htmlFor="roles">{FORM_CONFIG.role.label}</InputLabel>
@@ -296,7 +296,7 @@ export default function AddUserModal({ open, onClose, userProp = {} }) {
                   )}
                 </FormControl>
               </Grid>
-              <Grid item xs={5}>
+              <Grid size={{ xs: 5 }}>
                 <form action="" />
                 <FormControl className={classes.formControl} required>
                   <InputLabel htmlFor="periods">{FORM_CONFIG.periods.label}</InputLabel>

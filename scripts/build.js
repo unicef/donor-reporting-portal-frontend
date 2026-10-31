@@ -17,7 +17,7 @@ require('../config/env');
 
 const path = require('path');
 const chalk = require('react-dev-utils/chalk');
-const fs = require('fs-extra');
+const fs = require('fs');
 const webpack = require('webpack');
 const configFactory = require('../config/webpack.config');
 const paths = require('../config/paths');
@@ -60,7 +60,8 @@ checkBrowsers(paths.appPath, isInteractive)
   .then(previousFileSizes => {
     // Remove all content but keep the directory so that
     // if you're in it, you don't end up in Trash
-    fs.emptyDirSync(paths.appBuild);
+    fs.rmSync(paths.appBuild, { recursive: true, force: true });
+    fs.mkdirSync(paths.appBuild, { recursive: true });
     // Merge with the public folder
     copyPublicFolder();
     // Start the webpack build
@@ -194,7 +195,8 @@ function build(previousFileSizes) {
 }
 
 function copyPublicFolder() {
-  fs.copySync(paths.appPublic, paths.appBuild, {
+  fs.cpSync(paths.appPublic, paths.appBuild, {
+    recursive: true,
     dereference: true,
     filter: file => file !== paths.appHtml,
   });

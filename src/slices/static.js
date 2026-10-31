@@ -1,6 +1,6 @@
 import {
   createSlice
-} from 'redux-starter-kit';
+} from '@reduxjs/toolkit';
 
 export const staticAssetsInitialState = {
   grant_issue_years: [],
@@ -8,6 +8,7 @@ export const staticAssetsInitialState = {
 };
 
 const staticAssetsSlice = createSlice({
+  name: 'staticAssets',
   initialState: staticAssetsInitialState,
   reducers: {
     onReceiveStaticAssets(state, action) {

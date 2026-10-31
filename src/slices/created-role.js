@@ -1,6 +1,7 @@
-import { createSlice } from 'redux-starter-kit';
+import { createSlice } from '@reduxjs/toolkit';
 
 const createdRoleSlice = createSlice({
+  name: 'createdRole',
   initialState: null,
   reducers: {
     createRoleSuccess(state, action) {

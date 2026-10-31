@@ -23,37 +23,37 @@ import {
   THEMATIC_GRANTS
 } from 'lib/constants';
 
-function useInitSearchReports(dispatch, donorId) {
+function searchReportsEffect(dispatch, donorId) {
   return () => {
     dispatch(initSearchReportsPage(donorId));
   };
 }
 
-function useInitPooledGrants(dispatch, donorId) {
+function pooledGrantsEffect(dispatch, donorId) {
   return () => {
     dispatch(initPooledGrantsPage(donorId));
   };
 }
 
-function useInitThematicGrants(dispatch) {
+function thematicGrantsEffect(dispatch) {
   return () => {
     dispatch(initThematicGrantsPage());
   };
 }
 
-function useInitGaviReports(dispatch) {
+function gaviReportsEffect(dispatch) {
   return () => {
     dispatch(initGaviReportsPage());
   };
 }
 
-function useInitGaviStatements(dispatch) {
+function gaviStatementsEffect(dispatch) {
   return () => {
     dispatch(initGaviStatementsPage());
   };
 }
 
-function useDefaultHook() {
+function defaultEffect() {
   return () => {};
 }
 
@@ -62,18 +62,18 @@ const useInitPage = pageName => {
   const { donorId } = useParams();
   switch (pageName) {
     case SEARCH_REPORTS:
-      return useInitSearchReports(dispatch, donorId);
+      return searchReportsEffect(dispatch, donorId);
     case POOLED_GRANTS:
-      return useInitPooledGrants(dispatch, donorId);
+      return pooledGrantsEffect(dispatch, donorId);
     case THEMATIC_GRANTS:
-      return useInitThematicGrants(dispatch);
+      return thematicGrantsEffect(dispatch);
     case GAVI_REPORTS_CTN:
     case GAVI_REPORTS:
-      return useInitGaviReports(dispatch);
+      return gaviReportsEffect(dispatch);
     case GAVI_STATEMENTS_ACC:
-      return useInitGaviStatements(dispatch);
+      return gaviStatementsEffect(dispatch);
     default:
-      return useDefaultHook;
+      return defaultEffect;
   }
 };
 
@@ -81,11 +81,17 @@ export default function SearchPage() {
   const pageName = useSelector(selectPageName);
   const dispatch = useDispatch();
   const effect = useInitPage(pageName);
-  useEffect(effect, [pageName]);
+  useEffect(() => {
+    const cleanup = effect();
+    return cleanup;
+  }, [pageName, dispatch]);
 
   useEffect(() => {
     dispatch(onReceiveSearchReports([]));
-  }, [pageName]);
+    return () => {
+      dispatch(onReceiveSearchReports([]));
+    };
+  }, [pageName, dispatch]);
 
   return (
     <>

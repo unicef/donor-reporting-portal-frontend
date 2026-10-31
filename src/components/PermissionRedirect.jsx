@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Redirect } from 'react-router';
+import { Navigate } from 'react-router-dom';
 import {
   REPORTS_PATH,
   DONOR_ADMIN_ROLE,
@@ -27,7 +27,9 @@ export const usePermissions = () => {
   const isSuperUser = useSelector(selectIsSuperUser);
   const donor = useSelector(selectUserProfileDonor);
   const config = useSelector(selectConfig);
-  const isGaviDonor = donor && config && donor.code === config.gavi_donor_code;
+  const donorCode = donor && donor.code;
+  const gaviDonorCode = config && config.gavi_donor_code;
+  const isGaviDonor = Boolean(donorCode && gaviDonorCode && donorCode === gaviDonorCode);
 
   const canViewDonors = isUnicefUser || isSuperUser;
   return {
@@ -45,12 +47,12 @@ export default function PermissionRedirect() {
   const { canViewDonors, isGaviDonor } = usePermissions();
   const tab = useSelector(selectMenuBarPage);
   if (isGaviDonor) {
-    return <Redirect to={`${GAVI_REPORTS_PATH}`} />;
+    return <Navigate to={`${GAVI_REPORTS_PATH}`} replace />;
   } else if (canViewDonors) {
-    return <Redirect to="/donors" />;
+    return <Navigate to="/donors" replace />;
   } else if (tab === POOLED_GRANTS) {
-    return <Redirect to={`${POOLED_GRANTS_PATH}/${usersDonorId}`} />;
+    return <Navigate to={`${POOLED_GRANTS_PATH}/${usersDonorId}`} replace />;
   } else {
-    return <Redirect to={`${REPORTS_PATH}/${usersDonorId}`} />;
+    return <Navigate to={`${REPORTS_PATH}/${usersDonorId}`} replace />;
   }
 }

@@ -9,17 +9,14 @@ module.exports = {
         '<rootDir>/src/**/?(*.)(spec|test).{js,jsx,ts,tsx}'
     ],
     testEnvironment: 'jsdom',
-    snapshotSerializers: ['jss-snapshot-serializer'],
-    transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$'],
-    testPathIgnorePatterns: ['[/\\\\]fixtures[/\\\\].+\\.(js|jsx|ts|tsx)$'],
+    setupFiles: ['<rootDir>/src/setupTests.js'],
+    setupFilesAfterEnv: ['<rootDir>/src/setupTestsAfterEnv.js'],
     transform: {
-        '^.+\\.(js|jsx|ts|tsx)$': '<rootDir>/node_modules/babel-jest',
-        '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': '<rootDir>/config/jest/fileTransform.js'
+        '^.+\\.(js|jsx|ts|tsx|cjs|mjs)$': '<rootDir>/node_modules/babel-jest',
+        '^.+\\.css$': '<rootDir>/config/jest/cssTransform.js',
+        '^(?!.*\\.(js|jsx|ts|tsx|cjs|mjs|css|json)$)': '<rootDir>/config/jest/fileTransform.js'
     },
     modulePaths: ['<rootDir>/src/'],
-    watchPlugins: [
-        'jest-watch-typeahead/filename',
-        'jest-watch-typeahead/testname',
-        'jest-watch-select-projects'
-    ]
+    transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx|cjs|mjs)$'],
+    testPathIgnorePatterns: ['[/\\\\]fixtures[/\\\\].+\\.(js|jsx|ts|tsx)$']
 };

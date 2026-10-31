@@ -7,7 +7,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 import { prop } from 'ramda';
 import { useDispatch, useSelector } from 'react-redux';
-import { Grid, Box, Button, Paper } from '@material-ui/core';
+import { Grid, Box, Button, Paper } from '@mui/material';
 
 import useFilterStyles from 'styles/filter-styles';
 import { onFetchSearchReports } from 'actions';
@@ -72,32 +72,22 @@ export default function SearchReportsFilter() {
     <>
       <Paper className={classes.filterPaper}>
         <form onSubmit={handleSubmit}>
-          <Grid
-            container
-            spacing={0}
-            alignItems="flex-end"
-            direction="row"
-          >
-            <Grid item><SearchFilterMenuButton onSelectFilter={handleSelectFilter} selected={filtersActiveState} /></Grid>
+          <Grid container spacing={0} direction="row" sx={{ alignItems: 'flex-end' }}>
+            <Grid><SearchFilterMenuButton onSelectFilter={handleSelectFilter} selected={filtersActiveState} /></Grid>
           </Grid>
-          <Box display="flex" flex="1 1 auto" alignItems="flex-start" flexWrap="wrap">
+          <Box sx={{ display: 'flex', flex: '1 1 auto', alignItems: 'flex-start', flexWrap: 'wrap' }}>
             <Grid
               className={classes.filterComponents}
               container
               direction="row"
-              flex="1 1 auto"
-              spacing={2}
+              sx={{ flex: '1 1 auto' }}
+              spacing={1.5}
             >
               {selectedFilters.map((filter, idx) => {
                 const { Component: FilterComponent } = FILTERS_MAP[filter];
 
                 return (
-                  <Grid
-                    item
-                    className={classes.filterBox}
-                    sm={FILTERS_MAP[filter].gridSize || 3}
-                    key={idx}
-                  >
+                  <Grid className={classes.filterBox} key={idx} size={{ sm: FILTERS_MAP[filter].gridSize || 3 }}>
                     <FilterComponent
                       onChange={handleChangeFilterValue(filter)}
                       value={filterValues[filter]}
@@ -107,14 +97,14 @@ export default function SearchReportsFilter() {
               })}
             </Grid>
           </Box>
-          <Grid container alignContent="flex-start" className={classes.button}>
-            <Button className={classes.formBtn} variant="contained" color="secondary" onClick={handleClear}>
+          <Box sx={{ display: 'flex', gap: 2, mt: 1.5 }}>
+            <Button variant="outlined" color="secondary" onClick={handleClear}>
               {FORM_CONFIG.clear.label}
             </Button>
-            <Button className={classes.formBtn} variant="contained" color="secondary" onClick={handleSubmit}>
+            <Button variant="contained" color="secondary" onClick={handleSubmit}>
               {FORM_CONFIG.submit.label}
             </Button>
-          </Grid>
+          </Box>
         </form>
       </Paper>
     </>

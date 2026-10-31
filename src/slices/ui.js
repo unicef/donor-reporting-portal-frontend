@@ -1,6 +1,6 @@
 import {
   createSlice
-} from 'redux-starter-kit';
+} from '@reduxjs/toolkit';
 import {
   TABLE_PAGES
 } from 'lib/constants';
@@ -8,6 +8,7 @@ import {
 // const [page, donorId] = location.pathname.split('/').filter(Boolean);
 
 export const uiSlice = createSlice({
+  name: 'ui',
   initialState: {
     loading: false,
     page: '',
