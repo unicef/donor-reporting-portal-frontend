@@ -1,18 +1,41 @@
 import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import PrivacyTipOutlinedIcon from '@mui/icons-material/PrivacyTipOutlined';
 import { usePrivacyPolicyStyles } from 'styles/privacy-policy-styles';
 
 export default function PrivacyPolicy() {
   const classes = usePrivacyPolicyStyles();
   return (
     <div className={classes.root}>
-      <div
-      ><h3 className={classes.title}>Privacy Policy</h3>
+      <Box className={classes.header}>
+        <Box className={classes.iconBadge}>
+          <PrivacyTipOutlinedIcon />
+        </Box>
+        <Box>
+          <Typography variant="overline" color="text.secondary">
+            Legal
+          </Typography>
+          <Typography variant="h4" component="h1" className={classes.title}>
+            Privacy Policy
+          </Typography>
+          <Typography variant="body2" color="text.secondary" className={classes.subtitle}>
+            How UNICEF collects, uses and protects the information you share on the Donor
+            Reporting Portal.
+          </Typography>
+        </Box>
+      </Box>
+
+      <Paper component="article" elevation={0} className={classes.card}>
 
         <p>This privacy statement describes UNICEF’s policy concerning the gathering and sharing of visitors’ information through the UNICEF Donor Portal. It applies to all “UNICEF sites” – that is, all sites within the “unicef.org” domain name. You should note that through this site you may reach or be directed to other sites that relate to UNICEF. By visiting the UNICEF Donor Portal you are accepting the practices described in this policy.</p>
 
         <p>&nbsp;</p>
 
-        <h3>What information does UNICEF collect?</h3>
+        <h2>What information does UNICEF collect?</h2>
 
         <p><strong>Normal website usage</strong></p>
 
@@ -26,7 +49,7 @@ export default function PrivacyPolicy() {
 
         <p>&nbsp;</p>
 
-        <h3>What does UNICEF do with the information it collects?</h3>
+        <h2>What does UNICEF do with the information it collects?</h2>
 
         <p><strong>Normal web usage</strong></p>
 
@@ -57,7 +80,7 @@ export default function PrivacyPolicy() {
 
         <p>&nbsp;</p>
 
-        <h3>UNICEF Cookies Policy</h3>
+        <h2>UNICEF Cookies Policy</h2>
 
         <p>By visiting or using this website, a cookie will be created which UNICEF may use to provide statistics that help us to give you the best experience of our sites. The statement below describes our policy on cookies.</p>
 
@@ -112,7 +135,13 @@ export default function PrivacyPolicy() {
         <p><strong>Do you share data from cookies with other organizations?</strong></p>
 
         <p>We may share your data from your cookies with partners, agents or service providers to understand our supporters more effectively and to further UNICEF’s mission.</p>
-      </div>
+      </Paper>
+
+      <Box className={classes.footer}>
+        <Button component={RouterLink} to="/" variant="outlined" size="small">
+          Back to reports
+        </Button>
+      </Box>
     </div>
   )
 }

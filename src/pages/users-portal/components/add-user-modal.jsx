@@ -7,6 +7,8 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import CloseIcon from '@mui/icons-material/Close';
+import PersonAddAlt1OutlinedIcon from '@mui/icons-material/PersonAddAlt1Outlined';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DialogTitle from '@mui/material/DialogTitle';
 import {
   TextField,
@@ -18,7 +20,6 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  Paper,
   FormHelperText,
   CircularProgress
 } from '@mui/material';
@@ -34,34 +35,34 @@ import { onResetFormError, onFormError } from 'slices/form-error';
 import { userRoleEdited } from 'actions';
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    width: 625
-  },
   dialogTitle: {
     color: 'white',
-    background: theme.palette.secondary[500],
-    minWidth: 600
+    background: `linear-gradient(100deg, ${theme.palette.secondary.dark} 0%, ${theme.palette.secondary.main} 100%)`,
+    padding: theme.spacing(2, 3)
+  },
+  titleRow: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: theme.spacing(1.25)
+  },
+  titleIcon: {
+    opacity: 0.9
   },
   closeButton: {
-    color: theme.palette.getContrastText(theme.palette.secondary[500]),
-    width: 24,
-    height: 24,
+    color: '#FFFFFF',
+    width: 32,
+    height: 32,
     padding: 0
   },
-  textField: { marginBottom: theme.spacing(0.5) },
-  formControl: {
-    width: '100%'
-  },
   contentHeader: {
-    backgroundColor: theme.palette.grey[200],
-    padding: theme.spacing(2),
-    marginBottom: theme.spacing(0.5)
+    backgroundColor: theme.palette.primary.main + '0F',
+    border: `1px solid ${theme.palette.divider}`,
+    borderRadius: 10,
+    padding: theme.spacing(1.5, 2),
+    marginBottom: theme.spacing(2.5)
   },
   error: {
     color: theme.palette.error.main
-  },
-  formRow: {
-    marginBottom: theme.spacing(1)
   }
 }));
 
@@ -177,7 +178,9 @@ export default function AddUserModal({ open, onClose, userProp = {} }) {
     }
   };
 
-  const btnContent = (loading && <CircularProgress size={24} />) || 'Submit';
+  const btnContent =
+    (loading && <CircularProgress size={20} color="inherit" />) ||
+    (isEditMode ? 'Save changes' : 'Send invitation');
   const onSubmitDisabled = oneIsEmpty(email, firstName, lastName, role);
   return (
     <Dialog
@@ -185,157 +188,154 @@ export default function AddUserModal({ open, onClose, userProp = {} }) {
       onClose={onClose}
       onKeyDown={stopPropagationForTab}
       aria-labelledby="add-user-dialog"
+      fullWidth
+      maxWidth="sm"
     >
-      <DialogTitle className={classes.dialogTitle} disableTypography>
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Typography variant="h6" color="inherit">
-            {isEditMode ? "Edit User Role" : "Add New User"}
+      <DialogTitle id="add-user-dialog" className={classes.dialogTitle} disableTypography>
+        <Box className={classes.titleRow}>
+          {isEditMode ? (
+            <EditOutlinedIcon className={classes.titleIcon} />
+          ) : (
+            <PersonAddAlt1OutlinedIcon className={classes.titleIcon} />
+          )}
+          <Typography variant="h6" color="inherit" sx={{ flex: 1 }}>
+            {isEditMode ? 'Edit user role' : 'Add new user'}
           </Typography>
-          <IconButton className={classes.closeButton} onClick={onClose}>
+          <IconButton className={classes.closeButton} onClick={onClose} aria-label="Close dialog">
             <CloseIcon />
           </IconButton>
         </Box>
       </DialogTitle>
 
-      {!isEditMode &&
-        <Grid>
-          <Paper className={classes.contentHeader} elevation={0}>
-            <Typography variant="subtitle1">
-              Email with invitation will be sent to provided email.
-            </Typography>
-          </Paper>
-        </Grid>
-      }
-
       <DialogContent>
-        <FormControl className={classes.formControl}>
-          <Grid container sx={{ flexDirection: 'column', flexWrap: 'nowrap' }}>
-            <Grid className={classes.formRow} container spacing={3}>
-              <Grid size={{ xs: 5 }}>
-                <TextField
-                  required
-                  className={classes.textField}
-                  margin="none"
-                  id="email"
-                  label="Email"
-                  value={email}
-                  error={getErrorState(formError, 'email')}
-                  onBlur={handleErrorState('email', email)}
-                  onChange={setValueFromEvent(setEmail)}
-                  disabled={isEditMode}
-                />
-                {getErrorState(formError, 'email') && (
-                  <FormHelperText className={classes.error}>{formError['email']}</FormHelperText>
-                )}
-              </Grid>
-            </Grid>
-            <Grid container className={classes.formRow} spacing={3}>
-              <Grid size={{ xs: 5 }}>
-                <TextField
-                  required
-                  className={classes.textField}
-                  margin="none"
-                  id="first-name"
-                  label="First Name"
-                  value={firstName}
-                  onBlur={handleErrorState('first_name', firstName)}
-                  error={getErrorState(formError, 'first_name')}
-                  onChange={setValueFromEvent(setFirstName)}
-                  disabled={isEditMode}
-                />
-                {getErrorState(formError, 'first_name') && (
-                  <FormHelperText className={classes.error}>
-                    {formError['first_name']}
-                  </FormHelperText>
-                )}
-              </Grid>
-              <Grid size={{ xs: 5 }}>
-                <TextField
-                  required
-                  className={classes.textField}
-                  margin="none"
-                  id="last-name"
-                  label="Last Name"
-                  value={lastName}
-                  onBlur={handleErrorState('last_name', lastName)}
-                  error={getErrorState(formError, 'last_name')}
-                  onChange={setValueFromEvent(setLastName)}
-                  disabled={isEditMode}
-                />
-                {getErrorState(formError, 'last_name') && (
-                  <FormHelperText className={classes.error}>
-                    {formError['last_name']}
-                  </FormHelperText>
-                )}
-              </Grid>
-            </Grid>
-
-            <Grid container spacing={3}>
-              <Grid size={{ xs: 5 }}>
-                <form action="" />
-                <FormControl className={classes.formControl} required>
-                  <InputLabel htmlFor="roles">{FORM_CONFIG.role.label}</InputLabel>
-                  <Select
-                    value={role}
-                    onBlur={handleErrorState('group', role)}
-                    error={getErrorState(formError, 'group')}
-                    onChange={setValueFromEvent(setRole)}
-                    inputProps={{
-                      name: 'select-role',
-                      id: 'role'
-                    }}
-                  >
-                    {groups.map(group => (
-                      <MenuItem key={group.id} value={group.name}>
-                        {group.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                  {getErrorState(formError, 'group') && (
-                    <FormHelperText className={classes.error}>{formError['group']}</FormHelperText>
-                  )}
-                </FormControl>
-              </Grid>
-              <Grid size={{ xs: 5 }}>
-                <form action="" />
-                <FormControl className={classes.formControl} required>
-                  <InputLabel htmlFor="periods">{FORM_CONFIG.periods.label}</InputLabel>
-                  <Select
-                    value={period}
-                    onBlur={handleErrorState('period', period)}
-                    error={getErrorState(formError, 'period')}
-                    onChange={setValueFromEvent(setPeriod)}
-                    inputProps={{
-                      name: 'select-period',
-                      id: 'period'
-                    }}
-                  >
-                    {NOTIFICATION_PERIODS_MAP.map(period => (
-                      <MenuItem key={period.id} value={period.name}>
-                        {period.label}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                  {getErrorState(formError, 'period') && (
-                    <FormHelperText className={classes.error}>{formError['period']}</FormHelperText>
-                  )}
-                </FormControl>
-              </Grid>
-            </Grid>
+        {!isEditMode && (
+          <Box className={classes.contentHeader}>
+            <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+              Invitation email
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              An email with an invitation will be sent to the address provided below.
+            </Typography>
+          </Box>
+        )}
+        <Grid container spacing={2}>
+          <Grid size={{ xs: 12 }}>
+            <TextField
+              required
+              fullWidth
+              id="email"
+              label="Email"
+              type="email"
+              value={email}
+              error={getErrorState(formError, 'email')}
+              onBlur={handleErrorState('email', email)}
+              onChange={setValueFromEvent(setEmail)}
+              disabled={isEditMode}
+            />
+            {getErrorState(formError, 'email') && (
+              <FormHelperText className={classes.error}>{formError['email']}</FormHelperText>
+            )}
           </Grid>
-          {getErrorState(formError, 'non_field_errors') && (
-            <FormHelperText className={classes.error}>
-              The email and role selected must be a unique combination. Change either the email or
-              the user role.
-            </FormHelperText>
-          )}
-        </FormControl>
+          <Grid size={{ xs: 12, sm: 6 }}>
+            <TextField
+              required
+              fullWidth
+              id="first-name"
+              label="First Name"
+              value={firstName}
+              onBlur={handleErrorState('first_name', firstName)}
+              error={getErrorState(formError, 'first_name')}
+              onChange={setValueFromEvent(setFirstName)}
+              disabled={isEditMode}
+            />
+            {getErrorState(formError, 'first_name') && (
+              <FormHelperText className={classes.error}>{formError['first_name']}</FormHelperText>
+            )}
+          </Grid>
+          <Grid size={{ xs: 12, sm: 6 }}>
+            <TextField
+              required
+              fullWidth
+              id="last-name"
+              label="Last Name"
+              value={lastName}
+              onBlur={handleErrorState('last_name', lastName)}
+              error={getErrorState(formError, 'last_name')}
+              onChange={setValueFromEvent(setLastName)}
+              disabled={isEditMode}
+            />
+            {getErrorState(formError, 'last_name') && (
+              <FormHelperText className={classes.error}>{formError['last_name']}</FormHelperText>
+            )}
+          </Grid>
+
+          <Grid size={{ xs: 12, sm: 6 }}>
+            <FormControl fullWidth required>
+              <InputLabel htmlFor="role">{FORM_CONFIG.role.label}</InputLabel>
+              <Select
+                value={role}
+                onBlur={handleErrorState('group', role)}
+                error={getErrorState(formError, 'group')}
+                onChange={setValueFromEvent(setRole)}
+                inputProps={{
+                  name: 'select-role',
+                  id: 'role'
+                }}
+              >
+                {groups.map(group => (
+                  <MenuItem key={group.id} value={group.name}>
+                    {group.name}
+                  </MenuItem>
+                ))}
+              </Select>
+              {getErrorState(formError, 'group') && (
+                <FormHelperText className={classes.error}>{formError['group']}</FormHelperText>
+              )}
+            </FormControl>
+          </Grid>
+          <Grid size={{ xs: 12, sm: 6 }}>
+            <FormControl fullWidth required>
+              <InputLabel htmlFor="period">{FORM_CONFIG.periods.label}</InputLabel>
+              <Select
+                value={period}
+                onBlur={handleErrorState('period', period)}
+                error={getErrorState(formError, 'period')}
+                onChange={setValueFromEvent(setPeriod)}
+                inputProps={{
+                  name: 'select-period',
+                  id: 'period'
+                }}
+              >
+                {NOTIFICATION_PERIODS_MAP.map(period => (
+                  <MenuItem key={period.id} value={period.name}>
+                    {period.label}
+                  </MenuItem>
+                ))}
+              </Select>
+              {getErrorState(formError, 'period') && (
+                <FormHelperText className={classes.error}>{formError['period']}</FormHelperText>
+              )}
+            </FormControl>
+          </Grid>
+        </Grid>
+        {getErrorState(formError, 'non_field_errors') && (
+          <FormHelperText error sx={{ mt: 2 }}>
+            The email and role selected must be a unique combination. Change either the email or the
+            user role.
+          </FormHelperText>
+        )}
       </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose} color="primary" disabled={loading}>
+      <DialogActions sx={{ px: 3, py: 2 }}>
+        <Button onClick={onClose} color="inherit" disabled={loading}>
           Cancel
         </Button>
-        <Button onClick={isEditMode ? onEditSubmit : onSubmit} color="secondary" disabled={onSubmitDisabled} autoFocus>
+        <Button
+          onClick={isEditMode ? onEditSubmit : onSubmit}
+          variant="contained"
+          color="primary"
+          disabled={onSubmitDisabled || loading}
+          autoFocus
+        >
           {btnContent}
         </Button>
       </DialogActions>

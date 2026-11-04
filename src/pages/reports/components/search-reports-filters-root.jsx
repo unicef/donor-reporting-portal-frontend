@@ -7,7 +7,9 @@ if (process.env.NODE_ENV !== 'production') {
 
 import { prop } from 'ramda';
 import { useDispatch, useSelector } from 'react-redux';
-import { Grid, Box, Button, Paper } from '@mui/material';
+import { Grid, Box, Button, Chip, Paper, Typography } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 
 import useFilterStyles from 'styles/filter-styles';
 import { onFetchSearchReports } from 'actions';
@@ -53,6 +55,13 @@ export default function SearchReportsFilter() {
     clearFilters
   } = useFiltersQueries(FILTERS_MAP);
 
+  const activeFilterCount = Object.values(filterValues || {}).filter(value => {
+    if (Array.isArray(value)) {
+      return value.length > 0;
+    }
+    return value !== undefined && value !== null && value !== '';
+  }).length;
+
   useEffect(() => {
     if (pageName) {
       dispatch(onFetchSearchReports(filterValues));
@@ -69,45 +78,87 @@ export default function SearchReportsFilter() {
   }, [pageName]);
 
   return (
-    <>
-      <Paper className={classes.filterPaper}>
-        <form onSubmit={handleSubmit}>
-          <Grid container spacing={0} direction="row" sx={{ alignItems: 'flex-end' }}>
-            <Grid><SearchFilterMenuButton onSelectFilter={handleSelectFilter} selected={filtersActiveState} /></Grid>
-          </Grid>
-          <Box sx={{ display: 'flex', flex: '1 1 auto', alignItems: 'flex-start', flexWrap: 'wrap' }}>
-            <Grid
-              className={classes.filterComponents}
-              container
-              direction="row"
-              sx={{ flex: '1 1 auto' }}
-              spacing={1.5}
-            >
-              {selectedFilters.map((filter, idx) => {
-                const { Component: FilterComponent } = FILTERS_MAP[filter];
+    <Paper className={classes.filterPaper} variant="outlined">
+      <form onSubmit={handleSubmit}>
+        <Box className={classes.filterHeader}>
+          <Box className={classes.filterHeaderText}>
+            <Typography variant="subtitle1" className={classes.filterTitle} component="h2">
+              Filters
+            </Typography>
+            <Typography variant="body2" className={classes.filterSubtitle}>
+              Combine filters to narrow down the report library.
+            </Typography>
+          </Box>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            {activeFilterCount > 0 && (
+              <Chip
+                size="small"
+                className={classes.activeChip}
+                label={`${activeFilterCount} active`}
+                aria-live="polite"
+              />
+            )}
+            <SearchFilterMenuButton
+              onSelectFilter={handleSelectFilter}
+              selected={filtersActiveState}
+            />
+          </Box>
+        </Box>
 
-                return (
-                  <Grid className={classes.filterBox} key={idx} size={{ sm: FILTERS_MAP[filter].gridSize || 3 }}>
-                    <FilterComponent
-                      onChange={handleChangeFilterValue(filter)}
-                      value={filterValues[filter]}
-                    />
-                  </Grid>
-                );
-              })}
-            </Grid>
-          </Box>
-          <Box sx={{ display: 'flex', gap: 2, mt: 1.5 }}>
-            <Button variant="outlined" color="secondary" onClick={handleClear}>
-              {FORM_CONFIG.clear.label}
-            </Button>
-            <Button variant="contained" color="secondary" onClick={handleSubmit}>
-              {FORM_CONFIG.submit.label}
-            </Button>
-          </Box>
-        </form>
-      </Paper>
-    </>
+        <Box sx={{ display: 'flex', flex: '1 1 auto', alignItems: 'flex-start', flexWrap: 'wrap' }}>
+          <Grid
+            className={classes.filterComponents}
+            container
+            direction="row"
+            sx={{ flex: '1 1 auto' }}
+            spacing={1.5}
+          >
+            {selectedFilters.map((filter, idx) => {
+              const { Component: FilterComponent } = FILTERS_MAP[filter];
+
+              return (
+                <Grid
+                  className={classes.filterBox}
+                  key={idx}
+                  size={{ xs: 12, sm: FILTERS_MAP[filter].gridSize || 3 }}
+                >
+                  <FilterComponent
+                    onChange={handleChangeFilterValue(filter)}
+                    value={filterValues[filter]}
+                  />
+                </Grid>
+              );
+            })}
+          </Grid>
+        </Box>
+
+        {selectedFilters.length === 0 && (
+          <Typography variant="body2" className={classes.filterSubtitle} sx={{ mt: 1 }}>
+            Use “More filters” to add a field such as Grant, Country or Report type.
+          </Typography>
+        )}
+
+        <Box className={classes.filterActions}>
+          <Button
+            type="submit"
+            variant="contained"
+            color="secondary"
+            startIcon={<SearchIcon />}
+          >
+            {FORM_CONFIG.submit.label}
+          </Button>
+          <Button
+            type="button"
+            variant="outlined"
+            color="secondary"
+            startIcon={<RestartAltIcon />}
+            onClick={handleClear}
+          >
+            {FORM_CONFIG.clear.label}
+          </Button>
+        </Box>
+      </form>
+    </Paper>
   );
 }
 

@@ -1,6 +1,7 @@
 import React, {
   useState
 } from 'react';
+import clsx from 'clsx';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Menu, MenuItem, Button, Checkbox } from '@mui/material';
@@ -80,7 +81,7 @@ export function FilterButton(props) {
   return (
     <Button className={clsx(classes.filterBox, classes.filterBtn)} size="small" {...props}>
       <FilterListIcon className={classes.filterIcon} />
-      More Filters
+      More filters
     </Button>
   );
 }

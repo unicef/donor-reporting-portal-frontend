@@ -3,17 +3,25 @@ import { lighten } from '@mui/material/styles';
 
 export const useToolbarStyles = makeStyles(theme => ({
   root: {
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(3),
-    marginBottom: theme.spacing(2)
+    paddingLeft: theme.spacing(2.5),
+    paddingRight: theme.spacing(2.5),
+    paddingTop: theme.spacing(1.5),
+    paddingBottom: theme.spacing(1.5),
+    gap: theme.spacing(1),
+    minHeight: 64,
+    flexWrap: 'wrap',
+    borderBottom: `1px solid ${theme.palette.divider}`
   },
-  highlight: theme.palette.mode === 'light' ? {
-    color: theme.palette.secondary.main,
-    backgroundColor: lighten(theme.palette.secondary.light, 0.85)
-  } : {
-    color: theme.palette.text.primary,
-    backgroundColor: theme.palette.secondary.dark
-  },
+  highlight:
+    theme.palette.mode === 'light'
+      ? {
+          color: theme.palette.secondary.main,
+          backgroundColor: lighten(theme.palette.secondary.light, 0.85)
+        }
+      : {
+          color: theme.palette.text.primary,
+          backgroundColor: theme.palette.secondary.dark
+        },
   spacer: {
     flex: '1 1 100%'
   },
@@ -21,18 +29,31 @@ export const useToolbarStyles = makeStyles(theme => ({
     color: theme.palette.text.secondary
   },
   title: {
-    flex: '0 0 auto'
+    flex: '0 1 auto',
+    minWidth: 0
+  },
+  titleText: {
+    color: theme.palette.secondary.main,
+    fontWeight: 600
+  },
+  count: {
+    color: theme.palette.text.secondary,
+    whiteSpace: 'nowrap'
   }
 }));
 
 export const useTableStyles = makeStyles(theme => ({
   root: {
     width: '100%',
-    marginTop: theme.spacing(3)
+    marginTop: theme.spacing(2)
   },
   paper: {
     width: '100%',
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(2),
+    border: `1px solid ${theme.palette.divider}`,
+    borderRadius: 12,
+    overflow: 'hidden',
+    boxShadow: '0 8px 24px rgba(11, 59, 117, 0.06)'
   },
   table: {
     minWidth: 750
@@ -76,19 +97,29 @@ export const useTableStyles = makeStyles(theme => ({
     textAlign: 'center'
   },
   tableContainer: {
-    maxHeight: 'calc(100vh - 526px)',
-    minHeight: 500
+    maxHeight: 'calc(100vh - 470px)',
+    minHeight: 320,
+    '@media (max-height: 800px)': {
+      minHeight: 260
+    }
+  },
+  detailsRow: {
+    backgroundColor: '#F7FAFD'
   },
   detailsPanel: {
-    paddingRight: '20px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between'
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))',
+    gap: theme.spacing(1.5, 3),
+    padding: theme.spacing(1, 0.5)
   },
   detailsHeader: {
-    marginBlockStart: '5px',
-    marginBlockEnd: '5px',
-    fontWeight: '500'
+    margin: 0,
+    marginBottom: theme.spacing(0.25),
+    color: theme.palette.text.secondary,
+    fontSize: '0.6875rem',
+    fontWeight: 700,
+    letterSpacing: '0.06em',
+    textTransform: 'uppercase'
   },
   icon: {
     marginRight: '10px',
@@ -96,5 +127,15 @@ export const useTableStyles = makeStyles(theme => ({
   },
   dBlock: {
     display: 'block'
+  },
+  loadingBar: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 2
+  },
+  tableWrap: {
+    position: 'relative'
   }
 }));

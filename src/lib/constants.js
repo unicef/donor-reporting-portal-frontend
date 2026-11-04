@@ -1,4 +1,5 @@
-export const DRAWER_WIDTH = 224;
+export const DRAWER_WIDTH = 256;
+export const APP_BAR_HEIGHT = 72;
 export const FORM_CONFIG = {
   grant: {
     label: 'Grant'
@@ -109,6 +110,9 @@ export const GAVI_SECTION_PATHS = [
   GAVI_REPORTS_CTN_PATH,
   GAVI_STATEMENTS_ACC_PATH
 ];
+
+export const isGaviSectionPath = pathname =>
+  GAVI_SECTION_PATHS.some(path => pathname === path || pathname.startsWith(`${path}/`));
 
 export const BACKEND_PROPERTIES_USER_LAST_LOGIN = 'user_last_login';
 export const BACKEND_PROPERTIES_USER_FIRST_NAME = 'user_first_name';
