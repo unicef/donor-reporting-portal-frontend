@@ -14,6 +14,7 @@ import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import useFilterStyles from 'styles/filter-styles';
 import { onFetchReports } from 'actions';
 import FilterMenuButton from './filter-menu-button';
+import ExportButton from './export-button';
 
 import useFiltersQueries from 'lib/use-filters-queries';
 import { FORM_CONFIG } from 'lib/constants';
@@ -117,6 +118,7 @@ export default function ReportsFilter() {
               />
             )}
             <FilterMenuButton onSelectFilter={handleSelectFilter} selected={filtersActiveState} />
+            <ExportButton />
           </Box>
         </Box>
 

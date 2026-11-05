@@ -54,7 +54,7 @@ export const useMainStyles = makeStyles(theme => ({
     flexDirection: 'column',
     backgroundColor: theme.palette.background.default,
     backgroundImage:
-      'radial-gradient(circle at 92% 0%, rgba(28, 171, 226, 0.08), transparent 42%)'
+      'radial-gradient(circle at 92% 0%, rgba(0, 158, 219, 0.1), transparent 42%)'
   },
   contentWrapper: {
     flex: 1,

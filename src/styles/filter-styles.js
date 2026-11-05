@@ -8,13 +8,13 @@ const useFilterStyles = makeStyles(theme =>
       padding: `${theme.spacing(2.5)} ${theme.spacing(2.5)} ${theme.spacing(2)}`,
       background: theme.palette.common.white,
       border: `1px solid ${theme.palette.divider}`,
-      boxShadow: '0 8px 24px rgba(11, 59, 117, 0.05)'
+      boxShadow: '0 8px 24px rgba(0, 90, 156, 0.06)'
     },
     filterPaper: {
       padding: theme.spacing(2),
       border: `1px solid ${theme.palette.divider}`,
       borderRadius: 12,
-      boxShadow: '0 8px 24px rgba(11, 59, 117, 0.05)',
+      boxShadow: '0 8px 24px rgba(0, 90, 156, 0.06)',
       [theme.breakpoints.up('md')]: {
         padding: theme.spacing(2.5)
       }

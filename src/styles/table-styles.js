@@ -53,7 +53,7 @@ export const useTableStyles = makeStyles(theme => ({
     border: `1px solid ${theme.palette.divider}`,
     borderRadius: 12,
     overflow: 'hidden',
-    boxShadow: '0 8px 24px rgba(11, 59, 117, 0.06)'
+    boxShadow: '0 8px 24px rgba(0, 90, 156, 0.06)'
   },
   table: {
     minWidth: 750
@@ -104,7 +104,7 @@ export const useTableStyles = makeStyles(theme => ({
     }
   },
   detailsRow: {
-    backgroundColor: '#F7FAFD'
+    backgroundColor: '#F4F9FD'
   },
   detailsPanel: {
     display: 'grid',

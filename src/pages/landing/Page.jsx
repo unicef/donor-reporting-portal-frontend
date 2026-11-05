@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     minHeight: '100vh',
     color: '#FFFFFF',
-    backgroundImage: `linear-gradient(115deg, rgba(7, 44, 89, 0.96) 0%, rgba(11, 59, 117, 0.9) 45%, rgba(20, 121, 180, 0.72) 100%), url(${bgImage})`,
+    backgroundImage: `linear-gradient(115deg, rgba(0, 59, 115, 0.96) 0%, rgba(0, 90, 156, 0.9) 45%, rgba(0, 158, 219, 0.72) 100%), url(${bgImage})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat'

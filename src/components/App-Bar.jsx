@@ -30,7 +30,7 @@ import { APP_BAR_HEIGHT, isGaviSectionPath } from 'lib/constants';
 const useStyles = makeStyles(theme => ({
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    backgroundImage: `linear-gradient(100deg, ${theme.palette.secondary.dark} 0%, ${theme.palette.secondary.main} 52%, #1479B4 100%)`
+    backgroundImage: `linear-gradient(100deg, ${theme.palette.primary.main} 0%, ${theme.palette.info.main} 100%)`
   },
   toolbar: {
     minHeight: APP_BAR_HEIGHT,

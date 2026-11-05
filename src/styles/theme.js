@@ -1,26 +1,26 @@
 import { createTheme } from '@mui/material/styles';
 import { blue, grey } from '@mui/material/colors';
 
-blue.A400 = '#0199ff';
+blue.A400 = '#009EDB';
 grey.A100 = '#e5eaf0';
 
 /**
  * Shared brand tokens.
  *
- * Keep the UNICEF blue family in one place so that pages, the app bar and
+ * Keep the UN blue family in one place so that pages, the app bar and
  * generated charts/date pickers all stay visually consistent.
  */
 export const BRAND = {
-  navy: '#0B3B75',
-  navyDeep: '#072C59',
-  blue: '#1CABE2',
-  blueDark: '#0E73A8',
-  blueSoft: '#E7F6FD',
-  ink: '#12263F',
-  muted: '#58708B',
-  border: 'rgba(11, 59, 117, 0.12)',
+  navy: '#005A9C',
+  navyDeep: '#003B73',
+  blue: '#009EDB',
+  blueDark: '#0072BC',
+  blueSoft: '#E5F4FB',
+  ink: '#102A43',
+  muted: '#4F6D8C',
+  border: 'rgba(0, 90, 156, 0.14)',
   surface: '#FFFFFF',
-  background: '#F3F7FB',
+  background: '#F2F7FC',
   success: '#2E9E5B',
   warning: '#D98E04',
   error: '#D64545'
@@ -28,7 +28,7 @@ export const BRAND = {
 
 export const getColorTheme = () => ({
   ...blue,
-  500: '#0099FF'
+  500: '#009EDB'
 });
 
 export default createTheme({
@@ -37,7 +37,7 @@ export default createTheme({
       ...grey,
       main: BRAND.blueDark,
       dark: BRAND.navy,
-      light: '#8AD8F4',
+      light: '#7FD4F4',
       contrastText: '#FFFFFF',
       strong: BRAND.blue
     },
@@ -45,8 +45,8 @@ export default createTheme({
       ...blue,
       main: BRAND.navy,
       dark: BRAND.navyDeep,
-      light: '#3D7BB8',
-      500: '#0099FF'
+      light: '#2E7FBF',
+      500: '#009EDB'
     },
     info: {
       main: BRAND.blue
@@ -81,7 +81,7 @@ export default createTheme({
       statusOk: '#189a58',
       orange: '#F39C38',
       purple: '#A996D8',
-      blue: '#0099FF',
+      blue: '#009EDB',
       green: '#72C300',
       gray: '#F6F6F6',
       lightGreen: '#ADEAC0',
@@ -103,7 +103,7 @@ export default createTheme({
       dark: '#233944',
       green: '#72C300',
       red: '#EA4022',
-      blue: '#0099FF',
+      blue: '#009EDB',
       orange: '#fec832'
     },
     flags: {
@@ -190,7 +190,7 @@ export default createTheme({
     MuiCssBaseline: {
       styleOverrides: {
         '::selection': {
-          backgroundColor: 'rgba(28, 171, 226, 0.28)'
+          backgroundColor: 'rgba(0, 158, 219, 0.28)'
         },
         '*::-webkit-scrollbar': {
           width: 10,
@@ -200,10 +200,10 @@ export default createTheme({
           backgroundColor: 'transparent'
         },
         '*::-webkit-scrollbar-thumb': {
-          backgroundColor: 'rgba(11, 59, 117, 0.2)',
+          backgroundColor: 'rgba(0, 90, 156, 0.2)',
           borderRadius: 8,
           '&:hover': {
-            backgroundColor: 'rgba(11, 59, 117, 0.32)'
+            backgroundColor: 'rgba(0, 90, 156, 0.32)'
           }
         }
       }
@@ -221,15 +221,15 @@ export default createTheme({
         root: {
           borderRadius: 16,
           border: `1px solid ${BRAND.border}`,
-          boxShadow: '0 10px 30px rgba(11, 59, 117, 0.08)'
+          boxShadow: '0 10px 30px rgba(0, 90, 156, 0.08)'
         }
       }
     },
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundImage: `linear-gradient(100deg, ${BRAND.navyDeep} 0%, ${BRAND.navy} 48%, #1479B4 100%)`,
-          boxShadow: '0 2px 18px rgba(7, 44, 89, 0.28)'
+          backgroundImage: `linear-gradient(100deg, ${BRAND.blueDark} 0%, ${BRAND.blue} 100%)`,
+          boxShadow: '0 2px 18px rgba(0, 158, 219, 0.28)'
         }
       }
     },
@@ -237,7 +237,7 @@ export default createTheme({
       styleOverrides: {
         paper: {
           borderRight: `1px solid ${BRAND.border}`,
-          backgroundColor: '#FBFCFE'
+          backgroundColor: '#F7FBFE'
         }
       }
     },
@@ -257,14 +257,14 @@ export default createTheme({
         },
         contained: {
           '&:hover': {
-            boxShadow: '0 8px 18px rgba(11, 59, 117, 0.2)'
+            boxShadow: '0 8px 18px rgba(0, 90, 156, 0.2)'
           }
         },
         outlined: {
-          borderColor: 'rgba(11, 59, 117, 0.22)',
+          borderColor: 'rgba(0, 90, 156, 0.22)',
           '&:hover': {
-            borderColor: 'rgba(11, 59, 117, 0.45)',
-            backgroundColor: 'rgba(11, 59, 117, 0.04)'
+            borderColor: 'rgba(0, 90, 156, 0.45)',
+            backgroundColor: 'rgba(0, 90, 156, 0.04)'
           }
         }
       }
@@ -282,7 +282,7 @@ export default createTheme({
           backgroundColor: BRAND.surface,
           borderRadius: 8,
           '&:hover .MuiOutlinedInput-notchedOutline': {
-            borderColor: 'rgba(11, 59, 117, 0.35)'
+            borderColor: 'rgba(0, 90, 156, 0.35)'
           },
           '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
             borderWidth: 2,
@@ -307,7 +307,7 @@ export default createTheme({
           padding: '12px 16px'
         },
         head: {
-          backgroundColor: '#F7FAFD',
+          backgroundColor: '#F4F9FD',
           color: BRAND.muted,
           fontSize: '0.75rem',
           fontWeight: 700,
@@ -324,7 +324,7 @@ export default createTheme({
       styleOverrides: {
         root: {
           '&.MuiTableRow-hover:hover': {
-            backgroundColor: 'rgba(28, 171, 226, 0.06)'
+            backgroundColor: 'rgba(0, 158, 219, 0.06)'
           }
         }
       }
@@ -413,13 +413,13 @@ export default createTheme({
           borderRadius: 8,
           color: BRAND.ink,
           '&:hover': {
-            backgroundColor: 'rgba(11, 59, 117, 0.05)'
+            backgroundColor: 'rgba(0, 90, 156, 0.05)'
           },
           '&.Mui-selected': {
             backgroundColor: BRAND.blueSoft,
             color: BRAND.navyDeep,
             '&:hover': {
-              backgroundColor: '#D8F0FB'
+              backgroundColor: '#D6EEF9'
             },
             '& .MuiListItemIcon-root': {
               color: BRAND.blueDark

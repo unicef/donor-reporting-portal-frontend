@@ -22,9 +22,11 @@ import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined';
 import LayersOutlinedIcon from '@mui/icons-material/LayersOutlined';
 import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined';
 import MenuBookOutlinedIcon from '@mui/icons-material/MenuBookOutlined';
+import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
 import PrivacyTipOutlinedIcon from '@mui/icons-material/PrivacyTipOutlined';
 import PublicOutlinedIcon from '@mui/icons-material/PublicOutlined';
 import ReceiptLongOutlinedIcon from '@mui/icons-material/ReceiptLongOutlined';
+import SupportAgentOutlinedIcon from '@mui/icons-material/SupportAgentOutlined';
 import TuneOutlinedIcon from '@mui/icons-material/TuneOutlined';
 
 import {
@@ -36,6 +38,7 @@ import {
   USERS_PORTAL,
   USERS_PORTAL_PATH,
   TRAINING_LINK,
+  DRP_OPEN_TICKET_URL,
   ADMIN,
   GAVI_REPORTS,
   GAVI_REPORTS_CTN,
@@ -282,6 +285,24 @@ export default function ConnectedDrawer({ mobileOpen = false, onClose, showDrawe
         </Box>
 
         <Box className={classes.footer}>
+          {isSuperUser && (
+            <ListItemButton
+              component="a"
+              href={DRP_OPEN_TICKET_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open a DRP ticket in ServiceNow (opens in a new tab)"
+              sx={{ mb: 0.5 }}
+            >
+              <ListItemIcon>
+                <SupportAgentOutlinedIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText primary="DRP open ticket" />
+              <OpenInNewOutlinedIcon
+                sx={{ fontSize: 16, color: theme.palette.text.secondary }}
+              />
+            </ListItemButton>
+          )}
           <ListItemButton onClick={openPrivacyPolicy}>
             <ListItemIcon>
               <PrivacyTipOutlinedIcon fontSize="small" />
