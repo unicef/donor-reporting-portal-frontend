@@ -116,6 +116,16 @@ export const GAVI_SECTION_PATHS = [
 export const isGaviSectionPath = pathname =>
   GAVI_SECTION_PATHS.some(path => pathname === path || pathname.startsWith(`${path}/`));
 
+export const REPORT_SECTION_PATHS = [
+  SEARCH_REPORTS_PATH,
+  POOLED_GRANTS_PATH,
+  THEMATIC_GRANTS_PATH,
+  ...GAVI_SECTION_PATHS
+];
+
+export const isReportSectionPath = pathname =>
+  REPORT_SECTION_PATHS.some(path => pathname === path || pathname.startsWith(`${path}/`));
+
 export const BACKEND_PROPERTIES_USER_LAST_LOGIN = 'user_last_login';
 export const BACKEND_PROPERTIES_USER_FIRST_NAME = 'user_first_name';
 export const BACKEND_PROPERTIES_USER_LAST_NAME = 'user_last_name';

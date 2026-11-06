@@ -24,8 +24,8 @@ import PrivacyTipOutlinedIcon from '@mui/icons-material/PrivacyTipOutlined';
 import horizontalLogo from '../assets/images/UNICEF_White_Horizontal.png';
 import ErrorsSnackbar from './Errors-Snackbar';
 import SuccessSnackbar from './Success-Snackbar';
-import { selectUserProfile } from 'selectors/ui-flags';
-import { APP_BAR_HEIGHT, isGaviSectionPath } from 'lib/constants';
+import { selectDonorCode, selectDonorName, selectUserProfile } from 'selectors/ui-flags';
+import { APP_BAR_HEIGHT, isGaviSectionPath, isReportSectionPath } from 'lib/constants';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -167,11 +167,20 @@ export default function AppToolbar({ onMenuClick, showMenuButton = false }) {
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
   const [accountAnchor, setAccountAnchor] = useState(null);
   const profile = useSelector(selectUserProfile);
+  const donorName = useSelector(selectDonorName);
+  const donorCode = useSelector(selectDonorCode);
   const userName = profile?.username || profile?.email || '';
   const isGaviSection = isGaviSectionPath(location.pathname);
-  const portalName = isGaviSection
-    ? 'Donor Reporting Portal - GAVI'
-    : 'Donor Reporting Portal';
+  const isReportSection = isReportSectionPath(location.pathname);
+  const donorLabel = donorName
+    ? `${donorName}${donorCode ? ` (${donorCode})` : ''}`
+    : '';
+  const portalName =
+    isReportSection && donorLabel
+      ? `Donor Reporting Portal - ${donorLabel}`
+      : isGaviSection
+        ? 'Donor Reporting Portal - GAVI'
+        : 'Donor Reporting Portal';
 
   useEffect(() => {
     document.title = portalName;
