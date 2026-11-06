@@ -4,9 +4,53 @@ import clsx from 'clsx';
 const useFilterStyles = makeStyles(theme =>
   ({
     filterContainer: {
-      borderRadius: 8,
-      padding: `${theme.spacing(3)} ${theme.spacing(2)} ${theme.spacing(2)}`,
-      background: theme.palette.common.white
+      borderRadius: 12,
+      padding: `${theme.spacing(2.5)} ${theme.spacing(2.5)} ${theme.spacing(2)}`,
+      background: theme.palette.common.white,
+      border: `1px solid ${theme.palette.divider}`,
+      boxShadow: '0 8px 24px rgba(0, 90, 156, 0.06)'
+    },
+    filterPaper: {
+      padding: theme.spacing(2),
+      border: `1px solid ${theme.palette.divider}`,
+      borderRadius: 12,
+      boxShadow: '0 8px 24px rgba(0, 90, 156, 0.06)',
+      [theme.breakpoints.up('md')]: {
+        padding: theme.spacing(2.5)
+      }
+    },
+    filterHeader: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: theme.spacing(1),
+      marginBottom: theme.spacing(2)
+    },
+    filterHeaderText: {
+      minWidth: 0
+    },
+    filterTitle: {
+      color: theme.palette.secondary.main,
+      fontWeight: 600
+    },
+    filterSubtitle: {
+      color: theme.palette.text.secondary
+    },
+    activeChip: {
+      backgroundColor: theme.palette.primary.light,
+      color: theme.palette.secondary.dark,
+      fontWeight: 700
+    },
+    filterActions: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      alignItems: 'center',
+      gap: theme.spacing(1.25),
+      marginTop: theme.spacing(2)
+    },
+    filterGrid: {
+      marginTop: theme.spacing(0.5)
     },
     button: {
       display: 'flex',
@@ -23,7 +67,8 @@ const useFilterStyles = makeStyles(theme =>
       boxSizing: 'initial'
     },
     filterBox: {
-      maxWidth: 360
+      maxWidth: 360,
+      width: '100%'
     },
     validationWarning: {
       color: 'red'
@@ -38,15 +83,15 @@ const useFilterStyles = makeStyles(theme =>
     },
     filterBtn: {
       cursor: 'pointer',
-      padding: '4px 16px 4px 12px',
-      fontWeight: 400,
+      padding: '6px 16px 6px 12px',
+      fontWeight: 500,
       fontSize: 14,
-      borderRadius: 14,
+      borderRadius: 8,
       lineHeight: theme.spacing(3),
-      border: `1px solid #e5eaf0;`
-    },
-    filterPaper: {
-      padding: 16
+      border: `1px solid ${theme.palette.divider}`,
+      '&:hover': {
+        backgroundColor: theme.palette.background.default
+      }
     },
     yearFilter: {
       backgroundColor: '#fafafa',
