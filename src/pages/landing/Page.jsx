@@ -18,6 +18,7 @@ import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined';
 import VerifiedUserOutlinedIcon from '@mui/icons-material/VerifiedUserOutlined';
 import { BRAND } from 'styles/theme';
+import { getCookie } from 'api/helpers';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -189,7 +190,21 @@ export default function LandingPage() {
 
   function signIn() {
     const url = window.location.origin;
-    window.location.href = `${url}/social/login/unicef-azuread-b2c-oauth2/`;
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = `${url}/social/login/unicef-azuread-b2c-oauth2/`;
+
+    const csrfToken = getCookie('csrftoken');
+    if (csrfToken) {
+      const csrfInput = document.createElement('input');
+      csrfInput.type = 'hidden';
+      csrfInput.name = 'csrfmiddlewaretoken';
+      csrfInput.value = csrfToken;
+      form.appendChild(csrfInput);
+    }
+
+    document.body.appendChild(form);
+    form.submit();
   }
 
   return (
