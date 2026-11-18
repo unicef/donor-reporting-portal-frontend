@@ -20,6 +20,16 @@ import VerifiedUserOutlinedIcon from '@mui/icons-material/VerifiedUserOutlined';
 import { BRAND } from 'styles/theme';
 import { getCookie } from 'api/helpers';
 
+async function ensureCsrfCookie() {
+  if (getCookie('csrftoken')) {
+    return;
+  }
+  await fetch(`${window.location.origin}/admin/login/`, {
+    method: 'GET',
+    credentials: 'include',
+  });
+}
+
 const useStyles = makeStyles(theme => ({
   root: {
     minHeight: '100vh',
@@ -188,8 +198,10 @@ const features = [
 export default function LandingPage() {
   const classes = useStyles();
 
-  function signIn() {
+  async function signIn() {
     const url = window.location.origin;
+    await ensureCsrfCookie();
+
     const form = document.createElement('form');
     form.method = 'POST';
     form.action = `${url}/social/login/unicef-azuread-b2c-oauth2/`;
