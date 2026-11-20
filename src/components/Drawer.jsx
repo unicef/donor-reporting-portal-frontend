@@ -18,6 +18,8 @@ import {
 
 import AssessmentOutlinedIcon from '@mui/icons-material/AssessmentOutlined';
 import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettingsOutlined';
+import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
+import ArrowForwardOutlinedIcon from '@mui/icons-material/ArrowForwardOutlined';
 import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined';
 import LayersOutlinedIcon from '@mui/icons-material/LayersOutlined';
 import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined';
@@ -245,6 +247,19 @@ export default function ConnectedDrawer({ mobileOpen = false, onClose, showDrawe
                 {navButton(SEARCH_REPORTS, 'Reports', AssessmentOutlinedIcon)}
                 {navButton(POOLED_GRANTS, 'Pooled Grants', LayersOutlinedIcon)}
                 {navButton(THEMATIC_GRANTS, 'Thematic Grants', CategoryOutlinedIcon)}
+                <ListItemButton
+                  onClick={() => {
+                    navigate('/gavi');
+                    if (onClose) {
+                      onClose();
+                    }
+                  }}
+                >
+                  <ListItemIcon>
+                    <ArrowForwardOutlinedIcon fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText primary="Gavi" />
+                </ListItemButton>
               </>
             )}
 
@@ -254,6 +269,19 @@ export default function ConnectedDrawer({ mobileOpen = false, onClose, showDrawe
                 {navButton(COVAX, 'Covax', PublicOutlinedIcon)}
                 {navButton(GAVI_REPORTS_CTN, 'Gavi Adjusting CTNs', TuneOutlinedIcon)}
                 {navButton(GAVI_STATEMENTS_ACC, 'Gavi Statements of Account', ReceiptLongOutlinedIcon)}
+                <ListItemButton
+                  onClick={() => {
+                    navigate('/');
+                    if (onClose) {
+                      onClose();
+                    }
+                  }}
+                >
+                  <ListItemIcon>
+                    <ArrowBackOutlinedIcon fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText primary="DRP" />
+                </ListItemButton>
               </>
             )}
           </List>
