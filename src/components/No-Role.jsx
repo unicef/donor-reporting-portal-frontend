@@ -1,27 +1,32 @@
 import React, { useEffect } from 'react';
-import { Grid, Card, CardContent, Typography } from '@mui/material';
+import { Box, Button } from '@mui/material';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
+import EmptyState from './EmptyState';
 
 export default function NoRole() {
   const { trackPageView } = useMatomo();
 
   useEffect(() => {
-    trackPageView()
+    trackPageView();
   }, []);
 
+  function signOut() {
+    window.location.href = `/security/unicef-logout/`;
+  }
+
   return (
-    <Grid container sx={{ justifyContent: 'center', alignItems: 'center' }}>
-      <Grid size={{ xs: 4 }}>
-        <Card>
-          <CardContent>
-            <Typography variant="h5" gutterBottom>
-              Unassigned Role
-          </Typography>
-            <Typography variant="h5" component="h2" />
-            <Typography>You currently do not have access to Donor Reporting Portal, please reach out your focal point.</Typography>
-          </CardContent>
-        </Card>
-      </Grid>
-    </Grid >
+    <Box sx={{ maxWidth: 720, mx: 'auto' }}>
+      <EmptyState
+        icon={<LockOutlinedIcon />}
+        title="No portal access assigned"
+        description="You currently do not have access to the Donor Reporting Portal. Please reach out to your focal point to request a role."
+        action={
+          <Button variant="outlined" color="secondary" onClick={signOut}>
+            Sign out
+          </Button>
+        }
+      />
+    </Box>
   );
 }

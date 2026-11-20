@@ -20,6 +20,15 @@ export default function EnhancedTableHead(props) {
             align={headCell.align || 'left'}
             padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
+            aria-sort={
+              headCell.sortable
+                ? orderBy === headCell.id
+                  ? order === 'asc'
+                    ? 'ascending'
+                    : 'descending'
+                  : 'none'
+                : undefined
+            }
           >
             {headCell.sortable ? (
               <TableSortLabel

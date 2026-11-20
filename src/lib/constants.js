@@ -1,4 +1,5 @@
-export const DRAWER_WIDTH = 224;
+export const DRAWER_WIDTH = 256;
+export const APP_BAR_HEIGHT = 72;
 export const FORM_CONFIG = {
   grant: {
     label: 'Grant'
@@ -70,6 +71,7 @@ export const REPORTS = 'reports';
 export const ADMIN = 'admin';
 export const SEARCH_REPORTS = 'reports';
 export const THEMATIC_GRANTS = 'thematic-grants';
+export const GAVI = 'gavi';
 export const COVAX = 'covax';
 export const GAVI_REPORTS = 'gavi-reports';
 export const GAVI_REPORTS_CTN = 'gavi-reports-ctn';
@@ -80,6 +82,8 @@ export const REPORTS_PATH = `/${REPORTS}`;
 export const SEARCH_REPORTS_PATH = `/${SEARCH_REPORTS}`;
 export const TRAINING_LINK =
   'https://unicef.sharepoint.com/sites/DFAM-DRP/DocumentLibrary1/Forms/AllItems.aspx?viewid=b5d1ef12%2D2815%2D458e%2Da2d3%2D8fcc9f75e7e0&id=%2Fsites%2FDFAM%2DDRP%2FDocumentLibrary1%2FGo%20Live%20Planning%2FTraining';
+export const DRP_OPEN_TICKET_URL =
+  'https://unicef.service-now.com/cc?id=sc_cat_item&sys_id=c8e43760db622450f65a2aea4b9619ad&sysparm_category=c6ab1444db5b5700085184735b961920';
 
 // export const TABLE_PAGES = [REPORTS, THEMATIC_GRANTS, USERS_PORTAL];
 export const TABLE_PAGES = [
@@ -87,17 +91,41 @@ export const TABLE_PAGES = [
   POOLED_GRANTS,
   THEMATIC_GRANTS,
   USERS_PORTAL,
+  GAVI,
   GAVI_REPORTS,
   GAVI_REPORTS_CTN,
   GAVI_STATEMENTS_ACC,
   COVAX
 ];
 export const THEMATIC_GRANTS_PATH = `/${THEMATIC_GRANTS}`;
+export const GAVI_PATH = `/${GAVI}`;
 export const COVAX_PATH = `/${COVAX}`;
 export const GAVI_REPORTS_PATH = `/${GAVI_REPORTS}`;
 export const GAVI_REPORTS_CTN_PATH = `/${GAVI_REPORTS_CTN}`;
 export const GAVI_STATEMENTS_ACC_PATH = `/${GAVI_STATEMENTS_ACC}`;
 export const POOLED_GRANTS_PATH = `/${POOLED_GRANTS}`;
+
+export const GAVI_SECTION_PATHS = [
+  GAVI_PATH,
+  GAVI_REPORTS_PATH,
+  COVAX_PATH,
+  GAVI_REPORTS_CTN_PATH,
+  GAVI_STATEMENTS_ACC_PATH
+];
+
+export const isGaviSectionPath = pathname =>
+  GAVI_SECTION_PATHS.some(path => pathname === path || pathname.startsWith(`${path}/`));
+
+export const REPORT_SECTION_PATHS = [
+  SEARCH_REPORTS_PATH,
+  POOLED_GRANTS_PATH,
+  THEMATIC_GRANTS_PATH,
+  ...GAVI_SECTION_PATHS
+];
+
+export const isReportSectionPath = pathname =>
+  REPORT_SECTION_PATHS.some(path => pathname === path || pathname.startsWith(`${path}/`));
+
 export const BACKEND_PROPERTIES_USER_LAST_LOGIN = 'user_last_login';
 export const BACKEND_PROPERTIES_USER_FIRST_NAME = 'user_first_name';
 export const BACKEND_PROPERTIES_USER_LAST_NAME = 'user_last_name';
@@ -141,6 +169,7 @@ export const PAGE_TITLE_MAP = {
   [REPORTS]: 'Reports',
   [SEARCH_REPORTS]: 'Reports',
   [THEMATIC_GRANTS]: 'Thematic Grants',
+  [GAVI]: 'Gavi',
   [COVAX]: 'Covax',
   [GAVI_REPORTS]: 'Gavi Reports',
   [GAVI_REPORTS_CTN]: 'Gavi Adjusting CTNs',

@@ -9,16 +9,19 @@ import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import PropTypes from 'prop-types';
-import { Link, Tooltip, TableContainer, Box } from '@mui/material';
+import { Link, Tooltip, TableContainer, Box, LinearProgress } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import FiberNewIcon from '@mui/icons-material/FiberNew';
+import FilterAltOffOutlinedIcon from '@mui/icons-material/FilterAltOffOutlined';
 
 import { useTableStyles } from 'styles/table-styles';
 import EnhancedTableToolbar from './table-toolbar';
 import EnhancedTableHead from './table-head';
+import EmptyState from 'components/EmptyState';
 import { selectSearchReports } from 'selectors/collections';
+import { selectLoading } from 'selectors/ui-flags';
 import { usePermissions } from 'components/PermissionRedirect';
 import {
   useTable,
@@ -143,6 +146,7 @@ export default function ReportsTable() {
 
   const { isUnicefUser } = usePermissions();
   const data = useSelector(selectSearchReports);
+  const loading = useSelector(selectLoading);
   const pageName = useSelector(selectMenuBarPage);
   const rows = data.items || [];
   const certifiedReports = pageName !== THEMATIC_GRANTS;
@@ -190,16 +194,21 @@ export default function ReportsTable() {
       <>
         <TableRow {...otherProps}>
           <TableCell padding="checkbox">
-            <IconButton onClick={() => setIsExpanded(!isExpanded)}>
-              {isExpanded ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            <IconButton
+              size="small"
+              aria-label={isExpanded ? 'Collapse report details' : 'Expand report details'}
+              aria-expanded={isExpanded}
+              onClick={() => setIsExpanded(!isExpanded)}
+            >
+              {isExpanded ? <KeyboardArrowUpIcon fontSize="small" /> : <KeyboardArrowDownIcon fontSize="small" />}
             </IconButton>
           </TableCell>
           {children}
         </TableRow>
         {isExpanded && (
-          <TableRow bgcolor="#eeeeee">
+          <TableRow className={classes.detailsRow}>
             <TableCell padding="checkbox" />
-            <TableCell colSpan={getTableNumOfCells()}>
+            <TableCell colSpan={Math.max(getTableNumOfCells() - 1, 1)}>
               {getRowDetails(rowData)}
             </TableCell>
           </TableRow>
@@ -375,7 +384,7 @@ export default function ReportsTable() {
         >
           <Tooltip title={row.number ? row.number : ''}>
             <Typography className={classes.overflow}>
-              <Link color="secondary" href={row.download_url} target="_blank">
+              <Link color="secondary" href={row.download_url} target="_blank" rel="noopener noreferrer">
                 {row.is_new && (
                   <FiberNewIcon fontSize="small" className={classes.icon} color="error" />
                 )}
@@ -436,7 +445,7 @@ export default function ReportsTable() {
         >
           <Tooltip title={row.grant_number || 'N/A'}>
             <Typography className={classes.overflow}>
-              <Link color="secondary" href={row.download_url} target="_blank">
+              <Link color="secondary" href={row.download_url} target="_blank" rel="noopener noreferrer">
                 {row.is_new && (
                   <FiberNewIcon fontSize="small" className={classes.icon} color="error" />
                 )}
@@ -486,7 +495,7 @@ export default function ReportsTable() {
         >
           <Tooltip title={row.title ? row.title : ''}>
             <Typography className={classes.overflow}>
-              <Link color="secondary" href={row.download_url} target="_blank">
+              <Link color="secondary" href={row.download_url} target="_blank" rel="noopener noreferrer">
                 {row.is_new && (
                   <FiberNewIcon fontSize="small" className={classes.icon} color="error" />
                 )}
@@ -571,24 +580,40 @@ export default function ReportsTable() {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar />
-        <TableContainer className={classes.tableContainer} aria-label="sticky table">
-          <Table stickyHeader className={classes.table} aria-labelledby="tableTitle" size="medium">
-            <EnhancedTableHead
-              cells={headCells}
-              classes={classes}
-              order={order}
-              orderBy={orderBy}
-              onRequestSort={handleRequestSort}
-              rowCount={rows.length}
-            />
-            <TableBody>
-              {stableSort(rows, getSorting(order, orderBy)).map((row, index) => {
-                return getTableContent(index, row);
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <EnhancedTableToolbar
+          count={typeof data.total_rows === 'number' ? data.total_rows : rows.length}
+        />
+        <div className={classes.tableWrap}>
+          {loading && <LinearProgress className={classes.loadingBar} color="secondary" />}
+          <TableContainer className={classes.tableContainer} aria-label="Report results">
+            <Table stickyHeader className={classes.table} aria-labelledby="tableTitle" size="medium">
+              <EnhancedTableHead
+                cells={headCells}
+                classes={classes}
+                order={order}
+                orderBy={orderBy}
+                onRequestSort={handleRequestSort}
+                rowCount={rows.length}
+              />
+              <TableBody>
+                {stableSort(rows, getSorting(order, orderBy)).map((row, index) => {
+                  return getTableContent(index, row);
+                })}
+                {!loading && rows.length === 0 && (
+                  <TableRow>
+                    <TableCell colSpan={getTableNumOfCells()} className={classes.emptyLine}>
+                      <EmptyState
+                        icon={<FilterAltOffOutlinedIcon />}
+                        title="No reports found"
+                        description="Try removing one or more filters, or clear all filters to see the full library."
+                      />
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
         <TablePagination
           rowsPerPageOptions={[25]}
           component="div"

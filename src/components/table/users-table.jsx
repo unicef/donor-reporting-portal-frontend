@@ -5,18 +5,20 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import { useTableStyles } from 'styles/table-styles';
 import EnhancedTableHead from './table-head';
 import EnhancedTableToolbar from './table-toolbar';
 import AddUserModal from 'pages/users-portal/components/add-user-modal';
-import { Button, Box } from '@mui/material';
+import { Button, Box, LinearProgress } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 import { selectUserRoles } from 'selectors/user';
 import { BACKEND_PROPERTIES_USER_LAST_LOGIN } from '../../lib/constants';
 import { stableSort, getSorting } from './lib';
 import { selectLoading, selectUserDonor } from 'selectors/ui-flags';
 import UserRowItem from './user-row-item';
+import EmptyState from 'components/EmptyState';
+import PersonOffOutlinedIcon from '@mui/icons-material/PersonOffOutlined';
 import DeleteUserDialog from 'components/DeleteUserDialog';
 import { deleteUserRole } from 'actions';
 import { useDispatch } from 'react-redux';
@@ -24,7 +26,7 @@ import { useMatomo } from '@datapunt/matomo-tracker-react';
 import { usePermissions } from '../../components/PermissionRedirect';
 import {selectConfig} from 'selectors/collections';
 
-let headCells = [
+const headCells = [
   { id: 'user_first_name', numeric: false, disablePadding: false, label: 'Name', sortable: true },
   { id: 'user_email', numeric: false, disablePadding: false, label: 'Email', sortable: true },
   { id: 'group_name', numeric: false, disablePadding: false, label: 'Role', sortable: true },
@@ -106,58 +108,73 @@ export default function UsersTable() {
   const emptyRows =
     users.length === 0 ? 1 : rowsPerPage - Math.min(rowsPerPage, users.length - page * rowsPerPage);
   const loading = useSelector(selectLoading);
-  if (!hasEditRights) {
-    headCells = headCells.filter(x => x.id !== 'actions');
-  }
+  const visibleHeadCells = hasEditRights
+    ? headCells
+    : headCells.filter(cell => cell.id !== 'actions');
 
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        {hasEditRights && (
-          <EnhancedTableToolbar>
+        <EnhancedTableToolbar count={users.length}>
+          {hasEditRights && (
             <Box sx={{ display: 'flex' }}>
               <Button
                 onClick={openAddUserModal}
                 className={classes.addBtn}
                 color="secondary"
                 variant="contained"
+                startIcon={<AddIcon />}
               >
-                Add User
+                Add user
               </Button>
             </Box>
-          </EnhancedTableToolbar>
-        )}
-        <div className={classes.tableWrapper}>
-          <Table className={classes.table} aria-labelledby="tableTitle" size="medium">
-            <EnhancedTableHead
-              cells={headCells}
-              classes={classes}
-              order={order}
-              orderBy={orderBy}
-              onRequestSort={handleRequestSort}
-              rowCount={users.length}
-            />
-            <TableBody>
-              {stableSort(users, getSorting(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((user, index) => (
-                  <UserRowItem user={user} isGaviDonor={isGaviDonor} key={index} showActions={hasEditRights} onClickEdit={(user) => handleClickEdit(user)} onClickDelete={(user) => handleClickDelete(user)} />
-                ))}
+          )}
+        </EnhancedTableToolbar>
+        <div className={classes.tableWrap}>
+          {loading && <LinearProgress className={classes.loadingBar} color="secondary" />}
+          <div className={classes.tableWrapper}>
+            <Table className={classes.table} aria-labelledby="tableTitle" size="medium">
+              <EnhancedTableHead
+                cells={visibleHeadCells}
+                classes={classes}
+                order={order}
+                orderBy={orderBy}
+                onRequestSort={handleRequestSort}
+                rowCount={users.length}
+              />
+              <TableBody>
+                {stableSort(users, getSorting(order, orderBy))
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((user, index) => (
+                    <UserRowItem
+                      user={user}
+                      isGaviDonor={isGaviDonor}
+                      key={index}
+                      showActions={hasEditRights}
+                      onClickEdit={user => handleClickEdit(user)}
+                      onClickDelete={user => handleClickDelete(user)}
+                    />
+                  ))}
 
-              <TableRow>
-                <TableCell colSpan={4} className={classes.emptyLine}>
-                  {!loading && users.length == 0 && (
-                    <Typography color="primary">0 results returned</Typography>
-                  )}
-                </TableCell>
-              </TableRow>
-              {users.length > 1 && emptyRows > 0 && (
-                <TableRow style={{ height: 49 * emptyRows }}>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
+                {!loading && users.length === 0 && (
+                  <TableRow>
+                    <TableCell colSpan={visibleHeadCells.length} className={classes.emptyLine}>
+                      <EmptyState
+                        icon={<PersonOffOutlinedIcon />}
+                        title="No users found"
+                        description="Adjust the search or role filter, or add a new user to get started."
+                      />
+                    </TableCell>
+                  </TableRow>
+                )}
+                {users.length > 1 && emptyRows > 0 && (
+                  <TableRow style={{ height: 49 * emptyRows }}>
+                    <TableCell colSpan={visibleHeadCells.length} />
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
         </div>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
