@@ -14,6 +14,7 @@ import FiberNewIcon from '@mui/icons-material/FiberNew';
 import { useTableStyles } from 'styles/table-styles';
 import EnhancedTableToolbar from './table-toolbar';
 import EnhancedTableHead from './table-head';
+import TableLoadingRow from './table-loading-row';
 import { selectReports } from 'selectors/collections';
 import { usePermissions } from 'components/PermissionRedirect';
 import { useTable, getDisplayDate, stableSort, getSorting } from './lib';
@@ -23,7 +24,7 @@ import {
   BACKEND_THEMATIC_FIELDS,
   EXTERNAL_REF_GRANT_FIELD
 } from '../../pages/reports/constants';
-import { selectMenuBarPage } from 'selectors/ui-flags';
+import { selectLoading, selectMenuBarPage } from 'selectors/ui-flags';
 import { THEMATIC_GRANTS, REPORTS } from 'lib/constants';
 
 export function getRecipientOfficeStr(report) {
@@ -68,6 +69,7 @@ export default function ReportsTable() {
   const { isUnicefUser } = usePermissions();
 
   const rows = useSelector(selectReports);
+  const loading = useSelector(selectLoading);
   const pageName = useSelector(selectMenuBarPage);
   const certifiedReports = pageName === REPORTS;
   const headCells =
@@ -102,7 +104,8 @@ export default function ReportsTable() {
               rowCount={rows.length}
             />
             <TableBody>
-              {stableSort(rows, getSorting(order, orderBy))
+              {loading && <TableLoadingRow colSpan={headCells.length} label="Loading reports..." />}
+              {!loading && stableSort(rows, getSorting(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const labelId = `enhanced-table-checkbox-${index}`;

@@ -9,7 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import PropTypes from 'prop-types';
-import { Link, Tooltip, TableContainer, Box, LinearProgress } from '@mui/material';
+import { Link, Tooltip, TableContainer, Box } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
@@ -20,6 +20,7 @@ import { useTableStyles } from 'styles/table-styles';
 import EnhancedTableToolbar from './table-toolbar';
 import EnhancedTableHead from './table-head';
 import EmptyState from 'components/EmptyState';
+import TableLoadingRow from './table-loading-row';
 import { selectSearchReports } from 'selectors/collections';
 import { selectLoading } from 'selectors/ui-flags';
 import { usePermissions } from 'components/PermissionRedirect';
@@ -584,7 +585,6 @@ export default function ReportsTable() {
           count={typeof data.total_rows === 'number' ? data.total_rows : rows.length}
         />
         <div className={classes.tableWrap}>
-          {loading && <LinearProgress className={classes.loadingBar} color="secondary" />}
           <TableContainer className={classes.tableContainer} aria-label="Report results">
             <Table stickyHeader className={classes.table} aria-labelledby="tableTitle" size="medium">
               <EnhancedTableHead
@@ -596,7 +596,8 @@ export default function ReportsTable() {
                 rowCount={rows.length}
               />
               <TableBody>
-                {stableSort(rows, getSorting(order, orderBy)).map((row, index) => {
+                {loading && <TableLoadingRow colSpan={getTableNumOfCells()} label="Loading reports..." />}
+                {!loading && stableSort(rows, getSorting(order, orderBy)).map((row, index) => {
                   return getTableContent(index, row);
                 })}
                 {!loading && rows.length === 0 && (

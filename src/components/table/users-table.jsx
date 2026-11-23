@@ -10,13 +10,14 @@ import { useTableStyles } from 'styles/table-styles';
 import EnhancedTableHead from './table-head';
 import EnhancedTableToolbar from './table-toolbar';
 import AddUserModal from 'pages/users-portal/components/add-user-modal';
-import { Button, Box, LinearProgress } from '@mui/material';
+import { Button, Box } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { selectUserRoles } from 'selectors/user';
 import { BACKEND_PROPERTIES_USER_LAST_LOGIN } from '../../lib/constants';
 import { stableSort, getSorting } from './lib';
 import { selectLoading, selectUserDonor } from 'selectors/ui-flags';
 import UserRowItem from './user-row-item';
+import TableLoadingRow from './table-loading-row';
 import EmptyState from 'components/EmptyState';
 import PersonOffOutlinedIcon from '@mui/icons-material/PersonOffOutlined';
 import DeleteUserDialog from 'components/DeleteUserDialog';
@@ -131,7 +132,6 @@ export default function UsersTable() {
           )}
         </EnhancedTableToolbar>
         <div className={classes.tableWrap}>
-          {loading && <LinearProgress className={classes.loadingBar} color="secondary" />}
           <div className={classes.tableWrapper}>
             <Table className={classes.table} aria-labelledby="tableTitle" size="medium">
               <EnhancedTableHead
@@ -143,7 +143,8 @@ export default function UsersTable() {
                 rowCount={users.length}
               />
               <TableBody>
-                {stableSort(users, getSorting(order, orderBy))
+                {loading && <TableLoadingRow colSpan={visibleHeadCells.length} label="Loading users..." />}
+                {!loading && stableSort(users, getSorting(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((user, index) => (
                     <UserRowItem

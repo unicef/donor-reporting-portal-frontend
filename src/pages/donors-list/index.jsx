@@ -6,7 +6,6 @@ import {
   Box,
   Chip,
   InputAdornment,
-  LinearProgress,
   Paper,
   Table,
   TableBody,
@@ -24,6 +23,7 @@ import { makeStyles } from 'styles/makeStyles';
 import { selectDonors } from 'selectors/collections';
 import Loader from 'components/Loader';
 import EmptyState from 'components/EmptyState';
+import TableLoadingRow from 'components/table/table-loading-row';
 import { selectLoading } from 'selectors/ui-flags';
 import { usePagination } from 'components/table/lib/pagination';
 import { POOLED_GRANTS, SEARCH_REPORTS, THEMATIC_GRANTS } from 'lib/constants';
@@ -165,7 +165,6 @@ export default function DonorsList() {
       </Box>
 
       <Paper className={classes.paper} elevation={0}>
-        {loading && <LinearProgress className={classes.loadingBar} color="secondary" />}
         <Box className={classes.searchBar}>
           <TextField
             className={classes.searchField}
@@ -201,7 +200,8 @@ export default function DonorsList() {
             </TableHead>
 
             <TableBody>
-              {filteredList
+              {loading && <TableLoadingRow colSpan={2} label="Loading donors..." />}
+              {!loading && filteredList
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(row => (
                   <TableRow hover key={row.code}>
