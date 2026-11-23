@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -126,7 +126,6 @@ export const useNav = () => {
   }
 
   function goHome() {
-    dispatch(menuItemSelected(SEARCH_REPORTS));
     navigate('/');
   }
 
@@ -136,20 +135,15 @@ export const useNav = () => {
 export default function ConnectedDrawer({ mobileOpen = false, onClose, showDrawer = false }) {
   const classes = useStyles();
   const theme = useTheme();
-  const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
 
-  const { isUnicefUser, isSuperUser, isGaviDonor } = usePermissions();
+  const { isUnicefUser, isSuperUser } = usePermissions();
   const config = useSelector(selectConfig);
   const donors = useSelector(selectDonors);
   const [resolvingGaviDonor, setResolvingGaviDonor] = useState(false);
   const isGaviSection = isGaviSectionPath(location.pathname);
-
-  useEffect(() => {
-    dispatch(menuItemSelected(isGaviDonor ? GAVI_REPORTS : SEARCH_REPORTS));
-  }, []);
 
   const { handleNav, navSelected } = useNav();
 
@@ -250,7 +244,9 @@ export default function ConnectedDrawer({ mobileOpen = false, onClose, showDrawe
                 {navButton(THEMATIC_GRANTS, 'Thematic Grants', CategoryOutlinedIcon)}
                 <ListItemButton
                   onClick={() => {
-                    dispatch(menuItemSelected(GAVI_REPORTS));
+                    // The route change updates the selected menu item. Dispatching it here
+                    // would re-render the still-mounted report page and fire a search for
+                    // the new page before navigation finishes.
                     navigate('/gavi');
                     if (onClose) {
                       onClose();
@@ -273,7 +269,8 @@ export default function ConnectedDrawer({ mobileOpen = false, onClose, showDrawe
                 {navButton(GAVI_STATEMENTS_ACC, 'Gavi Statements of Account', ReceiptLongOutlinedIcon)}
                 <ListItemButton
                   onClick={() => {
-                    dispatch(menuItemSelected(SEARCH_REPORTS));
+                    // See the Gavi link above: let the route drive menu selection so a
+                    // report fetch is never started against a donor that isn't loaded.
                     navigate('/');
                     if (onClose) {
                       onClose();

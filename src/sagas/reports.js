@@ -194,13 +194,14 @@ function* handleFetchReports({
   payload
 }) {
   try {
-    yield put(setLoading(true));
-
+    // Resolve the caller first so a blocked wait for config/donor data cannot
+    // leave the global loading overlay stuck.
     const {
       caller,
       params,
       arg
     } = yield call(getCallerFunc, payload);
+    yield put(setLoading(true));
 
     const reports = yield call(caller, params, arg);
     yield put(onReceiveReports(reports));

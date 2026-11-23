@@ -138,9 +138,11 @@ function* getSearchCallerFunc(payload) {
 
 function* handleFetchSearchReports({ payload }) {
   try {
-    yield put(setLoading(true));
-
+    // Get the caller/params first. Waiting for config or a donor must not hold
+    // the global loading overlay open (e.g. a stale search triggered while
+    // navigating away from a report page).
     const { caller, params, arg } = yield call(getSearchCallerFunc, payload);
+    yield put(setLoading(true));
 
     const searchReports = yield call(caller, params, arg);
     yield put(onReceiveSearchReports(searchReports));
