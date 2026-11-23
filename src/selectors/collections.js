@@ -17,6 +17,15 @@ export const selectSearchReportsData = createSelector(
   selectSearchReports,
   reports => reports.items
 );
+export const selectResultCount = createSelector(
+  [selectReports, selectSearchReports],
+  (reports, searchReports) => {
+    if (typeof searchReports?.total_rows === 'number') {
+      return searchReports.total_rows;
+    }
+    return Array.isArray(reports) ? reports.length : undefined;
+  }
+);
 export const selectYears = createSelector(
   selectStaticAssets,
   assets => assets.report_years
