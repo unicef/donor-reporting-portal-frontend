@@ -2,7 +2,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { equals } from 'ramda';
 import { useLocation } from 'react-router';
-import { menuItemSelected, onRouteChange, resetLoading } from 'slices/ui';
+import { menuItemSelected, onRouteChange } from 'slices/ui';
 import { useEffect } from 'react';
 import { selectMenuBarPage, selectPageName, selectParamDonorId } from 'selectors/ui-flags';
 import { usePermissions } from './PermissionRedirect';
@@ -64,13 +64,12 @@ export default function ConnectedRouterWatcher({ children }) {
       return;
     }
 
-    // A request started on the previous page can be abandoned mid-navigation
-    // (e.g. a search waiting on a donor that is no longer selected). Its
-    // loading counter would otherwise keep the fullscreen overlay up forever.
-    // Clear it once the route has actually changed; fetches for the new page
-    // re-enable the loader themselves.
-    dispatch(resetLoading());
-
+    // Do not reset loading here. Child page effects (e.g. the search filter
+    // root) fire before this parent effect and start the new page's fetch;
+    // clearing loading afterwards would immediately hide the table spinner on
+    // Thematic Grants, Gavi, etc. Abandoned requests already release their
+    // loading slot in their saga's `finally`, and the loader is only started
+    // once a saga has resolved its config/donor inputs.
     const [page, donorId] = route;
     if (!equals(currentPageName, page) || !equals(currentDonorId, donorId)) {
       dispatch(onRouteChange({ page, donorId: donorId || null }));

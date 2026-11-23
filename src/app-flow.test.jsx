@@ -146,8 +146,7 @@ test('donor to thematic grants and back to the donor library finishes loading', 
     reducer: rootReducer,
     preloadedState: {
       ui: {
-        // Start with a stale counter to prove a route change clears the overlay.
-        loading: [1],
+        loading: false,
         page: 'donors',
         donorId: null,
         menuBarPage: 'reports',
