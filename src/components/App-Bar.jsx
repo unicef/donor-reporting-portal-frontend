@@ -291,7 +291,7 @@ export default function AppToolbar({ onMenuClick, showMenuButton = false }) {
           <ListItemIcon>
             <LogoutIcon fontSize="small" />
           </ListItemIcon>
-          Sign out
+          Sign out from Azure
         </MenuItem>
         <MenuItem onClick={logOutSession}>
           <ListItemIcon>

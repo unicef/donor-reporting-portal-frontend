@@ -25,7 +25,7 @@ export default function NoRole() {
         action={
           <Stack direction="row" spacing={1.5} flexWrap="wrap" justifyContent="center">
             <Button variant="outlined" color="secondary" onClick={signOutAzure}>
-              Sign out
+              Sign out from Azure
             </Button>
             <Button variant="outlined" color="secondary" onClick={logoutSession}>
               Log out
