@@ -20,12 +20,14 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import MenuIcon from '@mui/icons-material/Menu';
 import LogoutIcon from '@mui/icons-material/Logout';
+import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import PrivacyTipOutlinedIcon from '@mui/icons-material/PrivacyTipOutlined';
 import horizontalLogo from '../assets/images/UNICEF_White_Horizontal.png';
 import ErrorsSnackbar from './Errors-Snackbar';
 import SuccessSnackbar from './Success-Snackbar';
 import { selectDonorCode, selectDonorName, selectUserProfile } from 'selectors/ui-flags';
 import { APP_BAR_HEIGHT, isGaviSectionPath, isReportSectionPath } from 'lib/constants';
+import { logoutSession } from 'lib/session-logout';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -186,8 +188,13 @@ export default function AppToolbar({ onMenuClick, showMenuButton = false }) {
     document.title = portalName;
   }, [portalName]);
 
-  function logout() {
+  function signOutAzure() {
     window.location.href = `/security/unicef-logout/`;
+  }
+
+  function logOutSession() {
+    setAccountAnchor(null);
+    logoutSession();
   }
 
   function openPrivacyPolicy() {
@@ -280,11 +287,17 @@ export default function AppToolbar({ onMenuClick, showMenuButton = false }) {
           </ListItemIcon>
           Privacy policy
         </MenuItem>
-        <MenuItem onClick={logout}>
+        <MenuItem onClick={signOutAzure}>
           <ListItemIcon>
             <LogoutIcon fontSize="small" />
           </ListItemIcon>
           Sign out
+        </MenuItem>
+        <MenuItem onClick={logOutSession}>
+          <ListItemIcon>
+            <PowerSettingsNewIcon fontSize="small" />
+          </ListItemIcon>
+          Log out
         </MenuItem>
       </Menu>
     </AppBar>

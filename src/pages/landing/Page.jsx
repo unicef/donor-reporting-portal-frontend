@@ -19,16 +19,7 @@ import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlin
 import VerifiedUserOutlinedIcon from '@mui/icons-material/VerifiedUserOutlined';
 import { BRAND } from 'styles/theme';
 import { getCookie } from 'api/helpers';
-
-async function ensureCsrfCookie() {
-  if (getCookie('csrftoken')) {
-    return;
-  }
-  await fetch(`${window.location.origin}/admin/login/`, {
-    method: 'GET',
-    credentials: 'include',
-  });
-}
+import { ensureCsrfCookie } from 'lib/session-logout';
 
 const useStyles = makeStyles(theme => ({
   root: {
