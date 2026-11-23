@@ -126,6 +126,7 @@ export const useNav = () => {
   }
 
   function goHome() {
+    dispatch(menuItemSelected(SEARCH_REPORTS));
     navigate('/');
   }
 
@@ -249,6 +250,7 @@ export default function ConnectedDrawer({ mobileOpen = false, onClose, showDrawe
                 {navButton(THEMATIC_GRANTS, 'Thematic Grants', CategoryOutlinedIcon)}
                 <ListItemButton
                   onClick={() => {
+                    dispatch(menuItemSelected(GAVI_REPORTS));
                     navigate('/gavi');
                     if (onClose) {
                       onClose();
@@ -271,6 +273,7 @@ export default function ConnectedDrawer({ mobileOpen = false, onClose, showDrawe
                 {navButton(GAVI_STATEMENTS_ACC, 'Gavi Statements of Account', ReceiptLongOutlinedIcon)}
                 <ListItemButton
                   onClick={() => {
+                    dispatch(menuItemSelected(SEARCH_REPORTS));
                     navigate('/');
                     if (onClose) {
                       onClose();

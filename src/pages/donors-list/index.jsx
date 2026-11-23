@@ -26,7 +26,12 @@ import Loader from 'components/Loader';
 import EmptyState from 'components/EmptyState';
 import { selectLoading } from 'selectors/ui-flags';
 import { usePagination } from 'components/table/lib/pagination';
-import { SEARCH_REPORTS } from 'lib/constants';
+import { POOLED_GRANTS, SEARCH_REPORTS, THEMATIC_GRANTS } from 'lib/constants';
+
+// The donor library is only reachable from the DRP side of the portal. Keep links
+// scoped to DRP pages even if the last selected menu item came from Gavi (e.g. the
+// user returned with the browser back button instead of the "DRP" menu item).
+export const DONOR_LINK_PAGES = [SEARCH_REPORTS, POOLED_GRANTS, THEMATIC_GRANTS];
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -123,7 +128,8 @@ export default function DonorsList() {
     usePagination();
 
   const donors = useSelector(selectDonors);
-  const pageName = useSelector(state => state.ui.menuBarPage) || SEARCH_REPORTS;
+  const selectedPage = useSelector(state => state.ui.menuBarPage);
+  const pageName = DONOR_LINK_PAGES.includes(selectedPage) ? selectedPage : SEARCH_REPORTS;
   const hasSearch = query.trim().length > 0;
 
   useEffect(() => {
