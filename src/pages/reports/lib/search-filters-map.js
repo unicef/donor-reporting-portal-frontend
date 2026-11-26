@@ -9,7 +9,6 @@ import {
   REPORT_END_DATE_BEFORE_FIELD,
   REPORT_END_DATE_AFTER_FIELD,
   RECIPIENT_OFFICE_FIELD,
-  TITLE_FIELD,
   FRAMEWORK_FIELD,
   EXTERNAL_REF_GRANT_FIELD,
   DONOR_DOCUMENT_FIELD,
@@ -53,7 +52,6 @@ import ReportCategoryFilter from '../components/report-category-filter';
 import RecipientOfficeFilter from '../components/recipient-office-filter';
 import GrantsFilter from '../components/grants-filter';
 import ExternalGrantsFilter from '../components/external-grants-filter';
-import TitleSearchFilter from '../components/title-search-filter';
 import FrameworkAgreementFilter from '../components/framework-agreement-filter';
 import DonorDocumentFilter from '../components/donor-document-filter';
 import ApprovalYearFilter from '../components/approval-year-filter';
@@ -140,14 +138,6 @@ export const FILTERS_MAP = {
     label: 'Recipient Office',
     Component: RecipientOfficeFilter,
     pageName: [SEARCH_REPORTS, POOLED_GRANTS]
-  },
-
-  [TITLE_FIELD]: {
-    label: 'Filename',
-    Component: TitleSearchFilter,
-    gridSize: 2,
-    pageName: [SEARCH_REPORTS, POOLED_GRANTS],
-    permissionGroup: UNICEF_USER_ROLE
   },
 
   [GRANT_EXPIRY_BEFORE_FIELD]: {

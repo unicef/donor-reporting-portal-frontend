@@ -40,12 +40,12 @@ export default function SearchFilterMenuButton({ onSelectFilter, selected }) {
         onClose={handleClose}
         elevation={1}
         anchorOrigin={{
-          horizontal: 'right',
+          horizontal: 'left',
           vertical: 'top'
         }}
         transformOrigin={{
           vertical: 'top',
-          horizontal: 102
+          horizontal: 'left'
         }}
       >
         {usersFilters.map(filter => (
@@ -74,11 +74,6 @@ SearchFilterMenuButton.propTypes = {
   selected: PropTypes.object
 };
 
-FilterButton.propTypes = {
-  onClick: PropTypes.func,
-  sx: PropTypes.object
-};
-
 export function FilterButton(props) {
   const { sx, ...rest } = props;
   return (
@@ -89,16 +84,16 @@ export function FilterButton(props) {
       startIcon={<FilterListIcon />}
       {...rest}
       sx={{
-        mb: 2,
+        flex: '0 0 auto',
         px: 2,
-        py: 0.75,
+        py: 0.5,
         borderRadius: 2,
         textTransform: 'none',
-        fontWeight: 500,
+        fontWeight: 600,
         ...(sx || {})
       }}
     >
-      More Filters
+      More filters
     </Button>
   );
 }

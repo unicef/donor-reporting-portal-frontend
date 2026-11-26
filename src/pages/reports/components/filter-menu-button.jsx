@@ -1,6 +1,7 @@
 import React, {
   useState
 } from 'react';
+import clsx from 'clsx';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Menu, MenuItem, Button, Checkbox } from '@mui/material';
@@ -40,12 +41,12 @@ export default function FilterMenuButton({ onSelectFilter, selected }) {
         onClose={handleClose}
         elevation={1}
         anchorOrigin={{
-          horizontal: 'right',
+          horizontal: 'left',
           vertical: 'top'
         }}
         transformOrigin={{
           vertical: 'top',
-          horizontal: 102
+          horizontal: 'left'
         }}
       >
         {usersFilters.map(filter => (
@@ -78,9 +79,13 @@ export function FilterButton(props) {
   const classes = useFilterStyles();
 
   return (
-    <Button className={clsx(classes.filterBox, classes.filterBtn)} size="small" {...props}>
+    <Button
+      className={clsx(classes.filterMenuButton, classes.filterBtn)}
+      size="small"
+      {...props}
+    >
       <FilterListIcon className={classes.filterIcon} />
-      More Filters
+      More filters
     </Button>
   );
 }

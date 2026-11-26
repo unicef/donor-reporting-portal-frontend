@@ -1,5 +1,6 @@
 import React from 'react';
-import { FormControl, TextField } from '@mui/material';
+import { FormControl, InputAdornment, TextField } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 import { useGetFilterClasses } from 'styles/filter-styles';
 import { FilterProps } from '../lib/dropdown-filter-factory';
 
@@ -9,11 +10,18 @@ export default function SearchFilter({ value = '', onChange, ...props }) {
   return (
     <FormControl className={classes.formControl} {...props}>
       <TextField
-        placeholder="Search"
-        className={classes.input}
+        fullWidth
+        placeholder="Search by keyword"
         slotProps={{
           htmlInput: {
-            'aria-label': 'framework'
+            'aria-label': 'Search reports'
+          },
+          input: {
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon fontSize="small" color="action" />
+              </InputAdornment>
+            )
           }
         }}
         onChange={onChange}

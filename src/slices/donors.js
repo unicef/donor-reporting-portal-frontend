@@ -13,7 +13,9 @@ const donorsSlice = createSlice({
   },
   extraReducers: builder =>
     builder.addCase(onReceiveUserProfile, (state, action) => {
-      return action.payload.donors;
+      // The profile endpoint no longer returns a donors collection. Keep the
+      // list fetched via setDonors unless the profile actually provides one.
+      return Array.isArray(action.payload?.donors) ? action.payload.donors : state;
     })
 });
 

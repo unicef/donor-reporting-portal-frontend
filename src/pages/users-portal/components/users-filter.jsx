@@ -2,14 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { find, prop, propEq } from 'ramda';
 import {
+  Box,
   Grid,
   FormControl,
   Select,
   InputLabel,
   MenuItem,
   Button,
-  TextField
+  TextField,
+  InputAdornment,
+  Typography
 } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import useFilterStyles from 'styles/filter-styles';
 import { selectDonorUserGroups } from 'selectors/user';
 import { FORM_CONFIG } from '../../../lib/constants';
@@ -41,23 +46,52 @@ export default function UsersFilter() {
   }, [searchQuery, selectedRoles]);
 
   return (
-    <Grid className={classes.filterContainer} size={{ xs: 12 }}>
-      <Grid container direction="row" spacing={1}>
-        <Grid size={{ sm: 4, xs: 12 }}>
-          <FormControl className={classes.formControl}>
-            <TextField
-              id="search"
-              label="Search"
-              className={classes.textField}
-              value={searchQuery}
-              onChange={setValueFromEvent(setSearchQuery)}
-              margin="none"
-            />
-          </FormControl>
+    <Box className={classes.filterContainer}>
+      <Box className={classes.filterHeader}>
+        <Box className={classes.filterHeaderText}>
+          <Typography variant="subtitle1" className={classes.filterTitle} component="h2">
+            Filters
+          </Typography>
+          <Typography variant="body2" className={classes.filterSubtitle}>
+            Search users by name or email, and narrow down by role.
+          </Typography>
+        </Box>
+        <Button
+          type="button"
+          variant="outlined"
+          color="secondary"
+          size="small"
+          startIcon={<RestartAltIcon />}
+          onClick={reset}
+        >
+          {FORM_CONFIG.clear.label}
+        </Button>
+      </Box>
+
+      <Grid container direction="row" spacing={1.5}>
+        <Grid size={{ sm: 5, xs: 12 }}>
+          <TextField
+            id="search"
+            fullWidth
+            label="Search"
+            placeholder="Name or email"
+            value={searchQuery}
+            onChange={setValueFromEvent(setSearchQuery)}
+            margin="none"
+            slotProps={{
+              input: {
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon fontSize="small" color="action" />
+                  </InputAdornment>
+                )
+              }
+            }}
+          />
         </Grid>
-        <Grid size={{ sm: 4, xs: 12 }}>
-          <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="roles">{FORM_CONFIG.roles.label}</InputLabel>
+        <Grid size={{ sm: 5, xs: 12 }}>
+          <FormControl className={classes.formControl} fullWidth>
+            <InputLabel htmlFor="role">{FORM_CONFIG.roles.label}</InputLabel>
             <Select
               value={selectedRoles}
               onChange={setValueFromEvent(setSelectedRoles)}
@@ -66,6 +100,7 @@ export default function UsersFilter() {
                 name: 'select-role',
                 id: 'role'
               }}
+              renderValue={selected => (selected.length ? selected.join(', ') : 'All roles')}
             >
               {groups.map(group => (
                 <MenuItem key={group.name} value={group.name}>
@@ -75,18 +110,7 @@ export default function UsersFilter() {
             </Select>
           </FormControl>
         </Grid>
-        <Grid className={classes.button}>
-          <Button
-            className={classes.formBtn}
-            color="secondary"
-            onClick={() => {
-              reset();
-            }}
-          >
-            {FORM_CONFIG.clear.label}
-          </Button>
-        </Grid>
       </Grid>
-    </Grid>
+    </Box>
   );
 }
