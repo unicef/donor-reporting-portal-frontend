@@ -117,14 +117,13 @@ export default function ReportsFilter() {
                 aria-live="polite"
               />
             )}
-            <FilterMenuButton onSelectFilter={handleSelectFilter} selected={filtersActiveState} />
             <ExportButton />
           </Box>
         </Box>
 
         {showValidation && (
           <Alert severity="warning" sx={{ mb: 2 }}>
-            You must select a Report Year in order to submit.
+            You must select a Report Year in order to search.
           </Alert>
         )}
 
@@ -161,6 +160,7 @@ export default function ReportsFilter() {
         </Box>
 
         <Box className={classes.filterActions}>
+          <FilterMenuButton onSelectFilter={handleSelectFilter} selected={filtersActiveState} />
           <Button
             type="submit"
             variant="contained"

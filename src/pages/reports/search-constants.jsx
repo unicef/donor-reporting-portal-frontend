@@ -18,7 +18,6 @@ export const BACKEND_THEMATIC_FIELDS = {
 
 // QUERY PARAM FIELD NAMES FOR BACKEND
 export const SEARCH_FIELD = 'search';
-export const TITLE_FIELD = 'title__contains';
 export const FRAMEWORK_FIELD = 'framework_agreement';
 export const COUNTRY_FIELD = 'recipient_office';
 export const GRANT_FIELD = 'grant_number';

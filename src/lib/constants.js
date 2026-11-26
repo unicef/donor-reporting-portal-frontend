@@ -20,7 +20,7 @@ export const FORM_CONFIG = {
     label: 'Clear'
   },
   submit: {
-    label: 'Submit'
+    label: 'Search'
   },
   search: {
     label: 'Search'

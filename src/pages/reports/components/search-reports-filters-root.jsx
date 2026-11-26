@@ -99,10 +99,6 @@ export default function SearchReportsFilter() {
                 aria-live="polite"
               />
             )}
-            <SearchFilterMenuButton
-              onSelectFilter={handleSelectFilter}
-              selected={filtersActiveState}
-            />
             <ExportButton />
           </Box>
         </Box>
@@ -141,6 +137,10 @@ export default function SearchReportsFilter() {
         )}
 
         <Box className={classes.filterActions}>
+          <SearchFilterMenuButton
+            onSelectFilter={handleSelectFilter}
+            selected={filtersActiveState}
+          />
           <Button
             type="submit"
             variant="contained"

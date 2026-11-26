@@ -93,6 +93,11 @@ const useFilterStyles = makeStyles(theme =>
         backgroundColor: theme.palette.background.default
       }
     },
+    filterMenuButton: {
+      flex: '0 0 auto',
+      maxWidth: 'none',
+      width: 'auto'
+    },
     yearFilter: {
       backgroundColor: '#fafafa',
       width: 240

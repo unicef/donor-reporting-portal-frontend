@@ -33,7 +33,6 @@ export const BACKEND_GAVI_FIELDS = {
 };
 
 // QUERY PARAM FIELD NAMES FOR BACKEND
-export const TITLE_FIELD = 'title__contains';
 export const FRAMEWORK_FIELD = 'framework_agreement__contains';
 export const COUNTRY_FIELD = 'recipient_office';
 export const GRANT_FIELD = 'grant_number__in';

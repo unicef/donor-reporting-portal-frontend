@@ -8,7 +8,6 @@ import {
   REPORT_END_DATE_BEFORE_FIELD,
   REPORT_END_DATE_AFTER_FIELD,
   RECIPIENT_OFFICE_FIELD,
-  TITLE_FIELD,
   FRAMEWORK_FIELD,
   EXTERNAL_REF_GRANT_FIELD,
   REPORT_GROUP_FIELD,
@@ -35,7 +34,6 @@ import ReportCategoryFilter from '../components/report-category-filter';
 import RecipientOfficeFilter from '../components/recipient-office-filter';
 import GrantsFilter from '../components/grants-filter';
 import ExternalGrantsFilter from '../components/external-grants-filter';
-import TitleSearchFilter from '../components/title-search-filter';
 import FrameworkAgreementFilter from '../components/framework-agreement-filter';
 import reportingGroupFilter from '../components/reporting-group-filter';
 import {
@@ -65,12 +63,6 @@ export const FILTERS_MAP = {
     label: 'External Reference Grant',
     Component: ExternalGrantsFilter,
     pageName: REPORTS
-  },
-
-  [TITLE_FIELD]: {
-    label: 'Title',
-    Component: TitleSearchFilter,
-    gridSize: 2
   },
 
   [FRAMEWORK_FIELD]: {

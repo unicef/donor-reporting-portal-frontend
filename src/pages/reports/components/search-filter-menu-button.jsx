@@ -40,12 +40,12 @@ export default function SearchFilterMenuButton({ onSelectFilter, selected }) {
         onClose={handleClose}
         elevation={1}
         anchorOrigin={{
-          horizontal: 'right',
+          horizontal: 'left',
           vertical: 'top'
         }}
         transformOrigin={{
           vertical: 'top',
-          horizontal: 102
+          horizontal: 'left'
         }}
       >
         {usersFilters.map(filter => (
@@ -84,6 +84,7 @@ export function FilterButton(props) {
       startIcon={<FilterListIcon />}
       {...rest}
       sx={{
+        flex: '0 0 auto',
         px: 2,
         py: 0.5,
         borderRadius: 2,
